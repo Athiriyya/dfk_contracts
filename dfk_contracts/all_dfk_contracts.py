@@ -48,7 +48,7 @@ DEFAULT_RPC = {
     "sd": "https://klaytn.rpc.defikingdoms.com/"
 }
 
-class AllDfk_contractsContracts:
+class AllDfkContracts:
     # TODO: we might want to be able to specify other traits, like gas fees or timeout
     def __init__(self, chain_key:str, rpc:str=None):
         self.rpc = rpc or DEFAULT_RPC[chain_key]
