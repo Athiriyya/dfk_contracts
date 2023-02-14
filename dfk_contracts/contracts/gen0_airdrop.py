@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0xBd1f65e7f350C614d364AEFeB2d87F829b0E465d",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -25,10 +25,9 @@ ABI = """[
 ]
 """     
 
-class Gen0Airdrop(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class Gen0Airdrop(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def airdrop_crystal(self, cred:Credentials, _recipient:address) -> TxReceipt:
@@ -47,7 +46,7 @@ class Gen0Airdrop(ABIWrapperContract):
     def get_crystal(self, _crystal_id:uint256) -> tuple:
         return self.contract.functions.getCrystal(_crystal_id).call()
 
-    def get_user_crystals(self, _address:address) -> Sequence[uint256]:
+    def get_user_crystals(self, _address:address) -> List[uint256]:
         return self.contract.functions.getUserCrystals(_address).call()
 
     def open(self, cred:Credentials, _crystal_id:uint256) -> TxReceipt:

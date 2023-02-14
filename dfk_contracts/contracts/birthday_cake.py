@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0x184223A0921B58F5a0ddFD6448d8b2715EcC87a7",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -38,10 +38,9 @@ ABI = """[
 ]
 """     
 
-class BirthdayCake(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class BirthdayCake(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def allowance(self, owner:address, spender:address) -> uint256:

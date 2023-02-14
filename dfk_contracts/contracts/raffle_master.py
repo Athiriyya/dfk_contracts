@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0x6a56222A67df18FC282CD58dCDF12e61Be812f97",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -57,10 +57,9 @@ ABI = """[
 ]
 """     
 
-class RaffleMaster(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class RaffleMaster(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def active_raffle_types(self, a:uint256, b:uint256) -> uint256:
@@ -100,28 +99,28 @@ class RaffleMaster(ABIWrapperContract):
     def entries(self, a:uint256, b:uint256) -> address:
         return self.contract.functions.entries(a, b).call()
 
-    def get_current_raffle_buckets(self) -> Sequence[uint256]:
+    def get_current_raffle_buckets(self) -> List[uint256]:
         return self.contract.functions.getCurrentRaffleBuckets().call()
 
-    def get_current_raffle_data(self) -> Tuple[Sequence[tuple], Sequence[tuple], Sequence[uint256], Sequence[uint256]]:
+    def get_current_raffle_data(self) -> Tuple[List[tuple], List[tuple], List[uint256], List[uint256]]:
         return self.contract.functions.getCurrentRaffleData().call()
 
-    def get_last_raffle_buckets(self) -> Sequence[uint256]:
+    def get_last_raffle_buckets(self) -> List[uint256]:
         return self.contract.functions.getLastRaffleBuckets().call()
 
-    def get_previous_raffle_data(self) -> Tuple[Sequence[tuple], Sequence[tuple], Sequence[uint256], Sequence[uint256]]:
+    def get_previous_raffle_data(self) -> Tuple[List[tuple], List[tuple], List[uint256], List[uint256]]:
         return self.contract.functions.getPreviousRaffleData().call()
 
-    def get_raffle_list(self, _raffle_buckets:Sequence[uint256]) -> Sequence[tuple]:
+    def get_raffle_list(self, _raffle_buckets:Sequence[uint256]) -> List[tuple]:
         return self.contract.functions.getRaffleList(_raffle_buckets).call()
 
-    def get_raffle_tickets_allowance_list(self, _raffle_buckets:Sequence[uint256]) -> Sequence[uint256]:
+    def get_raffle_tickets_allowance_list(self, _raffle_buckets:Sequence[uint256]) -> List[uint256]:
         return self.contract.functions.getRaffleTicketsAllowanceList(_raffle_buckets).call()
 
-    def get_raffle_tickets_list(self, _raffle_buckets:Sequence[uint256]) -> Sequence[uint256]:
+    def get_raffle_tickets_list(self, _raffle_buckets:Sequence[uint256]) -> List[uint256]:
         return self.contract.functions.getRaffleTicketsList(_raffle_buckets).call()
 
-    def get_raffle_types_list(self, _raffle_buckets:Sequence[uint256]) -> Sequence[tuple]:
+    def get_raffle_types_list(self, _raffle_buckets:Sequence[uint256]) -> List[tuple]:
         return self.contract.functions.getRaffleTypesList(_raffle_buckets).call()
 
     def get_ticket_allowance(self, _user:address, _raffle_id:uint256) -> uint256:

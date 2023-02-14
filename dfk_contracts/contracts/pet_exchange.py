@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -32,10 +32,9 @@ ABI = """[
 ]
 """     
 
-class PetExchange(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class PetExchange(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def complete_exchange(self, cred:Credentials, _exchange_id:uint256) -> TxReceipt:
@@ -48,7 +47,7 @@ class PetExchange(ABIWrapperContract):
     def get_pet_exchange(self, _exchange_id:uint256) -> tuple:
         return self.contract.functions.getPetExchange(_exchange_id).call()
 
-    def get_user_pet_exchanges(self, _address:address) -> Sequence[tuple]:
+    def get_user_pet_exchanges(self, _address:address) -> List[tuple]:
         return self.contract.functions.getUserPetExchanges(_address).call()
 
     def id_to_pet_exchange(self, a:uint256) -> Tuple[uint256, address, uint256, uint256, uint256, uint256, uint8]:

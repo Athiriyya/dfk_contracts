@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -39,10 +39,9 @@ ABI = """[
 ]
 """     
 
-class AssistingAuction(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class AssistingAuction(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def auction_hero_core(self) -> address:
@@ -70,7 +69,7 @@ class AssistingAuction(ABIWrapperContract):
     def get_current_price(self, _token_id:uint256) -> uint256:
         return self.contract.functions.getCurrentPrice(_token_id).call()
 
-    def get_user_auctions(self, _address:address) -> Sequence[uint256]:
+    def get_user_auctions(self, _address:address) -> List[uint256]:
         return self.contract.functions.getUserAuctions(_address).call()
 
     def is_on_auction(self, _token_id:uint256) -> bool:

@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -26,10 +26,9 @@ ABI = """[
 ]
 """     
 
-class ItemGoldTraderV2(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class ItemGoldTraderV2(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def add_trade_item(self, cred:Credentials, _item_address:address, _buy_price:uint256, _sell_price:uint256) -> TxReceipt:
@@ -43,7 +42,7 @@ class ItemGoldTraderV2(ABIWrapperContract):
         tx = self.contract.functions.buyItem(_item_address, _quantity)
         return self.send_transaction(tx, cred)
 
-    def get_trade_items(self) -> Sequence[tuple]:
+    def get_trade_items(self) -> List[tuple]:
         return self.contract.functions.getTradeItems().call()
 
     def initialize(self, cred:Credentials, _dfk_gold_address:address) -> TxReceipt:

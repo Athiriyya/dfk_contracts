@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-HexAddress = str
+from .solidity_types import address as HexAddress
 from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 class Credentials:
@@ -13,7 +13,7 @@ class Credentials:
         return f'{self.address[0:6]}…{self.address[-4:]}'
 
     def __repr__(self):
-        return f'{self.nickname:<10}:  {self.short_address()}'
+        return f'{self.nickname:<10}:  {self.address}'
 
     @staticmethod
     def cred_for_nickname(creds:Sequence['Credentials'], nickname:str) -> Optional['Credentials']:

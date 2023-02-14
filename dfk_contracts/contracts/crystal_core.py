@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -46,10 +46,9 @@ ABI = """[
 ]
 """     
 
-class CrystalCore(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class CrystalCore(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def airdrop_crystal(self, cred:Credentials, _recipient:address, _is_shiny:bool) -> TxReceipt:
@@ -63,7 +62,7 @@ class CrystalCore(ABIWrapperContract):
     def get_crystal(self, _crystal_id:uint256) -> tuple:
         return self.contract.functions.getCrystal(_crystal_id).call()
 
-    def get_user_crystals(self, _address:address) -> Sequence[uint256]:
+    def get_user_crystals(self, _address:address) -> List[uint256]:
         return self.contract.functions.getUserCrystals(_address).call()
 
     def initialize(self, cred:Credentials, _hero_core_address:address, _stat_science_address:address, _random_generator_address:address) -> TxReceipt:

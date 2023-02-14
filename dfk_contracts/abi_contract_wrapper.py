@@ -19,7 +19,7 @@ DEFAULT_MAX_PRIORITY_GAS = 3
 
 W3_INSTANCES: Dict[str, Web3] = {}
 
-class ABIWrapperContract:
+class ABIContractWrapper:
     def __init__(self, 
                  contract_address:str, 
                  abi:str,

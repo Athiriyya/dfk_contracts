@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -41,13 +41,12 @@ ABI = """[
 ]
 """     
 
-class MeditationCircle(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class MeditationCircle(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def _get_required_runes(self, _level:uint16) -> Sequence[uint16]:
+    def _get_required_runes(self, _level:uint16) -> List[uint16]:
         return self.contract.functions._getRequiredRunes(_level).call()
 
     def active_attunement_crystals(self, a:address) -> bool:
@@ -65,7 +64,7 @@ class MeditationCircle(ABIWrapperContract):
         tx = self.contract.functions.completeMeditation(_hero_id)
         return self.send_transaction(tx, cred)
 
-    def get_active_meditations(self, _address:address) -> Sequence[tuple]:
+    def get_active_meditations(self, _address:address) -> List[tuple]:
         return self.contract.functions.getActiveMeditations(_address).call()
 
     def get_hero_meditation(self, _hero_id:uint256) -> tuple:

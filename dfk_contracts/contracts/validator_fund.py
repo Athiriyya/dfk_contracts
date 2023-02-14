@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0xED6dC9FD092190C08e4afF8611496774Ded19D54",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -56,10 +56,9 @@ ABI = """[
 ]
 """     
 
-class ValidatorFund(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class ValidatorFund(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def initial_max_stake_amount(self) -> uint256:
@@ -100,7 +99,7 @@ class ValidatorFund(ABIWrapperContract):
     def get_validator(self, _validator:address) -> tuple:
         return self.contract.functions.getValidator(_validator).call()
 
-    def get_validators(self) -> Sequence[tuple]:
+    def get_validators(self) -> List[tuple]:
         return self.contract.functions.getValidators().call()
 
     def gov_token(self) -> address:

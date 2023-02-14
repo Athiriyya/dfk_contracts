@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0x9EEaBBcf42F0c4900d302544Cce599811C2De2b9",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -79,10 +79,9 @@ ABI = """[
 ]
 """     
 
-class DFKDuelS2(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class DFKDuelS2(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def cancel_duel_entry(self, cred:Credentials, _id:uint256) -> TxReceipt:
@@ -145,7 +144,7 @@ class DFKDuelS2(ABIWrapperContract):
         tx = self.contract.functions.completeDuel(_duel_id)
         return self.send_transaction(tx, cred)
 
-    def get_current_class_bonuses(self) -> Sequence[Sequence[uint8]]:
+    def get_current_class_bonuses(self) -> List[List[uint8]]:
         return self.contract.functions.getCurrentClassBonuses().call()
 
     def complete_duel_admin(self, cred:Credentials, _duel_id:uint256) -> TxReceipt:
@@ -159,10 +158,10 @@ class DFKDuelS2(ABIWrapperContract):
         tx = self.contract.functions.enterDuelLobby(_type, _hero_ids, _token_fee, _background, _stat)
         return self.send_transaction(tx, cred)
 
-    def get_active_duels(self, _address:address) -> Sequence[tuple]:
+    def get_active_duels(self, _address:address) -> List[tuple]:
         return self.contract.functions.getActiveDuels(_address).call()
 
-    def get_challenges(self, _profile:address) -> Sequence[tuple]:
+    def get_challenges(self, _profile:address) -> List[tuple]:
         return self.contract.functions.getChallenges(_profile).call()
 
     def get_current_hero_score_duel_id(self, _hero_id:uint256) -> uint256:
@@ -174,22 +173,22 @@ class DFKDuelS2(ABIWrapperContract):
     def get_duel_entry(self, _id:uint256) -> tuple:
         return self.contract.functions.getDuelEntry(_id).call()
 
-    def get_duel_history(self, _profile:address) -> Sequence[tuple]:
+    def get_duel_history(self, _profile:address) -> List[tuple]:
         return self.contract.functions.getDuelHistory(_profile).call()
 
     def get_duel_index_p1(self, _duel_id:uint256) -> uint256:
         return self.contract.functions.getDuelIndexP1(_duel_id).call()
 
-    def get_duel_rewards(self, _id:uint256) -> Sequence[tuple]:
+    def get_duel_rewards(self, _id:uint256) -> List[tuple]:
         return self.contract.functions.getDuelRewards(_id).call()
 
-    def get_duel_turns(self, _id:uint256) -> Sequence[tuple]:
+    def get_duel_turns(self, _id:uint256) -> List[tuple]:
         return self.contract.functions.getDuelTurns(_id).call()
 
     def get_hero_duel(self, _hero_id:uint256) -> tuple:
         return self.contract.functions.getHeroDuel(_hero_id).call()
 
-    def get_hero_duel_count_for_day(self, _hero_ids:Sequence[uint256], _duel_type:uint256) -> Sequence[uint256]:
+    def get_hero_duel_count_for_day(self, _hero_ids:Sequence[uint256], _duel_type:uint256) -> List[uint256]:
         return self.contract.functions.getHeroDuelCountForDay(_hero_ids, _duel_type).call()
 
     def get_hero_duel_entry(self, _hero_id:uint256) -> tuple:
@@ -204,7 +203,7 @@ class DFKDuelS2(ABIWrapperContract):
     def get_num_ranks(self, _type:uint256) -> uint256:
         return self.contract.functions.getNumRanks(_type).call()
 
-    def get_player_duel_entries(self, _profile:address) -> Sequence[tuple]:
+    def get_player_duel_entries(self, _profile:address) -> List[tuple]:
         return self.contract.functions.getPlayerDuelEntries(_profile).call()
 
     def get_player_rank(self, _profile:address, _type:uint256) -> uint256:
@@ -216,7 +215,7 @@ class DFKDuelS2(ABIWrapperContract):
     def get_practice_entry(self, _type:uint256, _rank:uint8) -> tuple:
         return self.contract.functions.getPracticeEntry(_type, _rank).call()
 
-    def get_rank_levels(self, _type:uint256) -> Sequence[uint16]:
+    def get_rank_levels(self, _type:uint256) -> List[uint16]:
         return self.contract.functions.getRankLevels(_type).call()
 
     def get_season_info(self) -> Tuple[uint256, uint256]:

@@ -32,6 +32,7 @@ from .contracts.pet_auction import PetAuction
 from .contracts.pet_core import PetCore
 from .contracts.pet_exchange import PetExchange
 from .contracts.pet_hatching import PetHatching
+from .contracts.power_up_manager import PowerUpManager
 from .contracts.profiles import Profiles
 from .contracts.quest_core import QuestCore
 from .contracts.raffle_master import RaffleMaster
@@ -40,7 +41,7 @@ from .contracts.stone_carver import StoneCarver
 from .contracts.stylist import Stylist
 from .contracts.token_disburse import TokenDisburse
 from .contracts.uniswap_v2_factory import UniswapV2Factory
-from .contracts.uniswap_v2_router02 import UniswapV2Router02
+from .contracts.uniswap_v2_router import UniswapV2Router
 from .contracts.validator_fund import ValidatorFund
 
 DEFAULT_RPC = {
@@ -50,7 +51,7 @@ DEFAULT_RPC = {
 
 class AllDfkContracts:
     # TODO: we might want to be able to specify other traits, like gas fees or timeout
-    def __init__(self, chain_key:str, rpc:str=None):
+    def __init__(self, chain_key:str, rpc:str | None = None):
         self.rpc = rpc or DEFAULT_RPC[chain_key]
         self.chain_key = chain_key
 
@@ -66,7 +67,7 @@ class AllDfkContracts:
         self.dark_summoning = DarkSummoning(self.chain_key, self.rpc)
         self.dfk_duel_s2 = DFKDuelS2(self.chain_key, self.rpc)
         self.duel_rank_claim = DuelRankClaim(self.chain_key, self.rpc)
-        self.erc20 = ERC20(self.chain_key, self.rpc)
+        self.erc20 = ERC20(self.rpc)
         self.gen0_airdrop = Gen0Airdrop(self.chain_key, self.rpc)
         self.gen0_reroll = Gen0Reroll(self.chain_key, self.rpc)
         self.hero_auction = HeroAuction(self.chain_key, self.rpc)
@@ -85,6 +86,7 @@ class AllDfkContracts:
         self.pet_core = PetCore(self.chain_key, self.rpc)
         self.pet_exchange = PetExchange(self.chain_key, self.rpc)
         self.pet_hatching = PetHatching(self.chain_key, self.rpc)
+        self.power_up_manager = PowerUpManager(self.chain_key, self.rpc)
         self.profiles = Profiles(self.chain_key, self.rpc)
         self.quest_core = QuestCore(self.chain_key, self.rpc)
         self.raffle_master = RaffleMaster(self.chain_key, self.rpc)
@@ -93,6 +95,6 @@ class AllDfkContracts:
         self.stylist = Stylist(self.chain_key, self.rpc)
         self.token_disburse = TokenDisburse(self.chain_key, self.rpc)
         self.uniswap_v2_factory = UniswapV2Factory(self.chain_key, self.rpc)
-        self.uniswap_v2_router02 = UniswapV2Router02(self.chain_key, self.rpc)
+        self.uniswap_v2_router = UniswapV2Router(self.chain_key, self.rpc)
         self.validator_fund = ValidatorFund(self.chain_key, self.rpc)
 

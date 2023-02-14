@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -23,22 +23,21 @@ ABI = """[
 ]
 """     
 
-class Pasture(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class Pasture(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def get_profile_released_pet(self, _profile:address, _index:uint256) -> tuple:
         return self.contract.functions.getProfileReleasedPet(_profile, _index).call()
 
-    def get_profile_released_pets(self, _profile:address) -> Sequence[tuple]:
+    def get_profile_released_pets(self, _profile:address) -> List[tuple]:
         return self.contract.functions.getProfileReleasedPets(_profile).call()
 
     def get_released_pet(self, _pet_id:uint256) -> tuple:
         return self.contract.functions.getReleasedPet(_pet_id).call()
 
-    def get_released_pets(self) -> Sequence[tuple]:
+    def get_released_pets(self) -> List[tuple]:
         return self.contract.functions.getReleasedPets().call()
 
     def pet_core(self) -> address:

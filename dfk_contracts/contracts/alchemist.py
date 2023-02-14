@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -29,10 +29,9 @@ ABI = """[
 ]
 """     
 
-class Alchemist(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class Alchemist(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def add_potion(self, cred:Credentials, _potion_address:address, _required_resources:Sequence[address], _required_quantities:Sequence[uint32]) -> TxReceipt:
@@ -49,7 +48,7 @@ class Alchemist(ABIWrapperContract):
     def get_potion(self, _potion_address:address) -> tuple:
         return self.contract.functions.getPotion(_potion_address).call()
 
-    def get_potions(self) -> Sequence[tuple]:
+    def get_potions(self) -> List[tuple]:
         return self.contract.functions.getPotions().call()
 
     def initialize(self, cred:Credentials, _dfk_gold_address:address) -> TxReceipt:

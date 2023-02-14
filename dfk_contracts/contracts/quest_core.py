@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -50,10 +50,9 @@ ABI = """[
 ]
 """     
 
-class QuestCore(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class QuestCore(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def activate_quest(self, cred:Credentials, _quest_address:address) -> TxReceipt:
@@ -83,7 +82,7 @@ class QuestCore(ABIWrapperContract):
         tx = self.contract.functions.completeQuest(_hero_id)
         return self.send_transaction(tx, cred)
 
-    def get_account_active_quests(self, _account:address) -> Sequence[tuple]:
+    def get_account_active_quests(self, _account:address) -> List[tuple]:
         return self.contract.functions.getAccountActiveQuests(_account).call()
 
     def get_current_stamina(self, _hero_id:uint256) -> uint256:
@@ -92,7 +91,7 @@ class QuestCore(ABIWrapperContract):
     def get_hero_quest(self, hero_id:uint256) -> tuple:
         return self.contract.functions.getHeroQuest(hero_id).call()
 
-    def get_quest_contracts(self) -> Sequence[address]:
+    def get_quest_contracts(self) -> List[address]:
         return self.contract.functions.getQuestContracts().call()
 
     def hero_core(self) -> address:

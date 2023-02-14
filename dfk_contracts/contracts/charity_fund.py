@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0xABABB0A2c42274D0e81417B824CABca464F5c16C",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -37,10 +37,9 @@ ABI = """[
 ]
 """     
 
-class CharityFund(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class CharityFund(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def accepted(self, a:address) -> bool:
@@ -72,7 +71,7 @@ class CharityFund(ABIWrapperContract):
         tx = self.contract.functions.enableToken(_token)
         return self.send_transaction(tx, cred)
 
-    def get_info(self) -> Sequence[tuple]:
+    def get_info(self) -> List[tuple]:
         return self.contract.functions.getInfo().call()
 
     def initialize(self, cred:Credentials, _multisig:address, _flag_storage_address:address) -> TxReceipt:

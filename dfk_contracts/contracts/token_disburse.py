@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0x123165B3a30fdA3655B30cfC10135C1CA3C21bFC",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -26,10 +26,9 @@ ABI = """[
 ]
 """     
 
-class TokenDisburse(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class TokenDisburse(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def add_disbursement(self, cred:Credentials, _recipient:address, _amount:uint256, _start_time:uint64, _duration:uint64, _note:string) -> TxReceipt:
@@ -47,7 +46,7 @@ class TokenDisburse(ABIWrapperContract):
     def disbursements(self, a:uint256) -> Tuple[uint256, address, string, uint256, uint256, uint256, uint64, uint64, uint64]:
         return self.contract.functions.disbursements(a).call()
 
-    def get_disbursement_ids(self, _recipient:address) -> Sequence[uint256]:
+    def get_disbursement_ids(self, _recipient:address) -> List[uint256]:
         return self.contract.functions.getDisbursementIds(_recipient).call()
 
     def initialize(self, cred:Credentials, _token_address:address) -> TxReceipt:

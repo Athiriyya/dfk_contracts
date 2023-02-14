@@ -1,11 +1,11 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0x947873092dc57C1A70704033c41cB110f4462a8B",
-    "sd": ""
+    "sd": "0x0000000000000000000000000000000000000000"
 }
 
 ABI = """[
@@ -26,10 +26,9 @@ ABI = """[
 ]
 """     
 
-class AirdropClaim(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class AirdropClaim(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def claim_airdrop(self, cred:Credentials, _drop_id:uint256) -> TxReceipt:
@@ -58,10 +57,10 @@ class AirdropClaim(ABIWrapperContract):
     def token_to_pending_amount(self, a:address) -> uint256:
         return self.contract.functions.tokenToPendingAmount(a).call()
 
-    def view_airdrops(self) -> Sequence[tuple]:
+    def view_airdrops(self) -> List[tuple]:
         return self.contract.functions.viewAirdrops().call()
 
-    def view_user_airdrops(self, player:address) -> Sequence[tuple]:
+    def view_user_airdrops(self, player:address) -> List[tuple]:
         return self.contract.functions.viewUserAirdrops(player).call()
 
     def withdraw_tokens(self, cred:Credentials, _token_address:address, _recipient:address, _amount:uint256) -> TxReceipt:

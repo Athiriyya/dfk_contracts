@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -50,10 +50,9 @@ ABI = """[
 ]
 """     
 
-class LandCore(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class LandCore(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def approve(self, cred:Credentials, to:address, token_id:uint256) -> TxReceipt:
@@ -67,10 +66,10 @@ class LandCore(ABIWrapperContract):
         tx = self.contract.functions.claimLand(_to, _token_id)
         return self.send_transaction(tx, cred)
 
-    def get_account_lands(self, _account:address) -> Sequence[tuple]:
+    def get_account_lands(self, _account:address) -> List[tuple]:
         return self.contract.functions.getAccountLands(_account).call()
 
-    def get_all_lands(self) -> Sequence[tuple]:
+    def get_all_lands(self) -> List[tuple]:
         return self.contract.functions.getAllLands().call()
 
     def get_approved(self, token_id:uint256) -> address:
@@ -79,7 +78,7 @@ class LandCore(ABIWrapperContract):
     def get_land(self, _land_id:uint256) -> tuple:
         return self.contract.functions.getLand(_land_id).call()
 
-    def get_lands_by_region(self, _region:uint32) -> Sequence[tuple]:
+    def get_lands_by_region(self, _region:uint32) -> List[tuple]:
         return self.contract.functions.getLandsByRegion(_region).call()
 
     def initialize(self, cred:Credentials) -> TxReceipt:

@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -41,10 +41,9 @@ ABI = """[
 ]
 """     
 
-class Profiles(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class Profiles(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def max_char(self) -> uint8:
@@ -88,7 +87,7 @@ class Profiles(ABIWrapperContract):
     def get_profile_by_name(self, _name:string) -> tuple:
         return self.contract.functions.getProfileByName(_name).call()
 
-    def get_token_uris_held_by_address(self, _profile_address:address, _collection_id:uint256) -> Sequence[string]:
+    def get_token_uris_held_by_address(self, _profile_address:address, _collection_id:uint256) -> List[string]:
         return self.contract.functions.getTokenUrisHeldByAddress(_profile_address, _collection_id).call()
 
     def heroes_nft_contract(self) -> address:

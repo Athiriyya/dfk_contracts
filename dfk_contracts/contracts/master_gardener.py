@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -9,180 +9,312 @@ CONTRACT_ADDRESS =     {
 }
 
 ABI = """[
-    {"name": "DiamondCut", "type": "event", "inputs": [{"name": "_diamondCut", "type": "tuple[]", "indexed": false, "internalType": "struct IDiamondCut.FacetCut[]", "components": [{"name": "facetAddress", "type": "address", "internalType": "address"}, {"name": "action", "type": "uint8", "internalType": "enum IDiamondCut.FacetCutAction"}, {"name": "functionSelectors", "type": "bytes4[]", "internalType": "bytes4[]"}]}, {"name": "_init", "type": "address", "indexed": false, "internalType": "address"}, {"name": "_calldata", "type": "bytes", "indexed": false, "internalType": "bytes"}], "anonymous": false},
-    {"name": "diamondCut", "type": "function", "inputs": [{"name": "_diamondCut", "type": "tuple[]", "internalType": "struct IDiamondCut.FacetCut[]", "components": [{"name": "facetAddress", "type": "address", "internalType": "address"}, {"name": "action", "type": "uint8", "internalType": "enum IDiamondCut.FacetCutAction"}, {"name": "functionSelectors", "type": "bytes4[]", "internalType": "bytes4[]"}]}, {"name": "_init", "type": "address", "internalType": "address"}, {"name": "_calldata", "type": "bytes", "internalType": "bytes"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "facetAddress", "type": "function", "inputs": [{"name": "_functionSelector", "type": "bytes4", "internalType": "bytes4"}], "outputs": [{"name": "facetAddress_", "type": "address", "internalType": "address"}], "stateMutability": "view"},
-    {"name": "facetAddresses", "type": "function", "inputs": [], "outputs": [{"name": "facetAddresses_", "type": "address[]", "internalType": "address[]"}], "stateMutability": "view"},
-    {"name": "facetFunctionSelectors", "type": "function", "inputs": [{"name": "_facet", "type": "address", "internalType": "address"}], "outputs": [{"name": "facetFunctionSelectors_", "type": "bytes4[]", "internalType": "bytes4[]"}], "stateMutability": "view"},
-    {"name": "facets", "type": "function", "inputs": [], "outputs": [{"name": "facets_", "type": "tuple[]", "internalType": "struct IDiamondLoupe.Facet[]", "components": [{"name": "facetAddress", "type": "address", "internalType": "address"}, {"name": "functionSelectors", "type": "bytes4[]", "internalType": "bytes4[]"}]}], "stateMutability": "view"},
-    {"name": "supportsInterface", "type": "function", "inputs": [{"name": "_interfaceId", "type": "bytes4", "internalType": "bytes4"}], "outputs": [{"name": "", "type": "bool", "internalType": "bool"}], "stateMutability": "view"},
+    {"type": "constructor", "inputs": [{"name": "_govToken", "type": "address", "internalType": "contract ICrystalToken"}, {"name": "_devaddr", "type": "address", "internalType": "address"}, {"name": "_liquidityaddr", "type": "address", "internalType": "address"}, {"name": "_comfundaddr", "type": "address", "internalType": "address"}, {"name": "_founderaddr", "type": "address", "internalType": "address"}, {"name": "_rewardPerSecond", "type": "uint256", "internalType": "uint256"}, {"name": "_startTimestamp", "type": "uint256", "internalType": "uint256"}, {"name": "_halvingAfterTimestamp", "type": "uint256", "internalType": "uint256"}, {"name": "_rewardMultiplier", "type": "uint256[]", "internalType": "uint256[]"}, {"name": "_timeDeltaStartStage", "type": "uint256[]", "internalType": "uint256[]"}, {"name": "_timeDeltaEndStage", "type": "uint256[]", "internalType": "uint256[]"}, {"name": "_userFeeStage", "type": "uint256[]", "internalType": "uint256[]"}, {"name": "_devFeeStage", "type": "uint256[]", "internalType": "uint256[]"}], "stateMutability": "nonpayable"},
+    {"name": "Deposit", "type": "event", "inputs": [{"name": "user", "type": "address", "indexed": true, "internalType": "address"}, {"name": "pid", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}], "anonymous": false},
+    {"name": "EmergencyWithdraw", "type": "event", "inputs": [{"name": "user", "type": "address", "indexed": true, "internalType": "address"}, {"name": "pid", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}], "anonymous": false},
     {"name": "OwnershipTransferred", "type": "event", "inputs": [{"name": "previousOwner", "type": "address", "indexed": true, "internalType": "address"}, {"name": "newOwner", "type": "address", "indexed": true, "internalType": "address"}], "anonymous": false},
-    {"name": "owner", "type": "function", "inputs": [], "outputs": [{"name": "owner_", "type": "address", "internalType": "address"}], "stateMutability": "view"},
-    {"name": "transferOwnership", "type": "function", "inputs": [{"name": "_newOwner", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "addAttunementCrystal", "type": "function", "inputs": [{"name": "_address", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "adminRemove", "type": "function", "inputs": [{"name": "_heroId", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "pause", "type": "function", "inputs": [], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "removeAttunementCrystal", "type": "function", "inputs": [{"name": "_address", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "setFlagStorage", "type": "function", "inputs": [{"name": "_flagStorageAddress", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "setPowerToken", "type": "function", "inputs": [{"name": "_powerTokenAddress", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "setRune", "type": "function", "inputs": [{"name": "_index", "type": "uint8", "internalType": "uint8"}, {"name": "_address", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "setStatScienceAddress", "type": "function", "inputs": [{"name": "_statScienceAddress", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "setTokenUnlocker", "type": "function", "inputs": [{"name": "_tokenUnlockerAddress", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "unpause", "type": "function", "inputs": [], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "AttunementCrystalAdded", "type": "event", "inputs": [{"name": "atunementItemAddress", "type": "address", "indexed": false, "internalType": "address"}], "anonymous": false},
-    {"name": "FeeAddressAdded", "type": "event", "inputs": [{"name": "feeAddress", "type": "address", "indexed": true, "internalType": "address"}, {"name": "feePercent", "type": "uint256", "indexed": true, "internalType": "uint256"}], "anonymous": false},
-    {"name": "FeeDeferred", "type": "event", "inputs": [{"name": "source", "type": "address", "indexed": true, "internalType": "address"}, {"name": "from", "type": "address", "indexed": true, "internalType": "address"}, {"name": "to", "type": "address", "indexed": true, "internalType": "address"}, {"name": "token", "type": "address", "indexed": false, "internalType": "address"}, {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}, {"name": "timestamp", "type": "uint64", "indexed": false, "internalType": "uint64"}], "anonymous": false},
-    {"name": "FeeDisbursed", "type": "event", "inputs": [{"name": "source", "type": "address", "indexed": true, "internalType": "address"}, {"name": "from", "type": "address", "indexed": true, "internalType": "address"}, {"name": "to", "type": "address", "indexed": true, "internalType": "address"}, {"name": "token", "type": "address", "indexed": false, "internalType": "address"}, {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}, {"name": "timestamp", "type": "uint64", "indexed": false, "internalType": "uint64"}], "anonymous": false},
-    {"name": "FeeLockedBurned", "type": "event", "inputs": [{"name": "source", "type": "address", "indexed": true, "internalType": "address"}, {"name": "from", "type": "address", "indexed": true, "internalType": "address"}, {"name": "to", "type": "address", "indexed": true, "internalType": "address"}, {"name": "token", "type": "address", "indexed": false, "internalType": "address"}, {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}, {"name": "timestamp", "type": "uint64", "indexed": false, "internalType": "uint64"}], "anonymous": false},
-    {"name": "Initialized", "type": "event", "inputs": [{"name": "version", "type": "uint8", "indexed": false, "internalType": "uint8"}], "anonymous": false},
-    {"name": "LevelUp", "type": "event", "inputs": [{"name": "player", "type": "address", "indexed": true, "internalType": "address"}, {"name": "heroId", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "hero", "type": "tuple", "indexed": false, "internalType": "struct Hero", "components": [{"name": "id", "type": "uint256", "internalType": "uint256"}, {"name": "summoningInfo", "type": "tuple", "internalType": "struct SummoningInfo", "components": [{"name": "summonedTime", "type": "uint256", "internalType": "uint256"}, {"name": "nextSummonTime", "type": "uint256", "internalType": "uint256"}, {"name": "summonerId", "type": "uint256", "internalType": "uint256"}, {"name": "assistantId", "type": "uint256", "internalType": "uint256"}, {"name": "summons", "type": "uint32", "internalType": "uint32"}, {"name": "maxSummons", "type": "uint32", "internalType": "uint32"}]}, {"name": "info", "type": "tuple", "internalType": "struct HeroInfo", "components": [{"name": "statGenes", "type": "uint256", "internalType": "uint256"}, {"name": "visualGenes", "type": "uint256", "internalType": "uint256"}, {"name": "rarity", "type": "uint8", "internalType": "enum Rarity"}, {"name": "shiny", "type": "bool", "internalType": "bool"}, {"name": "generation", "type": "uint16", "internalType": "uint16"}, {"name": "firstName", "type": "uint32", "internalType": "uint32"}, {"name": "lastName", "type": "uint32", "internalType": "uint32"}, {"name": "shinyStyle", "type": "uint8", "internalType": "uint8"}, {"name": "class", "type": "uint8", "internalType": "uint8"}, {"name": "subClass", "type": "uint8", "internalType": "uint8"}]}, {"name": "state", "type": "tuple", "internalType": "struct HeroState", "components": [{"name": "staminaFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "hpFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "mpFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "level", "type": "uint16", "internalType": "uint16"}, {"name": "xp", "type": "uint64", "internalType": "uint64"}, {"name": "currentQuest", "type": "address", "internalType": "address"}, {"name": "sp", "type": "uint8", "internalType": "uint8"}, {"name": "status", "type": "uint8", "internalType": "enum HeroStatus"}]}, {"name": "stats", "type": "tuple", "internalType": "struct HeroStats", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hp", "type": "uint16", "internalType": "uint16"}, {"name": "mp", "type": "uint16", "internalType": "uint16"}, {"name": "stamina", "type": "uint16", "internalType": "uint16"}]}, {"name": "primaryStatGrowth", "type": "tuple", "internalType": "struct HeroStatGrowth", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hpSm", "type": "uint16", "internalType": "uint16"}, {"name": "hpRg", "type": "uint16", "internalType": "uint16"}, {"name": "hpLg", "type": "uint16", "internalType": "uint16"}, {"name": "mpSm", "type": "uint16", "internalType": "uint16"}, {"name": "mpRg", "type": "uint16", "internalType": "uint16"}, {"name": "mpLg", "type": "uint16", "internalType": "uint16"}]}, {"name": "secondaryStatGrowth", "type": "tuple", "internalType": "struct HeroStatGrowth", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hpSm", "type": "uint16", "internalType": "uint16"}, {"name": "hpRg", "type": "uint16", "internalType": "uint16"}, {"name": "hpLg", "type": "uint16", "internalType": "uint16"}, {"name": "mpSm", "type": "uint16", "internalType": "uint16"}, {"name": "mpRg", "type": "uint16", "internalType": "uint16"}, {"name": "mpLg", "type": "uint16", "internalType": "uint16"}]}, {"name": "professions", "type": "tuple", "internalType": "struct HeroProfessions", "components": [{"name": "mining", "type": "uint16", "internalType": "uint16"}, {"name": "gardening", "type": "uint16", "internalType": "uint16"}, {"name": "foraging", "type": "uint16", "internalType": "uint16"}, {"name": "fishing", "type": "uint16", "internalType": "uint16"}]}]}, {"name": "oldHero", "type": "tuple", "indexed": false, "internalType": "struct Hero", "components": [{"name": "id", "type": "uint256", "internalType": "uint256"}, {"name": "summoningInfo", "type": "tuple", "internalType": "struct SummoningInfo", "components": [{"name": "summonedTime", "type": "uint256", "internalType": "uint256"}, {"name": "nextSummonTime", "type": "uint256", "internalType": "uint256"}, {"name": "summonerId", "type": "uint256", "internalType": "uint256"}, {"name": "assistantId", "type": "uint256", "internalType": "uint256"}, {"name": "summons", "type": "uint32", "internalType": "uint32"}, {"name": "maxSummons", "type": "uint32", "internalType": "uint32"}]}, {"name": "info", "type": "tuple", "internalType": "struct HeroInfo", "components": [{"name": "statGenes", "type": "uint256", "internalType": "uint256"}, {"name": "visualGenes", "type": "uint256", "internalType": "uint256"}, {"name": "rarity", "type": "uint8", "internalType": "enum Rarity"}, {"name": "shiny", "type": "bool", "internalType": "bool"}, {"name": "generation", "type": "uint16", "internalType": "uint16"}, {"name": "firstName", "type": "uint32", "internalType": "uint32"}, {"name": "lastName", "type": "uint32", "internalType": "uint32"}, {"name": "shinyStyle", "type": "uint8", "internalType": "uint8"}, {"name": "class", "type": "uint8", "internalType": "uint8"}, {"name": "subClass", "type": "uint8", "internalType": "uint8"}]}, {"name": "state", "type": "tuple", "internalType": "struct HeroState", "components": [{"name": "staminaFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "hpFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "mpFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "level", "type": "uint16", "internalType": "uint16"}, {"name": "xp", "type": "uint64", "internalType": "uint64"}, {"name": "currentQuest", "type": "address", "internalType": "address"}, {"name": "sp", "type": "uint8", "internalType": "uint8"}, {"name": "status", "type": "uint8", "internalType": "enum HeroStatus"}]}, {"name": "stats", "type": "tuple", "internalType": "struct HeroStats", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hp", "type": "uint16", "internalType": "uint16"}, {"name": "mp", "type": "uint16", "internalType": "uint16"}, {"name": "stamina", "type": "uint16", "internalType": "uint16"}]}, {"name": "primaryStatGrowth", "type": "tuple", "internalType": "struct HeroStatGrowth", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hpSm", "type": "uint16", "internalType": "uint16"}, {"name": "hpRg", "type": "uint16", "internalType": "uint16"}, {"name": "hpLg", "type": "uint16", "internalType": "uint16"}, {"name": "mpSm", "type": "uint16", "internalType": "uint16"}, {"name": "mpRg", "type": "uint16", "internalType": "uint16"}, {"name": "mpLg", "type": "uint16", "internalType": "uint16"}]}, {"name": "secondaryStatGrowth", "type": "tuple", "internalType": "struct HeroStatGrowth", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hpSm", "type": "uint16", "internalType": "uint16"}, {"name": "hpRg", "type": "uint16", "internalType": "uint16"}, {"name": "hpLg", "type": "uint16", "internalType": "uint16"}, {"name": "mpSm", "type": "uint16", "internalType": "uint16"}, {"name": "mpRg", "type": "uint16", "internalType": "uint16"}, {"name": "mpLg", "type": "uint16", "internalType": "uint16"}]}, {"name": "professions", "type": "tuple", "internalType": "struct HeroProfessions", "components": [{"name": "mining", "type": "uint16", "internalType": "uint16"}, {"name": "gardening", "type": "uint16", "internalType": "uint16"}, {"name": "foraging", "type": "uint16", "internalType": "uint16"}, {"name": "fishing", "type": "uint16", "internalType": "uint16"}]}]}], "anonymous": false},
-    {"name": "MeditationBegun", "type": "event", "inputs": [{"name": "player", "type": "address", "indexed": true, "internalType": "address"}, {"name": "heroId", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "meditationId", "type": "uint256", "indexed": false, "internalType": "uint256"}, {"name": "primaryStat", "type": "uint8", "indexed": false, "internalType": "uint8"}, {"name": "secondaryStat", "type": "uint8", "indexed": false, "internalType": "uint8"}, {"name": "tertiaryStat", "type": "uint8", "indexed": false, "internalType": "uint8"}, {"name": "attunementCrystal", "type": "address", "indexed": false, "internalType": "address"}], "anonymous": false},
-    {"name": "MeditationBegunWithLevel", "type": "event", "inputs": [{"name": "player", "type": "address", "indexed": true, "internalType": "address"}, {"name": "heroId", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "meditationId", "type": "uint256", "indexed": false, "internalType": "uint256"}, {"name": "primaryStat", "type": "uint8", "indexed": false, "internalType": "uint8"}, {"name": "secondaryStat", "type": "uint8", "indexed": false, "internalType": "uint8"}, {"name": "tertiaryStat", "type": "uint8", "indexed": false, "internalType": "uint8"}, {"name": "attunementCrystal", "type": "address", "indexed": false, "internalType": "address"}, {"name": "toLevel", "type": "uint16", "indexed": false, "internalType": "uint16"}], "anonymous": false},
-    {"name": "MeditationCompleted", "type": "event", "inputs": [{"name": "player", "type": "address", "indexed": true, "internalType": "address"}, {"name": "heroId", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "meditationId", "type": "uint256", "indexed": false, "internalType": "uint256"}], "anonymous": false},
-    {"name": "Paused", "type": "event", "inputs": [{"name": "account", "type": "address", "indexed": false, "internalType": "address"}], "anonymous": false},
-    {"name": "RoleAdminChanged", "type": "event", "inputs": [{"name": "role", "type": "bytes32", "indexed": true, "internalType": "bytes32"}, {"name": "previousAdminRole", "type": "bytes32", "indexed": true, "internalType": "bytes32"}, {"name": "newAdminRole", "type": "bytes32", "indexed": true, "internalType": "bytes32"}], "anonymous": false},
-    {"name": "RoleGranted", "type": "event", "inputs": [{"name": "role", "type": "bytes32", "indexed": true, "internalType": "bytes32"}, {"name": "account", "type": "address", "indexed": true, "internalType": "address"}, {"name": "sender", "type": "address", "indexed": true, "internalType": "address"}], "anonymous": false},
-    {"name": "RoleRevoked", "type": "event", "inputs": [{"name": "role", "type": "bytes32", "indexed": true, "internalType": "bytes32"}, {"name": "account", "type": "address", "indexed": true, "internalType": "address"}, {"name": "sender", "type": "address", "indexed": true, "internalType": "address"}], "anonymous": false},
-    {"name": "StatUp", "type": "event", "inputs": [{"name": "player", "type": "address", "indexed": true, "internalType": "address"}, {"name": "heroId", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "stat", "type": "uint256", "indexed": false, "internalType": "uint256"}, {"name": "increase", "type": "uint8", "indexed": false, "internalType": "uint8"}, {"name": "updateType", "type": "uint8", "indexed": false, "internalType": "enum UpdateType"}], "anonymous": false},
-    {"name": "Unpaused", "type": "event", "inputs": [{"name": "account", "type": "address", "indexed": false, "internalType": "address"}], "anonymous": false},
-    {"name": "DEFAULT_ADMIN_ROLE", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "bytes32", "internalType": "bytes32"}], "stateMutability": "view"},
-    {"name": "MODERATOR_ROLE", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "bytes32", "internalType": "bytes32"}], "stateMutability": "view"},
-    {"name": "activeAttunementCrystals", "type": "function", "inputs": [{"name": "", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "bool", "internalType": "bool"}], "stateMutability": "view"},
-    {"name": "heroToMeditation", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
-    {"name": "profileActiveMeditations", "type": "function", "inputs": [{"name": "", "type": "address", "internalType": "address"}, {"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "id", "type": "uint256", "internalType": "uint256"}, {"name": "player", "type": "address", "internalType": "address"}, {"name": "heroId", "type": "uint256", "internalType": "uint256"}, {"name": "primaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "secondaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "tertiaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "attunementCrystal", "type": "address", "internalType": "address"}, {"name": "startBlock", "type": "uint256", "internalType": "uint256"}, {"name": "status", "type": "uint8", "internalType": "uint8"}], "stateMutability": "view"},
-    {"name": "runes", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "address", "internalType": "contract IInventoryItem"}], "stateMutability": "view"},
-    {"name": "tokenUnlockerAddress", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
-    {"name": "completeMeditation", "type": "function", "inputs": [{"name": "_heroId", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "getActiveMeditations", "type": "function", "inputs": [{"name": "_address", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "tuple[]", "internalType": "struct Meditation[]", "components": [{"name": "id", "type": "uint256", "internalType": "uint256"}, {"name": "player", "type": "address", "internalType": "address"}, {"name": "heroId", "type": "uint256", "internalType": "uint256"}, {"name": "primaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "secondaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "tertiaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "attunementCrystal", "type": "address", "internalType": "address"}, {"name": "startBlock", "type": "uint256", "internalType": "uint256"}, {"name": "status", "type": "uint8", "internalType": "uint8"}]}], "stateMutability": "view"},
-    {"name": "getHeroMeditation", "type": "function", "inputs": [{"name": "_heroId", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "tuple", "internalType": "struct Meditation", "components": [{"name": "id", "type": "uint256", "internalType": "uint256"}, {"name": "player", "type": "address", "internalType": "address"}, {"name": "heroId", "type": "uint256", "internalType": "uint256"}, {"name": "primaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "secondaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "tertiaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "attunementCrystal", "type": "address", "internalType": "address"}, {"name": "startBlock", "type": "uint256", "internalType": "uint256"}, {"name": "status", "type": "uint8", "internalType": "uint8"}]}], "stateMutability": "view"},
-    {"name": "getMeditation", "type": "function", "inputs": [{"name": "_id", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "tuple", "internalType": "struct Meditation", "components": [{"name": "id", "type": "uint256", "internalType": "uint256"}, {"name": "player", "type": "address", "internalType": "address"}, {"name": "heroId", "type": "uint256", "internalType": "uint256"}, {"name": "primaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "secondaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "tertiaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "attunementCrystal", "type": "address", "internalType": "address"}, {"name": "startBlock", "type": "uint256", "internalType": "uint256"}, {"name": "status", "type": "uint8", "internalType": "uint8"}]}], "stateMutability": "view"},
-    {"name": "getRoleAdmin", "type": "function", "inputs": [{"name": "role", "type": "bytes32", "internalType": "bytes32"}], "outputs": [{"name": "", "type": "bytes32", "internalType": "bytes32"}], "stateMutability": "view"},
-    {"name": "grantRole", "type": "function", "inputs": [{"name": "role", "type": "bytes32", "internalType": "bytes32"}, {"name": "account", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "hasRole", "type": "function", "inputs": [{"name": "role", "type": "bytes32", "internalType": "bytes32"}, {"name": "account", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "bool", "internalType": "bool"}], "stateMutability": "view"},
-    {"name": "paused", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "bool", "internalType": "bool"}], "stateMutability": "view"},
-    {"name": "renounceRole", "type": "function", "inputs": [{"name": "role", "type": "bytes32", "internalType": "bytes32"}, {"name": "account", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "revokeRole", "type": "function", "inputs": [{"name": "role", "type": "bytes32", "internalType": "bytes32"}, {"name": "account", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "setFees", "type": "function", "inputs": [{"name": "_feeAddresses", "type": "address[]", "internalType": "address[]"}, {"name": "_feePercents", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "_getRequiredRunes", "type": "function", "inputs": [{"name": "_level", "type": "uint16", "internalType": "uint16"}], "outputs": [{"name": "", "type": "uint16[10]", "internalType": "uint16[10]"}], "stateMutability": "pure"},
-    {"name": "startMeditation", "type": "function", "inputs": [{"name": "_heroId", "type": "uint256", "internalType": "uint256"}, {"name": "_primaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "_secondaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "_tertiaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "_attunementCrystal", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
-    {"name": "startMeditationWithLocked", "type": "function", "inputs": [{"name": "_heroId", "type": "uint256", "internalType": "uint256"}, {"name": "_primaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "_secondaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "_tertiaryStat", "type": "uint8", "internalType": "uint8"}, {"name": "_attunementCrystal", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"}
+    {"name": "SendGovernanceTokenReward", "type": "event", "inputs": [{"name": "user", "type": "address", "indexed": true, "internalType": "address"}, {"name": "pid", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}, {"name": "lockAmount", "type": "uint256", "indexed": false, "internalType": "uint256"}], "anonymous": false},
+    {"name": "Withdraw", "type": "event", "inputs": [{"name": "user", "type": "address", "indexed": true, "internalType": "address"}, {"name": "pid", "type": "uint256", "indexed": true, "internalType": "uint256"}, {"name": "amount", "type": "uint256", "indexed": false, "internalType": "uint256"}], "anonymous": false},
+    {"name": "FINISH_BONUS_AT_TIMESTAMP", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "HALVING_AT_TIMESTAMP", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "PERCENT_FOR_COM", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "PERCENT_FOR_DEV", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "PERCENT_FOR_FOUNDERS", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "PERCENT_FOR_LP", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "PERCENT_LOCK_BONUS_REWARD", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "REWARD_MULTIPLIER", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "REWARD_PER_SECOND", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "START_TIMESTAMP", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "add", "type": "function", "inputs": [{"name": "_allocPoint", "type": "uint256", "internalType": "uint256"}, {"name": "_lpToken", "type": "address", "internalType": "contract IERC20"}, {"name": "_withUpdate", "type": "bool", "internalType": "bool"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "addAuthorized", "type": "function", "inputs": [{"name": "_toAdd", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "authorized", "type": "function", "inputs": [{"name": "", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "bool", "internalType": "bool"}], "stateMutability": "view"},
+    {"name": "bonusFinishUpdate", "type": "function", "inputs": [{"name": "_newFinish", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "claimReward", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "claimRewards", "type": "function", "inputs": [{"name": "_pids", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "comUpdate", "type": "function", "inputs": [{"name": "_newCom", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "comfundaddr", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
+    {"name": "deposit", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}, {"name": "_amount", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "dev", "type": "function", "inputs": [{"name": "_devaddr", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "devFeeStage", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "devaddr", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
+    {"name": "emergencyWithdraw", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "founderUpdate", "type": "function", "inputs": [{"name": "_newFounder", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "founderaddr", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
+    {"name": "getLockPercentage", "type": "function", "inputs": [{"name": "_from", "type": "uint256", "internalType": "uint256"}, {"name": "_to", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "getMultiplier", "type": "function", "inputs": [{"name": "_from", "type": "uint256", "internalType": "uint256"}, {"name": "_to", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "getNewRewardPerSecond", "type": "function", "inputs": [{"name": "pid1", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "getPoolReward", "type": "function", "inputs": [{"name": "_from", "type": "uint256", "internalType": "uint256"}, {"name": "_to", "type": "uint256", "internalType": "uint256"}, {"name": "_allocPoint", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "forDev", "type": "uint256", "internalType": "uint256"}, {"name": "forFarmer", "type": "uint256", "internalType": "uint256"}, {"name": "forLP", "type": "uint256", "internalType": "uint256"}, {"name": "forCom", "type": "uint256", "internalType": "uint256"}, {"name": "forFounders", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "govToken", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "contract ICrystalToken"}], "stateMutability": "view"},
+    {"name": "halvingUpdate", "type": "function", "inputs": [{"name": "_newHalving", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "liquidityaddr", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
+    {"name": "lockUpdate", "type": "function", "inputs": [{"name": "_newlock", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "lockcomUpdate", "type": "function", "inputs": [{"name": "_newcomlock", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "lockdevUpdate", "type": "function", "inputs": [{"name": "_newdevlock", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "lockfounderUpdate", "type": "function", "inputs": [{"name": "_newfounderlock", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "locklpUpdate", "type": "function", "inputs": [{"name": "_newlplock", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "lpUpdate", "type": "function", "inputs": [{"name": "_newLP", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "massUpdatePools", "type": "function", "inputs": [], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "owner", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
+    {"name": "pendingReward", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}, {"name": "_user", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "poolExistence", "type": "function", "inputs": [{"name": "", "type": "address", "internalType": "contract IERC20"}], "outputs": [{"name": "", "type": "bool", "internalType": "bool"}], "stateMutability": "view"},
+    {"name": "poolId1", "type": "function", "inputs": [{"name": "", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "poolInfo", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "lpToken", "type": "address", "internalType": "contract IERC20"}, {"name": "allocPoint", "type": "uint256", "internalType": "uint256"}, {"name": "lastRewardTimestamp", "type": "uint256", "internalType": "uint256"}, {"name": "accGovTokenPerShare", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "poolLength", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "reclaimTokenOwnership", "type": "function", "inputs": [{"name": "_newOwner", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "removeAuthorized", "type": "function", "inputs": [{"name": "_toRemove", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "renounceOwnership", "type": "function", "inputs": [], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "rewardMulUpdate", "type": "function", "inputs": [{"name": "_newMulReward", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "rewardUpdate", "type": "function", "inputs": [{"name": "_newReward", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "set", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}, {"name": "_allocPoint", "type": "uint256", "internalType": "uint256"}, {"name": "_withUpdate", "type": "bool", "internalType": "bool"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "setDevFeeStage", "type": "function", "inputs": [{"name": "_devFees", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "setStageEnds", "type": "function", "inputs": [{"name": "_timeEnds", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "setStageStarts", "type": "function", "inputs": [{"name": "_timeStarts", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "setUserFeeStage", "type": "function", "inputs": [{"name": "_userFees", "type": "uint256[]", "internalType": "uint256[]"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "startTimestampUpdate", "type": "function", "inputs": [{"name": "_newstarttimestamp", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "timeDeltaEndStage", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "timeDeltaStartStage", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "totalAllocPoint", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "transferOwnership", "type": "function", "inputs": [{"name": "newOwner", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "updatePool", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"},
+    {"name": "usdOracle", "type": "function", "inputs": [], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
+    {"name": "userDelta", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "userFeeStage", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "userInfo", "type": "function", "inputs": [{"name": "", "type": "uint256", "internalType": "uint256"}, {"name": "", "type": "address", "internalType": "address"}], "outputs": [{"name": "amount", "type": "uint256", "internalType": "uint256"}, {"name": "rewardDebt", "type": "uint256", "internalType": "uint256"}, {"name": "rewardDebtAtTimestamp", "type": "uint256", "internalType": "uint256"}, {"name": "lastWithdrawTimestamp", "type": "uint256", "internalType": "uint256"}, {"name": "firstDepositTimestamp", "type": "uint256", "internalType": "uint256"}, {"name": "timeDelta", "type": "uint256", "internalType": "uint256"}, {"name": "lastDepositTimestamp", "type": "uint256", "internalType": "uint256"}], "stateMutability": "view"},
+    {"name": "withdraw", "type": "function", "inputs": [{"name": "_pid", "type": "uint256", "internalType": "uint256"}, {"name": "_amount", "type": "uint256", "internalType": "uint256"}], "outputs": [], "stateMutability": "nonpayable"}
 ]
 """     
 
-class MasterGardener(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class MasterGardener(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def diamond_cut(self, cred:Credentials, _diamond_cut:Sequence[tuple], _init:address, _calldata:bytes) -> TxReceipt:
-        tx = self.contract.functions.diamondCut(_diamond_cut, _init, _calldata)
+    def finish_bonus_at_timestamp(self) -> uint256:
+        return self.contract.functions.FINISH_BONUS_AT_TIMESTAMP().call()
+
+    def halving_at_timestamp(self, a:uint256) -> uint256:
+        return self.contract.functions.HALVING_AT_TIMESTAMP(a).call()
+
+    def percent_for_com(self) -> uint256:
+        return self.contract.functions.PERCENT_FOR_COM().call()
+
+    def percent_for_dev(self) -> uint256:
+        return self.contract.functions.PERCENT_FOR_DEV().call()
+
+    def percent_for_founders(self) -> uint256:
+        return self.contract.functions.PERCENT_FOR_FOUNDERS().call()
+
+    def percent_for_lp(self) -> uint256:
+        return self.contract.functions.PERCENT_FOR_LP().call()
+
+    def percent_lock_bonus_reward(self, a:uint256) -> uint256:
+        return self.contract.functions.PERCENT_LOCK_BONUS_REWARD(a).call()
+
+    def reward_multiplier(self, a:uint256) -> uint256:
+        return self.contract.functions.REWARD_MULTIPLIER(a).call()
+
+    def reward_per_second(self) -> uint256:
+        return self.contract.functions.REWARD_PER_SECOND().call()
+
+    def start_timestamp(self) -> uint256:
+        return self.contract.functions.START_TIMESTAMP().call()
+
+    def add(self, cred:Credentials, _alloc_point:uint256, _lp_token:address, _with_update:bool) -> TxReceipt:
+        tx = self.contract.functions.add(_alloc_point, _lp_token, _with_update)
         return self.send_transaction(tx, cred)
 
-    def facet_address(self, _function_selector:bytes4) -> address:
-        return self.contract.functions.facetAddress(_function_selector).call()
+    def add_authorized(self, cred:Credentials, _to_add:address) -> TxReceipt:
+        tx = self.contract.functions.addAuthorized(_to_add)
+        return self.send_transaction(tx, cred)
 
-    def facet_addresses(self) -> Sequence[address]:
-        return self.contract.functions.facetAddresses().call()
+    def authorized(self, a:address) -> bool:
+        return self.contract.functions.authorized(a).call()
 
-    def facet_function_selectors(self, _facet:address) -> Sequence[bytes4]:
-        return self.contract.functions.facetFunctionSelectors(_facet).call()
+    def bonus_finish_update(self, cred:Credentials, _new_finish:uint256) -> TxReceipt:
+        tx = self.contract.functions.bonusFinishUpdate(_new_finish)
+        return self.send_transaction(tx, cred)
 
-    def facets(self) -> Sequence[tuple]:
-        return self.contract.functions.facets().call()
+    def claim_reward(self, cred:Credentials, _pid:uint256) -> TxReceipt:
+        tx = self.contract.functions.claimReward(_pid)
+        return self.send_transaction(tx, cred)
 
-    def supports_interface(self, _interface_id:bytes4) -> bool:
-        return self.contract.functions.supportsInterface(_interface_id).call()
+    def claim_rewards(self, cred:Credentials, _pids:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.claimRewards(_pids)
+        return self.send_transaction(tx, cred)
+
+    def com_update(self, cred:Credentials, _new_com:address) -> TxReceipt:
+        tx = self.contract.functions.comUpdate(_new_com)
+        return self.send_transaction(tx, cred)
+
+    def comfundaddr(self) -> address:
+        return self.contract.functions.comfundaddr().call()
+
+    def deposit(self, cred:Credentials, _pid:uint256, _amount:uint256) -> TxReceipt:
+        tx = self.contract.functions.deposit(_pid, _amount)
+        return self.send_transaction(tx, cred)
+
+    def dev(self, cred:Credentials, _devaddr:address) -> TxReceipt:
+        tx = self.contract.functions.dev(_devaddr)
+        return self.send_transaction(tx, cred)
+
+    def dev_fee_stage(self, a:uint256) -> uint256:
+        return self.contract.functions.devFeeStage(a).call()
+
+    def devaddr(self) -> address:
+        return self.contract.functions.devaddr().call()
+
+    def emergency_withdraw(self, cred:Credentials, _pid:uint256) -> TxReceipt:
+        tx = self.contract.functions.emergencyWithdraw(_pid)
+        return self.send_transaction(tx, cred)
+
+    def founder_update(self, cred:Credentials, _new_founder:address) -> TxReceipt:
+        tx = self.contract.functions.founderUpdate(_new_founder)
+        return self.send_transaction(tx, cred)
+
+    def founderaddr(self) -> address:
+        return self.contract.functions.founderaddr().call()
+
+    def get_lock_percentage(self, _from:uint256, _to:uint256) -> uint256:
+        return self.contract.functions.getLockPercentage(_from, _to).call()
+
+    def get_multiplier(self, _from:uint256, _to:uint256) -> uint256:
+        return self.contract.functions.getMultiplier(_from, _to).call()
+
+    def get_new_reward_per_second(self, pid1:uint256) -> uint256:
+        return self.contract.functions.getNewRewardPerSecond(pid1).call()
+
+    def get_pool_reward(self, _from:uint256, _to:uint256, _alloc_point:uint256) -> Tuple[uint256, uint256, uint256, uint256, uint256]:
+        return self.contract.functions.getPoolReward(_from, _to, _alloc_point).call()
+
+    def gov_token(self) -> address:
+        return self.contract.functions.govToken().call()
+
+    def halving_update(self, cred:Credentials, _new_halving:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.halvingUpdate(_new_halving)
+        return self.send_transaction(tx, cred)
+
+    def liquidityaddr(self) -> address:
+        return self.contract.functions.liquidityaddr().call()
+
+    def lock_update(self, cred:Credentials, _newlock:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.lockUpdate(_newlock)
+        return self.send_transaction(tx, cred)
+
+    def lockcom_update(self, cred:Credentials, _newcomlock:uint256) -> TxReceipt:
+        tx = self.contract.functions.lockcomUpdate(_newcomlock)
+        return self.send_transaction(tx, cred)
+
+    def lockdev_update(self, cred:Credentials, _newdevlock:uint256) -> TxReceipt:
+        tx = self.contract.functions.lockdevUpdate(_newdevlock)
+        return self.send_transaction(tx, cred)
+
+    def lockfounder_update(self, cred:Credentials, _newfounderlock:uint256) -> TxReceipt:
+        tx = self.contract.functions.lockfounderUpdate(_newfounderlock)
+        return self.send_transaction(tx, cred)
+
+    def locklp_update(self, cred:Credentials, _newlplock:uint256) -> TxReceipt:
+        tx = self.contract.functions.locklpUpdate(_newlplock)
+        return self.send_transaction(tx, cred)
+
+    def lp_update(self, cred:Credentials, _new_lp:address) -> TxReceipt:
+        tx = self.contract.functions.lpUpdate(_new_lp)
+        return self.send_transaction(tx, cred)
+
+    def mass_update_pools(self, cred:Credentials) -> TxReceipt:
+        tx = self.contract.functions.massUpdatePools()
+        return self.send_transaction(tx, cred)
 
     def owner(self) -> address:
         return self.contract.functions.owner().call()
 
-    def transfer_ownership(self, cred:Credentials, _new_owner:address) -> TxReceipt:
-        tx = self.contract.functions.transferOwnership(_new_owner)
+    def pending_reward(self, _pid:uint256, _user:address) -> uint256:
+        return self.contract.functions.pendingReward(_pid, _user).call()
+
+    def pool_existence(self, a:address) -> bool:
+        return self.contract.functions.poolExistence(a).call()
+
+    def pool_id1(self, a:address) -> uint256:
+        return self.contract.functions.poolId1(a).call()
+
+    def pool_info(self, a:uint256) -> Tuple[address, uint256, uint256, uint256]:
+        return self.contract.functions.poolInfo(a).call()
+
+    def pool_length(self) -> uint256:
+        return self.contract.functions.poolLength().call()
+
+    def reclaim_token_ownership(self, cred:Credentials, _new_owner:address) -> TxReceipt:
+        tx = self.contract.functions.reclaimTokenOwnership(_new_owner)
         return self.send_transaction(tx, cred)
 
-    def add_attunement_crystal(self, cred:Credentials, _address:address) -> TxReceipt:
-        tx = self.contract.functions.addAttunementCrystal(_address)
+    def remove_authorized(self, cred:Credentials, _to_remove:address) -> TxReceipt:
+        tx = self.contract.functions.removeAuthorized(_to_remove)
         return self.send_transaction(tx, cred)
 
-    def admin_remove(self, cred:Credentials, _hero_id:uint256) -> TxReceipt:
-        tx = self.contract.functions.adminRemove(_hero_id)
+    def renounce_ownership(self, cred:Credentials) -> TxReceipt:
+        tx = self.contract.functions.renounceOwnership()
         return self.send_transaction(tx, cred)
 
-    def pause(self, cred:Credentials) -> TxReceipt:
-        tx = self.contract.functions.pause()
+    def reward_mul_update(self, cred:Credentials, _new_mul_reward:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.rewardMulUpdate(_new_mul_reward)
         return self.send_transaction(tx, cred)
 
-    def remove_attunement_crystal(self, cred:Credentials, _address:address) -> TxReceipt:
-        tx = self.contract.functions.removeAttunementCrystal(_address)
+    def reward_update(self, cred:Credentials, _new_reward:uint256) -> TxReceipt:
+        tx = self.contract.functions.rewardUpdate(_new_reward)
         return self.send_transaction(tx, cred)
 
-    def set_flag_storage(self, cred:Credentials, _flag_storage_address:address) -> TxReceipt:
-        tx = self.contract.functions.setFlagStorage(_flag_storage_address)
+    def set(self, cred:Credentials, _pid:uint256, _alloc_point:uint256, _with_update:bool) -> TxReceipt:
+        tx = self.contract.functions.set(_pid, _alloc_point, _with_update)
         return self.send_transaction(tx, cred)
 
-    def set_power_token(self, cred:Credentials, _power_token_address:address) -> TxReceipt:
-        tx = self.contract.functions.setPowerToken(_power_token_address)
+    def set_dev_fee_stage(self, cred:Credentials, _dev_fees:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.setDevFeeStage(_dev_fees)
         return self.send_transaction(tx, cred)
 
-    def set_rune(self, cred:Credentials, _index:uint8, _address:address) -> TxReceipt:
-        tx = self.contract.functions.setRune(_index, _address)
+    def set_stage_ends(self, cred:Credentials, _time_ends:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.setStageEnds(_time_ends)
         return self.send_transaction(tx, cred)
 
-    def set_stat_science_address(self, cred:Credentials, _stat_science_address:address) -> TxReceipt:
-        tx = self.contract.functions.setStatScienceAddress(_stat_science_address)
+    def set_stage_starts(self, cred:Credentials, _time_starts:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.setStageStarts(_time_starts)
         return self.send_transaction(tx, cred)
 
-    def set_token_unlocker(self, cred:Credentials, _token_unlocker_address:address) -> TxReceipt:
-        tx = self.contract.functions.setTokenUnlocker(_token_unlocker_address)
+    def set_user_fee_stage(self, cred:Credentials, _user_fees:Sequence[uint256]) -> TxReceipt:
+        tx = self.contract.functions.setUserFeeStage(_user_fees)
         return self.send_transaction(tx, cred)
 
-    def unpause(self, cred:Credentials) -> TxReceipt:
-        tx = self.contract.functions.unpause()
+    def start_timestamp_update(self, cred:Credentials, _newstarttimestamp:uint256) -> TxReceipt:
+        tx = self.contract.functions.startTimestampUpdate(_newstarttimestamp)
         return self.send_transaction(tx, cred)
 
-    def active_attunement_crystals(self, a:address) -> bool:
-        return self.contract.functions.activeAttunementCrystals(a).call()
+    def time_delta_end_stage(self, a:uint256) -> uint256:
+        return self.contract.functions.timeDeltaEndStage(a).call()
 
-    def hero_to_meditation(self, a:uint256) -> uint256:
-        return self.contract.functions.heroToMeditation(a).call()
+    def time_delta_start_stage(self, a:uint256) -> uint256:
+        return self.contract.functions.timeDeltaStartStage(a).call()
 
-    def profile_active_meditations(self, a:address, b:uint256) -> Tuple[uint256, address, uint256, uint8, uint8, uint8, address, uint256, uint8]:
-        return self.contract.functions.profileActiveMeditations(a, b).call()
+    def total_alloc_point(self) -> uint256:
+        return self.contract.functions.totalAllocPoint().call()
 
-    def runes(self, a:uint256) -> address:
-        return self.contract.functions.runes(a).call()
-
-    def token_unlocker_address(self) -> address:
-        return self.contract.functions.tokenUnlockerAddress().call()
-
-    def complete_meditation(self, cred:Credentials, _hero_id:uint256) -> TxReceipt:
-        tx = self.contract.functions.completeMeditation(_hero_id)
+    def transfer_ownership(self, cred:Credentials, new_owner:address) -> TxReceipt:
+        tx = self.contract.functions.transferOwnership(new_owner)
         return self.send_transaction(tx, cred)
 
-    def get_active_meditations(self, _address:address) -> Sequence[tuple]:
-        return self.contract.functions.getActiveMeditations(_address).call()
-
-    def get_hero_meditation(self, _hero_id:uint256) -> tuple:
-        return self.contract.functions.getHeroMeditation(_hero_id).call()
-
-    def get_meditation(self, _id:uint256) -> tuple:
-        return self.contract.functions.getMeditation(_id).call()
-
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
-
-    def set_fees(self, cred:Credentials, _fee_addresses:Sequence[address], _fee_percents:Sequence[uint256]) -> TxReceipt:
-        tx = self.contract.functions.setFees(_fee_addresses, _fee_percents)
+    def update_pool(self, cred:Credentials, _pid:uint256) -> TxReceipt:
+        tx = self.contract.functions.updatePool(_pid)
         return self.send_transaction(tx, cred)
 
-    def _get_required_runes(self, _level:uint16) -> Sequence[uint16]:
-        return self.contract.functions._getRequiredRunes(_level).call()
+    def usd_oracle(self) -> address:
+        return self.contract.functions.usdOracle().call()
 
-    def start_meditation(self, cred:Credentials, _hero_id:uint256, _primary_stat:uint8, _secondary_stat:uint8, _tertiary_stat:uint8, _attunement_crystal:address) -> TxReceipt:
-        tx = self.contract.functions.startMeditation(_hero_id, _primary_stat, _secondary_stat, _tertiary_stat, _attunement_crystal)
-        return self.send_transaction(tx, cred)
+    def user_delta(self, _pid:uint256) -> uint256:
+        return self.contract.functions.userDelta(_pid).call()
 
-    def start_meditation_with_locked(self, cred:Credentials, _hero_id:uint256, _primary_stat:uint8, _secondary_stat:uint8, _tertiary_stat:uint8, _attunement_crystal:address) -> TxReceipt:
-        tx = self.contract.functions.startMeditationWithLocked(_hero_id, _primary_stat, _secondary_stat, _tertiary_stat, _attunement_crystal)
+    def user_fee_stage(self, a:uint256) -> uint256:
+        return self.contract.functions.userFeeStage(a).call()
+
+    def user_info(self, a:uint256, b:address) -> Tuple[uint256, uint256, uint256, uint256, uint256, uint256, uint256]:
+        return self.contract.functions.userInfo(a, b).call()
+
+    def withdraw(self, cred:Credentials, _pid:uint256, _amount:uint256) -> TxReceipt:
+        tx = self.contract.functions.withdraw(_pid, _amount)
         return self.send_transaction(tx, cred)

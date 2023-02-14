@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -48,10 +48,9 @@ ABI = """[
 ]
 """     
 
-class HeroCore(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class HeroCore(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def approve(self, cred:Credentials, to:address, token_id:uint256) -> TxReceipt:
@@ -79,7 +78,7 @@ class HeroCore(ABIWrapperContract):
     def get_hero(self, _id:uint256) -> tuple:
         return self.contract.functions.getHero(_id).call()
 
-    def get_user_heroes(self, _address:address) -> Sequence[uint256]:
+    def get_user_heroes(self, _address:address) -> List[uint256]:
         return self.contract.functions.getUserHeroes(_address).call()
 
     def initialize(self, cred:Credentials, _name:string, _symbol:string, _url:string, _stat_science_address:address) -> TxReceipt:

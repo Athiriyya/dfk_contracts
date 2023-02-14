@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -57,10 +57,9 @@ ABI = """[
 ]
 """     
 
-class PetHatching(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class PetHatching(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def crack(self, cred:Credentials, _egg_id:uint256) -> TxReceipt:
@@ -79,7 +78,7 @@ class PetHatching(ABIWrapperContract):
     def get_egg(self, _egg_id:uint256) -> tuple:
         return self.contract.functions.getEgg(_egg_id).call()
 
-    def get_user_eggs(self, _address:address) -> Sequence[uint256]:
+    def get_user_eggs(self, _address:address) -> List[uint256]:
         return self.contract.functions.getUserEggs(_address).call()
 
     def incubate_egg(self, cred:Credentials, _egg_type:uint8, _tier:uint8) -> TxReceipt:

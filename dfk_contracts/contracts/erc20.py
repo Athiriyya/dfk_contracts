@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_multi_contract_wrapper import ABIMultiContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -29,11 +29,9 @@ ABI = """[
 ]
 """     
 
-class ERC20(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
-        super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
+class ERC20(ABIMultiContractWrapper):
+    def __init__(self, rpc:str):
+        super().__init__(abi=ABI, rpc=rpc)
 
     def allowance(self, contract_address:address, owner:address, spender:address) -> uint256:
         contract = self.get_custom_contract(contract_address, abi=self.abi)

@@ -1,5 +1,5 @@
 
-from ..abi_wrapper_contract import ABIWrapperContract
+from ..abi_contract_wrapper import ABIContractWrapper
 from ..solidity_types import *
 from ..credentials import Credentials
 
@@ -38,10 +38,9 @@ ABI = """[
 ]
 """     
 
-class UniswapV2Router02(ABIWrapperContract):
-
-    def __init__(self, chain_key:str, rpc:str=None):
-        contract_address = CONTRACT_ADDRESS.get(chain_key)
+class UniswapV2Router(ABIContractWrapper):
+    def __init__(self, chain_key:str, rpc:str):
+        contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
     def weth(self) -> address:
@@ -64,10 +63,10 @@ class UniswapV2Router02(ABIWrapperContract):
     def get_amount_out(self, amount_in:uint256, reserve_in:uint256, reserve_out:uint256) -> uint256:
         return self.contract.functions.getAmountOut(amount_in, reserve_in, reserve_out).call()
 
-    def get_amounts_in(self, amount_out:uint256, path:Sequence[address]) -> Sequence[uint256]:
+    def get_amounts_in(self, amount_out:uint256, path:Sequence[address]) -> List[uint256]:
         return self.contract.functions.getAmountsIn(amount_out, path).call()
 
-    def get_amounts_out(self, amount_in:uint256, path:Sequence[address]) -> Sequence[uint256]:
+    def get_amounts_out(self, amount_in:uint256, path:Sequence[address]) -> List[uint256]:
         return self.contract.functions.getAmountsOut(amount_in, path).call()
 
     def quote(self, amount_a:uint256, reserve_a:uint256, reserve_b:uint256) -> uint256:

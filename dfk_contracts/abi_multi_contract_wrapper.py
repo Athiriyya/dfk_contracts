@@ -19,15 +19,13 @@ DEFAULT_MAX_PRIORITY_GAS = 3
 
 W3_INSTANCES: Dict[str, Web3] = {}
 
-class ABIWrapperContract:
+class ABIMultiContractWrapper:
     def __init__(self, 
-                 contract_address:str, 
                  abi:str,
                  rpc:str,
                  max_gas_gwei:float=DEFAULT_MAX_GAS,
                  max_priority_gwei:float=DEFAULT_MAX_PRIORITY_GAS):
         self.rpc = rpc
-        # self.contract_address = contract_address
         self.abi = abi
         self.nonces: Dict[address, int] = {}
         self.timeout = DEFAULT_TIMEOUT
@@ -41,12 +39,9 @@ class ABIWrapperContract:
             w3.middleware_onion.inject(geth_poa_middleware, layer=0)
             W3_INSTANCES[self.rpc] = w3
         self.w3 = w3
-        self.contract_address = self.w3.toChecksumAddress(contract_address)
 
         self.max_gas_wei = self.w3.toWei(max_gas_gwei, 'gwei')
         self.max_priority_wei = self.w3.toWei(max_priority_gwei, 'gwei')
-
-        self.contract = self.w3.eth.contract(self.contract_address, abi=self.abi)
 
     def get_nonce_and_update(self, address:address, force_fetch=True) -> int:
         # FIXME: I think there's a bug in the caching logic below that lets
@@ -88,8 +83,6 @@ class ABIWrapperContract:
             }
         return gas_dict
 
-    def call_contract_function(self, function_name:str, *args) -> Any:
-        contract_func = getattr(self.contract, function_name)
         return contract_func(*args).call()
 
     def get_custom_contract(self, contract_address:address, abi:str | None=None) -> Contract:
