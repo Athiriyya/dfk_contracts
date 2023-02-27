@@ -5,7 +5,8 @@ from ..credentials import Credentials
 
 CONTRACT_ADDRESS =     {
     "cv": "0xEb9B61B145D6489Be575D3603F4a704810e143dF",
-    "sd": "0x268CC8248FFB72Cd5F3e73A9a20Fa2FF40EfbA61"
+    "sd": "0x268CC8248FFB72Cd5F3e73A9a20Fa2FF40EfbA61",
+    "sd1": "0x5F753dcDf9b1AD9AabC1346614D1f4746fd6Ce5C"
 }
 
 ABI = """[
@@ -25,7 +26,6 @@ ABI = """[
     {"name": "getApproved", "type": "function", "inputs": [{"name": "tokenId", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "address", "internalType": "address"}], "stateMutability": "view"},
     {"name": "getHero", "type": "function", "inputs": [{"name": "_id", "type": "uint256", "internalType": "uint256"}], "outputs": [{"name": "", "type": "tuple", "components": [{"name": "id", "type": "uint256", "internalType": "uint256"}, {"name": "summoningInfo", "type": "tuple", "components": [{"name": "summonedTime", "type": "uint256", "internalType": "uint256"}, {"name": "nextSummonTime", "type": "uint256", "internalType": "uint256"}, {"name": "summonerId", "type": "uint256", "internalType": "uint256"}, {"name": "assistantId", "type": "uint256", "internalType": "uint256"}, {"name": "summons", "type": "uint32", "internalType": "uint32"}, {"name": "maxSummons", "type": "uint32", "internalType": "uint32"}], "internalType": "struct IHeroTypes.SummoningInfo"}, {"name": "info", "type": "tuple", "components": [{"name": "statGenes", "type": "uint256", "internalType": "uint256"}, {"name": "visualGenes", "type": "uint256", "internalType": "uint256"}, {"name": "rarity", "type": "uint8", "internalType": "enum IHeroTypes.Rarity"}, {"name": "shiny", "type": "bool", "internalType": "bool"}, {"name": "generation", "type": "uint16", "internalType": "uint16"}, {"name": "firstName", "type": "uint32", "internalType": "uint32"}, {"name": "lastName", "type": "uint32", "internalType": "uint32"}, {"name": "shinyStyle", "type": "uint8", "internalType": "uint8"}, {"name": "class", "type": "uint8", "internalType": "uint8"}, {"name": "subClass", "type": "uint8", "internalType": "uint8"}], "internalType": "struct IHeroTypes.HeroInfo"}, {"name": "state", "type": "tuple", "components": [{"name": "staminaFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "hpFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "mpFullAt", "type": "uint256", "internalType": "uint256"}, {"name": "level", "type": "uint16", "internalType": "uint16"}, {"name": "xp", "type": "uint64", "internalType": "uint64"}, {"name": "currentQuest", "type": "address", "internalType": "address"}, {"name": "sp", "type": "uint8", "internalType": "uint8"}, {"name": "status", "type": "uint8", "internalType": "enum IHeroTypes.HeroStatus"}], "internalType": "struct IHeroTypes.HeroState"}, {"name": "stats", "type": "tuple", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hp", "type": "uint16", "internalType": "uint16"}, {"name": "mp", "type": "uint16", "internalType": "uint16"}, {"name": "stamina", "type": "uint16", "internalType": "uint16"}], "internalType": "struct IHeroTypes.HeroStats"}, {"name": "primaryStatGrowth", "type": "tuple", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hpSm", "type": "uint16", "internalType": "uint16"}, {"name": "hpRg", "type": "uint16", "internalType": "uint16"}, {"name": "hpLg", "type": "uint16", "internalType": "uint16"}, {"name": "mpSm", "type": "uint16", "internalType": "uint16"}, {"name": "mpRg", "type": "uint16", "internalType": "uint16"}, {"name": "mpLg", "type": "uint16", "internalType": "uint16"}], "internalType": "struct IHeroTypes.HeroStatGrowth"}, {"name": "secondaryStatGrowth", "type": "tuple", "components": [{"name": "strength", "type": "uint16", "internalType": "uint16"}, {"name": "intelligence", "type": "uint16", "internalType": "uint16"}, {"name": "wisdom", "type": "uint16", "internalType": "uint16"}, {"name": "luck", "type": "uint16", "internalType": "uint16"}, {"name": "agility", "type": "uint16", "internalType": "uint16"}, {"name": "vitality", "type": "uint16", "internalType": "uint16"}, {"name": "endurance", "type": "uint16", "internalType": "uint16"}, {"name": "dexterity", "type": "uint16", "internalType": "uint16"}, {"name": "hpSm", "type": "uint16", "internalType": "uint16"}, {"name": "hpRg", "type": "uint16", "internalType": "uint16"}, {"name": "hpLg", "type": "uint16", "internalType": "uint16"}, {"name": "mpSm", "type": "uint16", "internalType": "uint16"}, {"name": "mpRg", "type": "uint16", "internalType": "uint16"}, {"name": "mpLg", "type": "uint16", "internalType": "uint16"}], "internalType": "struct IHeroTypes.HeroStatGrowth"}, {"name": "professions", "type": "tuple", "components": [{"name": "mining", "type": "uint16", "internalType": "uint16"}, {"name": "gardening", "type": "uint16", "internalType": "uint16"}, {"name": "foraging", "type": "uint16", "internalType": "uint16"}, {"name": "fishing", "type": "uint16", "internalType": "uint16"}], "internalType": "struct IHeroTypes.HeroProfessions"}], "internalType": "struct IHeroTypes.Hero"}], "stateMutability": "view"},
     {"name": "getUserHeroes", "type": "function", "inputs": [{"name": "_address", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "uint256[]", "internalType": "uint256[]"}], "stateMutability": "view"},
-    {"name": "initialize", "type": "function", "inputs": [{"name": "_name", "type": "string", "internalType": "string"}, {"name": "_symbol", "type": "string", "internalType": "string"}, {"name": "_url", "type": "string", "internalType": "string"}, {"name": "_statScienceAddress", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
     {"name": "initialize", "type": "function", "inputs": [{"name": "name", "type": "string", "internalType": "string"}, {"name": "symbol", "type": "string", "internalType": "string"}, {"name": "baseTokenURI", "type": "string", "internalType": "string"}], "outputs": [], "stateMutability": "nonpayable"},
     {"name": "isApprovedForAll", "type": "function", "inputs": [{"name": "owner", "type": "address", "internalType": "address"}, {"name": "operator", "type": "address", "internalType": "address"}], "outputs": [{"name": "", "type": "bool", "internalType": "bool"}], "stateMutability": "view"},
     {"name": "mint", "type": "function", "inputs": [{"name": "to", "type": "address", "internalType": "address"}], "outputs": [], "stateMutability": "nonpayable"},
@@ -57,8 +57,8 @@ class HeroCore(ABIContractWrapper):
         tx = self.contract.functions.approve(to, token_id)
         return self.send_transaction(tx, cred)
 
-    def balance_of(self, owner:address) -> uint256:
-        return self.contract.functions.balanceOf(owner).call()
+    def balance_of(self, owner:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.balanceOf(owner).call(block_identifier=block_identifier)
 
     def bridge_mint(self, cred:Credentials, _id:uint256, _to:address) -> TxReceipt:
         tx = self.contract.functions.bridgeMint(_id, _to)
@@ -72,42 +72,38 @@ class HeroCore(ABIContractWrapper):
         tx = self.contract.functions.createHero(_stat_genes, _visual_genes, _rarity, _shiny, _crystal, _crystal_id)
         return self.send_transaction(tx, cred)
 
-    def get_approved(self, token_id:uint256) -> address:
-        return self.contract.functions.getApproved(token_id).call()
+    def get_approved(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.getApproved(token_id).call(block_identifier=block_identifier)
 
-    def get_hero(self, _id:uint256) -> tuple:
-        return self.contract.functions.getHero(_id).call()
+    def get_hero(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getHero(_id).call(block_identifier=block_identifier)
 
-    def get_user_heroes(self, _address:address) -> List[uint256]:
-        return self.contract.functions.getUserHeroes(_address).call()
-
-    def initialize(self, cred:Credentials, _name:string, _symbol:string, _url:string, _stat_science_address:address) -> TxReceipt:
-        tx = self.contract.functions.initialize(_name, _symbol, _url, _stat_science_address)
-        return self.send_transaction(tx, cred)
+    def get_user_heroes(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getUserHeroes(_address).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, name:string, symbol:string, base_token_uri:string) -> TxReceipt:
         tx = self.contract.functions.initialize(name, symbol, base_token_uri)
         return self.send_transaction(tx, cred)
 
-    def is_approved_for_all(self, owner:address, operator:address) -> bool:
-        return self.contract.functions.isApprovedForAll(owner, operator).call()
+    def is_approved_for_all(self, owner:address, operator:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isApprovedForAll(owner, operator).call(block_identifier=block_identifier)
 
     def mint(self, cred:Credentials, to:address) -> TxReceipt:
         tx = self.contract.functions.mint(to)
         return self.send_transaction(tx, cred)
 
-    def name(self) -> string:
-        return self.contract.functions.name().call()
+    def name(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.name().call(block_identifier=block_identifier)
 
-    def owner_of(self, token_id:uint256) -> address:
-        return self.contract.functions.ownerOf(token_id).call()
+    def owner_of(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.ownerOf(token_id).call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
     def post_init(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.postInit()
@@ -125,20 +121,20 @@ class HeroCore(ABIContractWrapper):
         tx = self.contract.functions.setStatScienceAddress(_stat_science_address)
         return self.send_transaction(tx, cred)
 
-    def symbol(self) -> string:
-        return self.contract.functions.symbol().call()
+    def symbol(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.symbol().call(block_identifier=block_identifier)
 
-    def token_by_index(self, index:uint256) -> uint256:
-        return self.contract.functions.tokenByIndex(index).call()
+    def token_by_index(self, index:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.tokenByIndex(index).call(block_identifier=block_identifier)
 
-    def token_of_owner_by_index(self, owner:address, index:uint256) -> uint256:
-        return self.contract.functions.tokenOfOwnerByIndex(owner, index).call()
+    def token_of_owner_by_index(self, owner:address, index:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.tokenOfOwnerByIndex(owner, index).call(block_identifier=block_identifier)
 
-    def token_uri(self, token_id:uint256) -> string:
-        return self.contract.functions.tokenURI(token_id).call()
+    def token_uri(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.tokenURI(token_id).call(block_identifier=block_identifier)
 
-    def total_supply(self) -> uint256:
-        return self.contract.functions.totalSupply().call()
+    def total_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalSupply().call(block_identifier=block_identifier)
 
     def transfer_from(self, cred:Credentials, _from:address, to:address, token_id:uint256) -> TxReceipt:
         tx = self.contract.functions.transferFrom(_from, to, token_id)
