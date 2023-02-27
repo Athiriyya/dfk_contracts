@@ -62,8 +62,8 @@ class RaffleMaster(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def active_raffle_types(self, a:uint256, b:uint256) -> uint256:
-        return self.contract.functions.activeRaffleTypes(a, b).call()
+    def active_raffle_types(self, a:uint256, b:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.activeRaffleTypes(a, b).call(block_identifier=block_identifier)
 
     def add_active_raffle_type(self, cred:Credentials, _id:uint256, _bucket:uint256) -> TxReceipt:
         tx = self.contract.functions.addActiveRaffleType(_id, _bucket)
@@ -85,8 +85,8 @@ class RaffleMaster(ABIContractWrapper):
         tx = self.contract.functions.createRaffle(_raffle_type_id, _bucket)
         return self.send_transaction(tx, cred)
 
-    def current_raffle_buckets(self, a:uint256) -> uint256:
-        return self.contract.functions.currentRaffleBuckets(a).call()
+    def current_raffle_buckets(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.currentRaffleBuckets(a).call(block_identifier=block_identifier)
 
     def draw_winners(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.drawWinners()
@@ -96,35 +96,35 @@ class RaffleMaster(ABIContractWrapper):
         tx = self.contract.functions.enterRaffle(_raffle_id, _tickets)
         return self.send_transaction(tx, cred)
 
-    def entries(self, a:uint256, b:uint256) -> address:
-        return self.contract.functions.entries(a, b).call()
+    def entries(self, a:uint256, b:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.entries(a, b).call(block_identifier=block_identifier)
 
-    def get_current_raffle_buckets(self) -> List[uint256]:
-        return self.contract.functions.getCurrentRaffleBuckets().call()
+    def get_current_raffle_buckets(self, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getCurrentRaffleBuckets().call(block_identifier=block_identifier)
 
-    def get_current_raffle_data(self) -> Tuple[List[tuple], List[tuple], List[uint256], List[uint256]]:
-        return self.contract.functions.getCurrentRaffleData().call()
+    def get_current_raffle_data(self, block_identifier:BlockIdentifier = 'latest') -> Tuple[List[tuple], List[tuple], List[uint256], List[uint256]]:
+        return self.contract.functions.getCurrentRaffleData().call(block_identifier=block_identifier)
 
-    def get_last_raffle_buckets(self) -> List[uint256]:
-        return self.contract.functions.getLastRaffleBuckets().call()
+    def get_last_raffle_buckets(self, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getLastRaffleBuckets().call(block_identifier=block_identifier)
 
-    def get_previous_raffle_data(self) -> Tuple[List[tuple], List[tuple], List[uint256], List[uint256]]:
-        return self.contract.functions.getPreviousRaffleData().call()
+    def get_previous_raffle_data(self, block_identifier:BlockIdentifier = 'latest') -> Tuple[List[tuple], List[tuple], List[uint256], List[uint256]]:
+        return self.contract.functions.getPreviousRaffleData().call(block_identifier=block_identifier)
 
-    def get_raffle_list(self, _raffle_buckets:Sequence[uint256]) -> List[tuple]:
-        return self.contract.functions.getRaffleList(_raffle_buckets).call()
+    def get_raffle_list(self, _raffle_buckets:Sequence[uint256], block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getRaffleList(_raffle_buckets).call(block_identifier=block_identifier)
 
-    def get_raffle_tickets_allowance_list(self, _raffle_buckets:Sequence[uint256]) -> List[uint256]:
-        return self.contract.functions.getRaffleTicketsAllowanceList(_raffle_buckets).call()
+    def get_raffle_tickets_allowance_list(self, _raffle_buckets:Sequence[uint256], block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getRaffleTicketsAllowanceList(_raffle_buckets).call(block_identifier=block_identifier)
 
-    def get_raffle_tickets_list(self, _raffle_buckets:Sequence[uint256]) -> List[uint256]:
-        return self.contract.functions.getRaffleTicketsList(_raffle_buckets).call()
+    def get_raffle_tickets_list(self, _raffle_buckets:Sequence[uint256], block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getRaffleTicketsList(_raffle_buckets).call(block_identifier=block_identifier)
 
-    def get_raffle_types_list(self, _raffle_buckets:Sequence[uint256]) -> List[tuple]:
-        return self.contract.functions.getRaffleTypesList(_raffle_buckets).call()
+    def get_raffle_types_list(self, _raffle_buckets:Sequence[uint256], block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getRaffleTypesList(_raffle_buckets).call(block_identifier=block_identifier)
 
-    def get_ticket_allowance(self, _user:address, _raffle_id:uint256) -> uint256:
-        return self.contract.functions.getTicketAllowance(_user, _raffle_id).call()
+    def get_ticket_allowance(self, _user:address, _raffle_id:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getTicketAllowance(_user, _raffle_id).call(block_identifier=block_identifier)
 
     def init_raffle_buckets(self, cred:Credentials, _buckets:uint256) -> TxReceipt:
         tx = self.contract.functions.initRaffleBuckets(_buckets)
@@ -134,24 +134,24 @@ class RaffleMaster(ABIContractWrapper):
         tx = self.contract.functions.initialize(_raffle_tickets, _airdrop_claim, _item_minter)
         return self.send_transaction(tx, cred)
 
-    def last_raffle_buckets(self, a:uint256) -> uint256:
-        return self.contract.functions.lastRaffleBuckets(a).call()
+    def last_raffle_buckets(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lastRaffleBuckets(a).call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def player_entries(self, a:uint256, b:address) -> uint256:
-        return self.contract.functions.playerEntries(a, b).call()
+    def player_entries(self, a:uint256, b:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.playerEntries(a, b).call(block_identifier=block_identifier)
 
-    def raffle_types(self, a:uint256) -> Tuple[uint256, uint256, uint64]:
-        return self.contract.functions.raffleTypes(a).call()
+    def raffle_types(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256, uint64]:
+        return self.contract.functions.raffleTypes(a).call(block_identifier=block_identifier)
 
-    def raffles(self, a:uint256) -> Tuple[uint256, uint256, uint256, uint256, uint256, uint256, uint8]:
-        return self.contract.functions.raffles(a).call()
+    def raffles(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256, uint256, uint256, uint256, uint256, uint8]:
+        return self.contract.functions.raffles(a).call(block_identifier=block_identifier)
 
     def remove_active_raffle_type(self, cred:Credentials, _index:uint256, _bucket:uint256) -> TxReceipt:
         tx = self.contract.functions.removeActiveRaffleType(_index, _bucket)
@@ -169,14 +169,14 @@ class RaffleMaster(ABIContractWrapper):
         tx = self.contract.functions.startRandomRaffles(_buckets)
         return self.send_transaction(tx, cred)
 
-    def time_per_ticket(self) -> uint256:
-        return self.contract.functions.timePerTicket().call()
+    def time_per_ticket(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.timePerTicket().call(block_identifier=block_identifier)
 
-    def total_raffle_types(self) -> uint256:
-        return self.contract.functions.totalRaffleTypes().call()
+    def total_raffle_types(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalRaffleTypes().call(block_identifier=block_identifier)
 
-    def total_raffles(self) -> uint256:
-        return self.contract.functions.totalRaffles().call()
+    def total_raffles(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalRaffles().call(block_identifier=block_identifier)
 
     def unpause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unpause()

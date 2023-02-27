@@ -46,11 +46,11 @@ class MeditationCircle(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def _get_required_runes(self, _level:uint16) -> List[uint16]:
-        return self.contract.functions._getRequiredRunes(_level).call()
+    def _get_required_runes(self, _level:uint16, block_identifier:BlockIdentifier = 'latest') -> List[uint16]:
+        return self.contract.functions._getRequiredRunes(_level).call(block_identifier=block_identifier)
 
-    def active_attunement_crystals(self, a:address) -> bool:
-        return self.contract.functions.activeAttunementCrystals(a).call()
+    def active_attunement_crystals(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.activeAttunementCrystals(a).call(block_identifier=block_identifier)
 
     def add_attunement_crystal(self, cred:Credentials, _address:address) -> TxReceipt:
         tx = self.contract.functions.addAttunementCrystal(_address)
@@ -64,41 +64,41 @@ class MeditationCircle(ABIContractWrapper):
         tx = self.contract.functions.completeMeditation(_hero_id)
         return self.send_transaction(tx, cred)
 
-    def get_active_meditations(self, _address:address) -> List[tuple]:
-        return self.contract.functions.getActiveMeditations(_address).call()
+    def get_active_meditations(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getActiveMeditations(_address).call(block_identifier=block_identifier)
 
-    def get_hero_meditation(self, _hero_id:uint256) -> tuple:
-        return self.contract.functions.getHeroMeditation(_hero_id).call()
+    def get_hero_meditation(self, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getHeroMeditation(_hero_id).call(block_identifier=block_identifier)
 
-    def get_meditation(self, _id:uint256) -> tuple:
-        return self.contract.functions.getMeditation(_id).call()
+    def get_meditation(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getMeditation(_id).call(block_identifier=block_identifier)
 
-    def hero_to_meditation(self, a:uint256) -> uint256:
-        return self.contract.functions.heroToMeditation(a).call()
+    def hero_to_meditation(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.heroToMeditation(a).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _hero_core_address:address, _stat_science_address:address, _jewel_token_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_hero_core_address, _stat_science_address, _jewel_token_address)
         return self.send_transaction(tx, cred)
 
-    def jewel_token(self) -> address:
-        return self.contract.functions.jewelToken().call()
+    def jewel_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.jewelToken().call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def profile_active_meditations(self, a:address, b:uint256) -> Tuple[uint256, address, uint256, uint8, uint8, uint8, address, uint256, uint8]:
-        return self.contract.functions.profileActiveMeditations(a, b).call()
+    def profile_active_meditations(self, a:address, b:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, uint256, uint8, uint8, uint8, address, uint256, uint8]:
+        return self.contract.functions.profileActiveMeditations(a, b).call(block_identifier=block_identifier)
 
     def remove_attunement_crystal(self, cred:Credentials, _address:address) -> TxReceipt:
         tx = self.contract.functions.removeAttunementCrystal(_address)
         return self.send_transaction(tx, cred)
 
-    def runes(self, a:uint256) -> address:
-        return self.contract.functions.runes(a).call()
+    def runes(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.runes(a).call(block_identifier=block_identifier)
 
     def set_fees(self, cred:Credentials, _fee_addresses:Sequence[address], _fee_percents:Sequence[uint256]) -> TxReceipt:
         tx = self.contract.functions.setFees(_fee_addresses, _fee_percents)

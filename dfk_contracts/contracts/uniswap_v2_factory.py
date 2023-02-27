@@ -28,27 +28,27 @@ class UniswapV2Factory(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def all_pairs(self, a:uint256) -> address:
-        return self.contract.functions.allPairs(a).call()
+    def all_pairs(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.allPairs(a).call(block_identifier=block_identifier)
 
-    def all_pairs_length(self) -> uint256:
-        return self.contract.functions.allPairsLength().call()
+    def all_pairs_length(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.allPairsLength().call(block_identifier=block_identifier)
 
     def create_pair(self, cred:Credentials, token_a:address, token_b:address) -> TxReceipt:
         tx = self.contract.functions.createPair(token_a, token_b)
         return self.send_transaction(tx, cred)
 
-    def fee_to(self) -> address:
-        return self.contract.functions.feeTo().call()
+    def fee_to(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.feeTo().call(block_identifier=block_identifier)
 
-    def fee_to_setter(self) -> address:
-        return self.contract.functions.feeToSetter().call()
+    def fee_to_setter(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.feeToSetter().call(block_identifier=block_identifier)
 
-    def get_pair(self, a:address, b:address) -> address:
-        return self.contract.functions.getPair(a, b).call()
+    def get_pair(self, a:address, b:address, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.getPair(a, b).call(block_identifier=block_identifier)
 
-    def pair_code_hash(self) -> bytes32:
-        return self.contract.functions.pairCodeHash().call()
+    def pair_code_hash(self, block_identifier:BlockIdentifier = 'latest') -> bytes32:
+        return self.contract.functions.pairCodeHash().call(block_identifier=block_identifier)
 
     def set_fee_to(self, cred:Credentials, _fee_to:address) -> TxReceipt:
         tx = self.contract.functions.setFeeTo(_fee_to)

@@ -46,17 +46,17 @@ class Profiles(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def max_char(self) -> uint8:
-        return self.contract.functions.MAX_CHAR().call()
+    def max_char(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.MAX_CHAR().call(block_identifier=block_identifier)
 
-    def max_pic(self) -> uint8:
-        return self.contract.functions.MAX_PIC().call()
+    def max_pic(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.MAX_PIC().call(block_identifier=block_identifier)
 
-    def min_char(self) -> uint8:
-        return self.contract.functions.MIN_CHAR().call()
+    def min_char(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.MIN_CHAR().call(block_identifier=block_identifier)
 
-    def address_to_profile(self, a:address) -> Tuple[address, string, uint64, uint256, uint256, string]:
-        return self.contract.functions.addressToProfile(a).call()
+    def address_to_profile(self, a:address, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, string, uint64, uint256, uint256, string]:
+        return self.contract.functions.addressToProfile(a).call(block_identifier=block_identifier)
 
     def admin_create_profile(self, cred:Credentials, _owner:address, _name:string, _created:uint64, _nft_id:uint256, _collection_id:uint256) -> TxReceipt:
         tx = self.contract.functions.adminCreateProfile(_owner, _name, _created, _nft_id, _collection_id)
@@ -78,42 +78,42 @@ class Profiles(ABIContractWrapper):
         tx = self.contract.functions.createProfile(_name, _nft_id, _collection_id)
         return self.send_transaction(tx, cred)
 
-    def get_profile(self, _profile_address:address) -> tuple:
-        return self.contract.functions.getProfile(_profile_address).call()
+    def get_profile(self, _profile_address:address, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getProfile(_profile_address).call(block_identifier=block_identifier)
 
-    def get_profile_by_address(self, _profile_address:address) -> Tuple[uint256, address, string, uint64, uint8, uint256, uint256]:
-        return self.contract.functions.getProfileByAddress(_profile_address).call()
+    def get_profile_by_address(self, _profile_address:address, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, string, uint64, uint8, uint256, uint256]:
+        return self.contract.functions.getProfileByAddress(_profile_address).call(block_identifier=block_identifier)
 
-    def get_profile_by_name(self, _name:string) -> tuple:
-        return self.contract.functions.getProfileByName(_name).call()
+    def get_profile_by_name(self, _name:string, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getProfileByName(_name).call(block_identifier=block_identifier)
 
-    def get_token_uris_held_by_address(self, _profile_address:address, _collection_id:uint256) -> List[string]:
-        return self.contract.functions.getTokenUrisHeldByAddress(_profile_address, _collection_id).call()
+    def get_token_uris_held_by_address(self, _profile_address:address, _collection_id:uint256, block_identifier:BlockIdentifier = 'latest') -> List[string]:
+        return self.contract.functions.getTokenUrisHeldByAddress(_profile_address, _collection_id).call(block_identifier=block_identifier)
 
-    def heroes_nft_contract(self) -> address:
-        return self.contract.functions.heroesNftContract().call()
+    def heroes_nft_contract(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.heroesNftContract().call(block_identifier=block_identifier)
 
-    def identity_token_router(self) -> address:
-        return self.contract.functions.identityTokenRouter().call()
+    def identity_token_router(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.identityTokenRouter().call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _hero_core_address:address, _identity_token_router:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_hero_core_address, _identity_token_router)
         return self.send_transaction(tx, cred)
 
-    def max_char(self) -> uint8:
-        return self.contract.functions.maxChar().call()
+    def max_char(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.maxChar().call(block_identifier=block_identifier)
 
-    def max_pic(self) -> uint8:
-        return self.contract.functions.maxPic().call()
+    def max_pic(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.maxPic().call(block_identifier=block_identifier)
 
-    def min_char(self) -> uint8:
-        return self.contract.functions.minChar().call()
+    def min_char(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.minChar().call(block_identifier=block_identifier)
 
-    def name_to_address(self, a:string) -> address:
-        return self.contract.functions.nameToAddress(a).call()
+    def name_to_address(self, a:string, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.nameToAddress(a).call(block_identifier=block_identifier)
 
-    def pic_uris(self, a:uint256) -> string:
-        return self.contract.functions.picUris(a).call()
+    def pic_uris(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.picUris(a).call(block_identifier=block_identifier)
 
     def set_heroes(self, cred:Credentials, _address:address) -> TxReceipt:
         tx = self.contract.functions.setHeroes(_address)

@@ -39,8 +39,8 @@ class AirdropClaim(ABIContractWrapper):
         tx = self.contract.functions.deleteAirdrop(player, _drop_id)
         return self.send_transaction(tx, cred)
 
-    def enabled(self) -> bool:
-        return self.contract.functions.enabled().call()
+    def enabled(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.enabled().call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.initialize()
@@ -54,14 +54,14 @@ class AirdropClaim(ABIContractWrapper):
         tx = self.contract.functions.toggleEnabled()
         return self.send_transaction(tx, cred)
 
-    def token_to_pending_amount(self, a:address) -> uint256:
-        return self.contract.functions.tokenToPendingAmount(a).call()
+    def token_to_pending_amount(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.tokenToPendingAmount(a).call(block_identifier=block_identifier)
 
-    def view_airdrops(self) -> List[tuple]:
-        return self.contract.functions.viewAirdrops().call()
+    def view_airdrops(self, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.viewAirdrops().call(block_identifier=block_identifier)
 
-    def view_user_airdrops(self, player:address) -> List[tuple]:
-        return self.contract.functions.viewUserAirdrops(player).call()
+    def view_user_airdrops(self, player:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.viewUserAirdrops(player).call(block_identifier=block_identifier)
 
     def withdraw_tokens(self, cred:Credentials, _token_address:address, _recipient:address, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.withdrawTokens(_token_address, _recipient, _amount)

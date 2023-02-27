@@ -46,20 +46,20 @@ class Stylist(ABIContractWrapper):
         tx = self.contract.functions.initialize(_profiles_address, _jewel_token_address)
         return self.send_transaction(tx, cred)
 
-    def jewel_token(self) -> address:
-        return self.contract.functions.jewelToken().call()
+    def jewel_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.jewelToken().call(block_identifier=block_identifier)
 
-    def name_change_fee(self) -> uint256:
-        return self.contract.functions.nameChangeFee().call()
+    def name_change_fee(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.nameChangeFee().call(block_identifier=block_identifier)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def pic_change_fee(self) -> uint256:
-        return self.contract.functions.picChangeFee().call()
+    def pic_change_fee(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.picChangeFee().call(block_identifier=block_identifier)
 
-    def profiles_contract(self) -> address:
-        return self.contract.functions.profilesContract().call()
+    def profiles_contract(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.profilesContract().call(block_identifier=block_identifier)
 
     def set_fees(self, cred:Credentials, _fee_addresses:Sequence[address], _fee_percents:Sequence[uint256]) -> TxReceipt:
         tx = self.contract.functions.setFees(_fee_addresses, _fee_percents)

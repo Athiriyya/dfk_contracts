@@ -1,8 +1,4 @@
 #! /usr/bin/env python
-
-import traceback
-
-import web3
 from web3 import Web3
 from web3.middleware.geth_poa import geth_poa_middleware
 from web3.logs import DISCARD
@@ -41,7 +37,7 @@ class ABIContractWrapper:
             w3.middleware_onion.inject(geth_poa_middleware, layer=0)
             W3_INSTANCES[self.rpc] = w3
         self.w3 = w3
-        self.contract_address = self.w3.toChecksumAddress(contract_address)
+        self.contract_address:HexAddress = self.w3.toChecksumAddress(contract_address)
 
         self.max_gas_wei = self.w3.toWei(max_gas_gwei, 'gwei')
         self.max_priority_wei = self.w3.toWei(max_priority_gwei, 'gwei')
@@ -92,12 +88,13 @@ class ABIContractWrapper:
         contract_func = getattr(self.contract, function_name)
         return contract_func(*args).call()
 
-    def get_custom_contract(self, contract_address:address, abi:str | None=None) -> Contract:
+    def get_custom_contract(self, contract_address:HexAddress, abi:str | None=None) -> Contract:
         # TODO: Many custom contracts for e.g. ERC20 tokens could
         # be re-used by caching a contracts dictionary keyed by address
         # For now, just return a new contract
         abi = abi or self.abi
-        contract = self.w3.eth.contract(contract_address, abi=abi)
+        checked_addr = self.w3.toChecksumAddress(contract_address)
+        contract = self.w3.eth.contract(checked_addr, abi=abi)
         return contract
 
     def send_transaction(self,

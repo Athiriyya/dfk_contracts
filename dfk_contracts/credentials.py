@@ -16,19 +16,18 @@ class Credentials:
         return f'{self.nickname:<10}:  {self.address}'
 
     @staticmethod
-    def cred_for_nickname(creds:Sequence['Credentials'], nickname:str) -> Optional['Credentials']:
-        result = None
-        for cred in creds:
-            if cred.nickname == nickname:
-                result = cred
-                break
-        return result
+    def cred_for_nickname(creds:Sequence['Credentials'], nickname:str) -> 'Credentials':
+        gen = (c for c in creds if c.nickname == nickname)
+        try:
+            return next(gen)
+        except StopIteration:
+            raise ValueError(f'Nickname {nickname} not found in {creds}')
 
     @staticmethod
-    def cred_for_address(creds:Sequence['Credentials'], address:HexAddress) -> Optional['Credentials']:
-        result = None
-        for cred in creds:
-            if cred.address == address:
-                result = cred
-                break
-        return result        
+    def cred_for_address(creds:Sequence['Credentials'], address:HexAddress) -> 'Credentials':
+        gen = (c for c in creds if c.address == address)
+        try:
+            return next(gen)
+        except StopIteration:
+            raise ValueError(f'Address {address} not found in {creds}')   
+

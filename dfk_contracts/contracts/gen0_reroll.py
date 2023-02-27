@@ -37,25 +37,25 @@ class Gen0Reroll(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def campaign(self) -> uint256:
-        return self.contract.functions.campaign().call()
+    def campaign(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.campaign().call(block_identifier=block_identifier)
 
     def cancel_reroll(self, cred:Credentials, _hero_id:uint256) -> TxReceipt:
         tx = self.contract.functions.cancelReroll(_hero_id)
         return self.send_transaction(tx, cred)
 
-    def crystals(self, a:uint256) -> address:
-        return self.contract.functions.crystals(a).call()
+    def crystals(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.crystals(a).call(block_identifier=block_identifier)
 
     def end_roll(self, cred:Credentials, _hero_id:uint256) -> TxReceipt:
         tx = self.contract.functions.endRoll(_hero_id)
         return self.send_transaction(tx, cred)
 
-    def end_time(self) -> uint256:
-        return self.contract.functions.endTime().call()
+    def end_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.endTime().call(block_identifier=block_identifier)
 
-    def hero_to_reroll_data(self, a:uint256) -> Tuple[uint256, uint256, uint8, tuple, uint8, uint256]:
-        return self.contract.functions.heroToRerollData(a).call()
+    def hero_to_reroll_data(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256, uint8, tuple, uint8, uint256]:
+        return self.contract.functions.heroToRerollData(a).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _start_time:uint256, _end_time:uint256, _hero_core_address:address, _stat_science_address:address, _flag_storage_address:address, _assisting_auction:address, _reroll_modifier:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_start_time, _end_time, _hero_core_address, _stat_science_address, _flag_storage_address, _assisting_auction, _reroll_modifier)
@@ -81,8 +81,8 @@ class Gen0Reroll(ABIContractWrapper):
         tx = self.contract.functions.startRoll(_hero_id, _choice)
         return self.send_transaction(tx, cred)
 
-    def start_time(self) -> uint256:
-        return self.contract.functions.startTime().call()
+    def start_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.startTime().call(block_identifier=block_identifier)
 
-    def stones(self, a:uint256) -> address:
-        return self.contract.functions.stones(a).call()
+    def stones(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.stones(a).call(block_identifier=block_identifier)

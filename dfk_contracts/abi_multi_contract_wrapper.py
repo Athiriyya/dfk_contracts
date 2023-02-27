@@ -1,16 +1,10 @@
 #! /usr/bin/env python
-
-import traceback
-
-import web3
 from web3 import Web3
 from web3.middleware.geth_poa import geth_poa_middleware
-from web3.logs import DISCARD
 
-from .credentials import Credentials
+from .abi_contract_wrapper import ABIContractWrapper
 
 from .solidity_types import *
-from web3.contract import Contract
 from typing import Dict, Tuple, Union, Optional, Any
 
 DEFAULT_TIMEOUT = 30
@@ -19,7 +13,7 @@ DEFAULT_MAX_PRIORITY_GAS = 3
 
 W3_INSTANCES: Dict[str, Web3] = {}
 
-class ABIMultiContractWrapper:
+class ABIMultiContractWrapper(ABIContractWrapper):
     def __init__(self, 
                  abi:str,
                  rpc:str,
@@ -42,108 +36,3 @@ class ABIMultiContractWrapper:
 
         self.max_gas_wei = self.w3.toWei(max_gas_gwei, 'gwei')
         self.max_priority_wei = self.w3.toWei(max_priority_gwei, 'gwei')
-
-    def get_nonce_and_update(self, address:address, force_fetch=True) -> int:
-        # FIXME: I think there's a bug in the caching logic below that lets
-        # nonces run ahead of where they should be and causes transactions to
-        # fail.
-        # So force_fetch is set to true, which fetches the appropriate nonce for
-        # every transaction
-        # - Athiriyya 13 December 2022
-
-        # We keep track of our own nonce, and only re-fetch it if a 'nonce too low'
-        # error gets thrown       
-        nonce = self.nonces.get(address, 0) 
-        if force_fetch or nonce == 0:
-            nonce = self.w3.eth.getTransactionCount( address, 'pending')
-
-        # Store the next nonce this address will use, and return the current one
-        self.nonces[address] = nonce + 1
-        return nonce
-
-    def get_gas_dict_and_update(self, address:address) -> Dict[str, int]:
-        nonce = self.get_nonce_and_update(address)
-         
-        legacy = False
-        if legacy:
-            # TODO: it's expensive to query for fees with every transaction. 
-            # Maybe query only once a minute?
-            gas, gas_price = self.get_legacy_gas_fee()
-            gas_dict = {
-                'gas': gas, 
-                'gasPrice':gas_price, 
-                'nonce':nonce
-            }
-        else:
-            gas_dict = {
-                'from': address, 
-                'maxFeePerGas': int(self.max_gas_wei), 
-                'maxPriorityFeePerGas': int(self.max_priority_wei), 
-                'nonce': nonce
-            }
-        return gas_dict
-
-        return contract_func(*args).call()
-
-    def get_custom_contract(self, contract_address:address, abi:str | None=None) -> Contract:
-        # TODO: Many custom contracts for e.g. ERC20 tokens could
-        # be re-used by caching a contracts dictionary keyed by address
-        # For now, just return a new contract
-        abi = abi or self.abi
-        contract = self.w3.eth.contract(contract_address, abi=abi)
-        return contract
-
-    def send_transaction(self,
-                         tx,
-                         cred:Credentials,
-                         extra_dict:Dict[str,Any] | None = None
-                        ) -> TxReceipt:
-        # Some transactions require extra information or fees when building 
-        # the transaction. e.g. bridging functions need a {'value': <bridge_fee_in_wei>}
-        # argument. If supplied, add that extra info
-        address = cred.address  
-        gas_dict = self.get_gas_dict_and_update(address)
-        if extra_dict:
-            gas_dict.update(extra_dict)
-        tx_dict = tx.buildTransaction(gas_dict)    
-        signed_tx = self.w3.eth.account.sign_transaction(tx_dict, private_key=cred.private_key)
-        try:
-            self.w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-
-        except Exception as e:
-            if 'nonce too low' in str(e):
-                nonce = self.get_nonce_and_update(address, force_fetch=True)
-                return self.send_transaction( tx, cred)
-            # otherwise, raise
-            raise(e)
-
-        receipt = self.w3.eth.wait_for_transaction_receipt(
-            transaction_hash=signed_tx.hash,
-            poll_latency=1,
-            timeout=self.timeout,
-        )
-        return receipt
-
-    def get_legacy_gas_fee(self) ->Tuple[int, int]:
-        # See: https://web3py.readthedocs.io/en/stable/gas_price.html#gas-price-api
-        # Some transactions may require a gas dict with the keys {'gasPrice': x_wei, '': y_wei}
-        block = self.w3.eth.getBlock("pending")
-        base_gas = block.gasUsed + self.w3.toWei(50, 'gwei')
-        gas_limit =block.gasLimit
-
-        return base_gas, gas_limit
-
-    def tx_receipt_for_hash(self, tx_hash:address) -> TxReceipt:
-        tx_receipt = self.w3.eth.get_transaction_receipt(tx_hash)
-        return tx_receipt
-
-    def parse_events(self, tx_receipt:TxReceipt, event_names:Sequence[str] | None = None) -> Dict[str, AttributeDict]:
-        event_dicts = {}
-        for event in self.contract.events: # type: ignore
-            eds = event().processReceipt(tx_receipt, errors=DISCARD)
-            if eds:
-                for ed in eds:
-                    event_dicts.setdefault(ed.event,[]).append(ed)
-        if event_names:
-            event_dicts = {k:v for k,v in event_dicts.items() if k in event_names}
-        return event_dicts        

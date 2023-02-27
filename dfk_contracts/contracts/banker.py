@@ -30,11 +30,11 @@ class Banker(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def bank(self) -> address:
-        return self.contract.functions.bank().call()
+    def bank(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.bank().call(block_identifier=block_identifier)
 
-    def bridge_for(self, token:address) -> address:
-        return self.contract.functions.bridgeFor(token).call()
+    def bridge_for(self, token:address, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.bridgeFor(token).call(block_identifier=block_identifier)
 
     def convert(self, cred:Credentials, token0:address, token1:address) -> TxReceipt:
         tx = self.contract.functions.convert(token0, token1)
@@ -44,11 +44,11 @@ class Banker(ABIContractWrapper):
         tx = self.contract.functions.convertMultiple(token0, token1)
         return self.send_transaction(tx, cred)
 
-    def factory(self) -> address:
-        return self.contract.functions.factory().call()
+    def factory(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.factory().call(block_identifier=block_identifier)
 
-    def owner(self) -> address:
-        return self.contract.functions.owner().call()
+    def owner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.owner().call(block_identifier=block_identifier)
 
     def renounce_ownership(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.renounceOwnership()

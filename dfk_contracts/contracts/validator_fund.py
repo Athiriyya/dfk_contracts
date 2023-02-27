@@ -61,68 +61,68 @@ class ValidatorFund(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def initial_max_stake_amount(self) -> uint256:
-        return self.contract.functions.INITIAL_MAX_STAKE_AMOUNT().call()
+    def initial_max_stake_amount(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.INITIAL_MAX_STAKE_AMOUNT().call(block_identifier=block_identifier)
 
-    def initial_max_stake_duration(self) -> uint256:
-        return self.contract.functions.INITIAL_MAX_STAKE_DURATION().call()
+    def initial_max_stake_duration(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.INITIAL_MAX_STAKE_DURATION().call(block_identifier=block_identifier)
 
-    def initial_min_stake_amount(self) -> uint256:
-        return self.contract.functions.INITIAL_MIN_STAKE_AMOUNT().call()
+    def initial_min_stake_amount(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.INITIAL_MIN_STAKE_AMOUNT().call(block_identifier=block_identifier)
 
-    def initial_min_stake_duration(self) -> uint256:
-        return self.contract.functions.INITIAL_MIN_STAKE_DURATION().call()
+    def initial_min_stake_duration(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.INITIAL_MIN_STAKE_DURATION().call(block_identifier=block_identifier)
 
     def add_validator(self, cred:Credentials, _address:address, _node_id:string) -> TxReceipt:
         tx = self.contract.functions.addValidator(_address, _node_id)
         return self.send_transaction(tx, cred)
 
-    def address_to_validator(self, a:address) -> Tuple[address, string, address, uint256, uint256, uint256, uint256, uint256, bool]:
-        return self.contract.functions.addressToValidator(a).call()
+    def address_to_validator(self, a:address, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, string, address, uint256, uint256, uint256, uint256, uint256, bool]:
+        return self.contract.functions.addressToValidator(a).call(block_identifier=block_identifier)
 
-    def allocated_amount(self) -> uint256:
-        return self.contract.functions.allocatedAmount().call()
+    def allocated_amount(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.allocatedAmount().call(block_identifier=block_identifier)
 
-    def burn_percentage(self) -> uint256:
-        return self.contract.functions.burnPercentage().call()
+    def burn_percentage(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.burnPercentage().call(block_identifier=block_identifier)
 
     def claim_balance(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.claimBalance()
         return self.send_transaction(tx, cred)
 
-    def fund_address(self) -> address:
-        return self.contract.functions.fundAddress().call()
+    def fund_address(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.fundAddress().call(block_identifier=block_identifier)
 
-    def fund_percentage(self) -> uint256:
-        return self.contract.functions.fundPercentage().call()
+    def fund_percentage(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.fundPercentage().call(block_identifier=block_identifier)
 
-    def get_validator(self, _validator:address) -> tuple:
-        return self.contract.functions.getValidator(_validator).call()
+    def get_validator(self, _validator:address, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getValidator(_validator).call(block_identifier=block_identifier)
 
-    def get_validators(self) -> List[tuple]:
-        return self.contract.functions.getValidators().call()
+    def get_validators(self, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getValidators().call(block_identifier=block_identifier)
 
-    def gov_token(self) -> address:
-        return self.contract.functions.govToken().call()
+    def gov_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.govToken().call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _burn_percentage:uint256, _jewel_fund_percentage:uint256, _validator_fund_percentage:uint256, _gov_token_address:address, _fund_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_burn_percentage, _jewel_fund_percentage, _validator_fund_percentage, _gov_token_address, _fund_address)
         return self.send_transaction(tx, cred)
 
-    def last_distribution(self) -> uint256:
-        return self.contract.functions.lastDistribution().call()
+    def last_distribution(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lastDistribution().call(block_identifier=block_identifier)
 
-    def max_stake_amount(self) -> uint256:
-        return self.contract.functions.maxStakeAmount().call()
+    def max_stake_amount(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.maxStakeAmount().call(block_identifier=block_identifier)
 
-    def max_stake_duration(self) -> uint256:
-        return self.contract.functions.maxStakeDuration().call()
+    def max_stake_duration(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.maxStakeDuration().call(block_identifier=block_identifier)
 
-    def min_stake_amount(self) -> uint256:
-        return self.contract.functions.minStakeAmount().call()
+    def min_stake_amount(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.minStakeAmount().call(block_identifier=block_identifier)
 
-    def min_stake_duration(self) -> uint256:
-        return self.contract.functions.minStakeDuration().call()
+    def min_stake_duration(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.minStakeDuration().call(block_identifier=block_identifier)
 
     def process_funds(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.processFunds()
@@ -132,8 +132,8 @@ class ValidatorFund(ABIContractWrapper):
         tx = self.contract.functions.removeValidator(_validator, _index)
         return self.send_transaction(tx, cred)
 
-    def reward_percentage(self) -> uint256:
-        return self.contract.functions.rewardPercentage().call()
+    def reward_percentage(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.rewardPercentage().call(block_identifier=block_identifier)
 
     def set_percentages(self, cred:Credentials, _burn_percentage:uint256, _fund_percentage:uint256, _reward_percentage:uint256) -> TxReceipt:
         tx = self.contract.functions.setPercentages(_burn_percentage, _fund_percentage, _reward_percentage)
@@ -155,20 +155,20 @@ class ValidatorFund(ABIContractWrapper):
         tx = self.contract.functions.stake(_amount, _duration)
         return self.send_transaction(tx, cred)
 
-    def total_burn(self) -> uint256:
-        return self.contract.functions.totalBurn().call()
+    def total_burn(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalBurn().call(block_identifier=block_identifier)
 
-    def total_fund(self) -> uint256:
-        return self.contract.functions.totalFund().call()
+    def total_fund(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalFund().call(block_identifier=block_identifier)
 
-    def total_reward(self) -> uint256:
-        return self.contract.functions.totalReward().call()
+    def total_reward(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalReward().call(block_identifier=block_identifier)
 
-    def total_stake(self) -> uint256:
-        return self.contract.functions.totalStake().call()
+    def total_stake(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalStake().call(block_identifier=block_identifier)
 
-    def unallocated(self) -> uint256:
-        return self.contract.functions.unallocated().call()
+    def unallocated(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.unallocated().call(block_identifier=block_identifier)
 
     def unstake(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unstake()
@@ -178,5 +178,5 @@ class ValidatorFund(ABIContractWrapper):
         tx = self.contract.functions.updateRewardAddress(_reward_address)
         return self.send_transaction(tx, cred)
 
-    def validators(self, a:uint256) -> address:
-        return self.contract.functions.validators(a).call()
+    def validators(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.validators(a).call(block_identifier=block_identifier)

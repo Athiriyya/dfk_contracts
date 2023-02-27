@@ -43,8 +43,8 @@ class UniswapV2Router(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def weth(self) -> address:
-        return self.contract.functions.WETH().call()
+    def weth(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.WETH().call(block_identifier=block_identifier)
 
     def add_liquidity(self, cred:Credentials, token_a:address, token_b:address, amount_a_desired:uint256, amount_b_desired:uint256, amount_a_min:uint256, amount_b_min:uint256, to:address, deadline:uint256) -> TxReceipt:
         tx = self.contract.functions.addLiquidity(token_a, token_b, amount_a_desired, amount_b_desired, amount_a_min, amount_b_min, to, deadline)
@@ -54,23 +54,23 @@ class UniswapV2Router(ABIContractWrapper):
         tx = self.contract.functions.addLiquidityETH(token, amount_token_desired, amount_token_min, amount_eth_min, to, deadline)
         return self.send_transaction(tx, cred)
 
-    def factory(self) -> address:
-        return self.contract.functions.factory().call()
+    def factory(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.factory().call(block_identifier=block_identifier)
 
-    def get_amount_in(self, amount_out:uint256, reserve_in:uint256, reserve_out:uint256) -> uint256:
-        return self.contract.functions.getAmountIn(amount_out, reserve_in, reserve_out).call()
+    def get_amount_in(self, amount_out:uint256, reserve_in:uint256, reserve_out:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getAmountIn(amount_out, reserve_in, reserve_out).call(block_identifier=block_identifier)
 
-    def get_amount_out(self, amount_in:uint256, reserve_in:uint256, reserve_out:uint256) -> uint256:
-        return self.contract.functions.getAmountOut(amount_in, reserve_in, reserve_out).call()
+    def get_amount_out(self, amount_in:uint256, reserve_in:uint256, reserve_out:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getAmountOut(amount_in, reserve_in, reserve_out).call(block_identifier=block_identifier)
 
-    def get_amounts_in(self, amount_out:uint256, path:Sequence[address]) -> List[uint256]:
-        return self.contract.functions.getAmountsIn(amount_out, path).call()
+    def get_amounts_in(self, amount_out:uint256, path:Sequence[address], block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getAmountsIn(amount_out, path).call(block_identifier=block_identifier)
 
-    def get_amounts_out(self, amount_in:uint256, path:Sequence[address]) -> List[uint256]:
-        return self.contract.functions.getAmountsOut(amount_in, path).call()
+    def get_amounts_out(self, amount_in:uint256, path:Sequence[address], block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getAmountsOut(amount_in, path).call(block_identifier=block_identifier)
 
-    def quote(self, amount_a:uint256, reserve_a:uint256, reserve_b:uint256) -> uint256:
-        return self.contract.functions.quote(amount_a, reserve_a, reserve_b).call()
+    def quote(self, amount_a:uint256, reserve_a:uint256, reserve_b:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.quote(amount_a, reserve_a, reserve_b).call(block_identifier=block_identifier)
 
     def remove_liquidity(self, cred:Credentials, token_a:address, token_b:address, liquidity:uint256, amount_a_min:uint256, amount_b_min:uint256, to:address, deadline:uint256) -> TxReceipt:
         tx = self.contract.functions.removeLiquidity(token_a, token_b, liquidity, amount_a_min, amount_b_min, to, deadline)

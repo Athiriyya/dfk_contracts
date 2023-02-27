@@ -35,29 +35,29 @@ class ItemGoldTraderV2(ABIContractWrapper):
         tx = self.contract.functions.addTradeItem(_item_address, _buy_price, _sell_price)
         return self.send_transaction(tx, cred)
 
-    def address_to_trade_item_id(self, a:address) -> uint256:
-        return self.contract.functions.addressToTradeItemId(a).call()
+    def address_to_trade_item_id(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.addressToTradeItemId(a).call(block_identifier=block_identifier)
 
     def buy_item(self, cred:Credentials, _item_address:address, _quantity:uint256) -> TxReceipt:
         tx = self.contract.functions.buyItem(_item_address, _quantity)
         return self.send_transaction(tx, cred)
 
-    def get_trade_items(self) -> List[tuple]:
-        return self.contract.functions.getTradeItems().call()
+    def get_trade_items(self, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getTradeItems().call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _dfk_gold_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_dfk_gold_address)
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
     def sell_item(self, cred:Credentials, _item_address:address, _quantity:uint256) -> TxReceipt:
         tx = self.contract.functions.sellItem(_item_address, _quantity)
         return self.send_transaction(tx, cred)
 
-    def trade_items(self, a:uint256) -> Tuple[uint256, address, uint256, uint256, uint8]:
-        return self.contract.functions.tradeItems(a).call()
+    def trade_items(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, uint256, uint256, uint8]:
+        return self.contract.functions.tradeItems(a).call(block_identifier=block_identifier)
 
     def update_trade_item(self, cred:Credentials, _item_address:address, _buy_price:uint256, _sell_price:uint256, _status:uint8) -> TxReceipt:
         tx = self.contract.functions.updateTradeItem(_item_address, _buy_price, _sell_price, _status)

@@ -72,8 +72,8 @@ class HeroSummoning(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def active_enhancement_stones(self, a:address) -> bool:
-        return self.contract.functions.activeEnhancementStones(a).call()
+    def active_enhancement_stones(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.activeEnhancementStones(a).call(block_identifier=block_identifier)
 
     def add_enhancement_stone(self, cred:Credentials, _address:address) -> TxReceipt:
         tx = self.contract.functions.addEnhancementStone(_address)
@@ -83,45 +83,45 @@ class HeroSummoning(ABIContractWrapper):
         tx = self.contract.functions.approveAuctionSpending(_address, _amount)
         return self.send_transaction(tx, cred)
 
-    def base_cooldown(self) -> uint256:
-        return self.contract.functions.baseCooldown().call()
+    def base_cooldown(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.baseCooldown().call(block_identifier=block_identifier)
 
-    def base_summon_fee(self) -> uint256:
-        return self.contract.functions.baseSummonFee().call()
+    def base_summon_fee(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.baseSummonFee().call(block_identifier=block_identifier)
 
-    def calculate_summoning_cost(self, _hero:tuple) -> uint256:
-        return self.contract.functions.calculateSummoningCost(_hero).call()
+    def calculate_summoning_cost(self, _hero:tuple, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.calculateSummoningCost(_hero).call(block_identifier=block_identifier)
 
-    def cooldown_per_gen(self) -> uint256:
-        return self.contract.functions.cooldownPerGen().call()
+    def cooldown_per_gen(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.cooldownPerGen().call(block_identifier=block_identifier)
 
-    def fee_addresses(self, a:uint256) -> address:
-        return self.contract.functions.feeAddresses(a).call()
+    def fee_addresses(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.feeAddresses(a).call(block_identifier=block_identifier)
 
-    def fee_percents(self, a:uint256) -> uint256:
-        return self.contract.functions.feePercents(a).call()
+    def fee_percents(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.feePercents(a).call(block_identifier=block_identifier)
 
-    def increase_per_gen(self) -> uint256:
-        return self.contract.functions.increasePerGen().call()
+    def increase_per_gen(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.increasePerGen().call(block_identifier=block_identifier)
 
-    def increase_per_summon(self) -> uint256:
-        return self.contract.functions.increasePerSummon().call()
+    def increase_per_summon(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.increasePerSummon().call(block_identifier=block_identifier)
 
-    def last_locked_summon(self, a:address) -> uint256:
-        return self.contract.functions.lastLockedSummon(a).call()
+    def last_locked_summon(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lastLockedSummon(a).call(block_identifier=block_identifier)
 
-    def locked_summon_cooldown(self) -> uint256:
-        return self.contract.functions.lockedSummonCooldown().call()
+    def locked_summon_cooldown(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockedSummonCooldown().call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def power_token(self) -> address:
-        return self.contract.functions.powerToken().call()
+    def power_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.powerToken().call(block_identifier=block_identifier)
 
     def remove_enhancement_stone(self, cred:Credentials, _address:address) -> TxReceipt:
         tx = self.contract.functions.removeEnhancementStone(_address)
@@ -179,8 +179,8 @@ class HeroSummoning(ABIContractWrapper):
         tx = self.contract.functions.summonCrystalWithLocked(_summoner_id, _assistant_id, _summoner_tears, _assistant_tears, _enhancement_stone)
         return self.send_transaction(tx, cred)
 
-    def supports_interface(self, interface_id:bytes4) -> bool:
-        return self.contract.functions.supportsInterface(interface_id).call()
+    def supports_interface(self, interface_id:bytes4, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.supportsInterface(interface_id).call(block_identifier=block_identifier)
 
     def unpause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unpause()

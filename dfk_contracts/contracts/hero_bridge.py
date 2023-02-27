@@ -66,31 +66,31 @@ class HeroBridge(ABIContractWrapper):
         tx = self.contract.functions.upgradeToAndCall(new_implementation, data)
         return self.send_transaction(tx, cred)
 
-    def assisting_auction(self) -> address:
-        return self.contract.functions.assistingAuction().call()
+    def assisting_auction(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.assistingAuction().call(block_identifier=block_identifier)
 
     def execute_message(self, cred:Credentials, _src_address:bytes32, _src_chain_id:uint256, _message:bytes, _executor:address) -> TxReceipt:
         tx = self.contract.functions.executeMessage(_src_address, _src_chain_id, _message, _executor)
         return self.send_transaction(tx, cred)
 
-    def get_trusted_remote(self, _chain_id:uint256) -> bytes32:
-        return self.contract.functions.getTrustedRemote(_chain_id).call()
+    def get_trusted_remote(self, _chain_id:uint256, block_identifier:BlockIdentifier = 'latest') -> bytes32:
+        return self.contract.functions.getTrustedRemote(_chain_id).call(block_identifier=block_identifier)
 
-    def heroes(self) -> address:
-        return self.contract.functions.heroes().call()
+    def heroes(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.heroes().call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _message_bus:address, _heroes:address, _assisting_auction:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_message_bus, _heroes, _assisting_auction)
         return self.send_transaction(tx, cred)
 
-    def message_bus(self) -> address:
-        return self.contract.functions.messageBus().call()
+    def message_bus(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.messageBus().call(block_identifier=block_identifier)
 
-    def msg_gas_limit(self) -> uint256:
-        return self.contract.functions.msgGasLimit().call()
+    def msg_gas_limit(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.msgGasLimit().call(block_identifier=block_identifier)
 
-    def owner(self) -> address:
-        return self.contract.functions.owner().call()
+    def owner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.owner().call(block_identifier=block_identifier)
 
     def renounce_ownership(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.renounceOwnership()

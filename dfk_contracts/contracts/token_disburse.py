@@ -43,27 +43,27 @@ class TokenDisburse(ABIContractWrapper):
         tx = self.contract.functions.claim(_amount)
         return self.send_transaction(tx, cred)
 
-    def disbursements(self, a:uint256) -> Tuple[uint256, address, string, uint256, uint256, uint256, uint64, uint64, uint64]:
-        return self.contract.functions.disbursements(a).call()
+    def disbursements(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, string, uint256, uint256, uint256, uint64, uint64, uint64]:
+        return self.contract.functions.disbursements(a).call(block_identifier=block_identifier)
 
-    def get_disbursement_ids(self, _recipient:address) -> List[uint256]:
-        return self.contract.functions.getDisbursementIds(_recipient).call()
+    def get_disbursement_ids(self, _recipient:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getDisbursementIds(_recipient).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _token_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_token_address)
         return self.send_transaction(tx, cred)
 
-    def reserved_token(self) -> uint256:
-        return self.contract.functions.reservedToken().call()
+    def reserved_token(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.reservedToken().call(block_identifier=block_identifier)
 
-    def total_claimed(self, _recipient:address) -> uint256:
-        return self.contract.functions.totalClaimed(_recipient).call()
+    def total_claimed(self, _recipient:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalClaimed(_recipient).call(block_identifier=block_identifier)
 
-    def total_unvested(self, _recipient:address) -> uint256:
-        return self.contract.functions.totalUnvested(_recipient).call()
+    def total_unvested(self, _recipient:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalUnvested(_recipient).call(block_identifier=block_identifier)
 
-    def total_vested(self, _recipient:address) -> uint256:
-        return self.contract.functions.totalVested(_recipient).call()
+    def total_vested(self, _recipient:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalVested(_recipient).call(block_identifier=block_identifier)
 
     def update_disbursement(self, cred:Credentials, _disbursement_id:uint256, _reduction:uint256, _start_time:uint64, _duration:uint64) -> TxReceipt:
         tx = self.contract.functions.updateDisbursement(_disbursement_id, _reduction, _start_time, _duration)

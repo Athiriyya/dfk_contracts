@@ -51,17 +51,17 @@ class HeroAuction(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def erc721(self) -> address:
-        return self.contract.functions.ERC721().call()
+    def erc721(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.ERC721().call(block_identifier=block_identifier)
 
-    def assisting_auction(self) -> address:
-        return self.contract.functions.assistingAuction().call()
+    def assisting_auction(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.assistingAuction().call(block_identifier=block_identifier)
 
-    def auction_id_offset(self) -> uint256:
-        return self.contract.functions.auctionIdOffset().call()
+    def auction_id_offset(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.auctionIdOffset().call(block_identifier=block_identifier)
 
-    def auctions(self, a:uint256) -> Tuple[address, uint256, uint128, uint128, uint64, uint64, address, bool]:
-        return self.contract.functions.auctions(a).call()
+    def auctions(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, uint256, uint128, uint128, uint64, uint64, address, bool]:
+        return self.contract.functions.auctions(a).call(block_identifier=block_identifier)
 
     def bid(self, cred:Credentials, _token_id:uint256, _bid_amount:uint256) -> TxReceipt:
         tx = self.contract.functions.bid(_token_id, _bid_amount)
@@ -83,46 +83,46 @@ class HeroAuction(ABIContractWrapper):
         tx = self.contract.functions.createAuction(_token_id, _starting_price, _ending_price, _duration, _winner)
         return self.send_transaction(tx, cred)
 
-    def fee_addresses(self, a:uint256) -> address:
-        return self.contract.functions.feeAddresses(a).call()
+    def fee_addresses(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.feeAddresses(a).call(block_identifier=block_identifier)
 
-    def fee_percents(self, a:uint256) -> uint256:
-        return self.contract.functions.feePercents(a).call()
+    def fee_percents(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.feePercents(a).call(block_identifier=block_identifier)
 
-    def get_auction(self, _token_id:uint256) -> tuple:
-        return self.contract.functions.getAuction(_token_id).call()
+    def get_auction(self, _token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getAuction(_token_id).call(block_identifier=block_identifier)
 
-    def get_auctions(self, _token_ids:Sequence[uint256]) -> List[tuple]:
-        return self.contract.functions.getAuctions(_token_ids).call()
+    def get_auctions(self, _token_ids:Sequence[uint256], block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getAuctions(_token_ids).call(block_identifier=block_identifier)
 
-    def get_current_price(self, _token_id:uint256) -> uint256:
-        return self.contract.functions.getCurrentPrice(_token_id).call()
+    def get_current_price(self, _token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getCurrentPrice(_token_id).call(block_identifier=block_identifier)
 
-    def get_user_auctions(self, _address:address) -> List[uint256]:
-        return self.contract.functions.getUserAuctions(_address).call()
+    def get_user_auctions(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getUserAuctions(_address).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _hero_core_address:address, _crystal_address:address, _cut:uint256, _assisting_auction_address:address, _auction_id_offset:uint256) -> TxReceipt:
         tx = self.contract.functions.initialize(_hero_core_address, _crystal_address, _cut, _assisting_auction_address, _auction_id_offset)
         return self.send_transaction(tx, cred)
 
-    def is_on_auction(self, _token_id:uint256) -> bool:
-        return self.contract.functions.isOnAuction(_token_id).call()
+    def is_on_auction(self, _token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isOnAuction(_token_id).call(block_identifier=block_identifier)
 
-    def on_erc721_received(self, a:address, b:address, c:uint256, d:bytes) -> bytes4:
-        return self.contract.functions.onERC721Received(a, b, c, d).call()
+    def on_erc721_received(self, a:address, b:address, c:uint256, d:bytes, block_identifier:BlockIdentifier = 'latest') -> bytes4:
+        return self.contract.functions.onERC721Received(a, b, c, d).call(block_identifier=block_identifier)
 
-    def owner_cut(self) -> uint256:
-        return self.contract.functions.ownerCut().call()
+    def owner_cut(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.ownerCut().call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def power_token(self) -> address:
-        return self.contract.functions.powerToken().call()
+    def power_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.powerToken().call(block_identifier=block_identifier)
 
     def set_auction_id_offset(self, cred:Credentials, _auction_id_offset:uint256) -> TxReceipt:
         tx = self.contract.functions.setAuctionIDOffset(_auction_id_offset)
@@ -136,12 +136,12 @@ class HeroAuction(ABIContractWrapper):
         tx = self.contract.functions.setFees(_fee_addresses, _fee_percents)
         return self.send_transaction(tx, cred)
 
-    def total_auctions(self) -> uint256:
-        return self.contract.functions.totalAuctions().call()
+    def total_auctions(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalAuctions().call(block_identifier=block_identifier)
 
     def unpause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unpause()
         return self.send_transaction(tx, cred)
 
-    def user_auctions(self, a:address, b:uint256) -> uint256:
-        return self.contract.functions.userAuctions(a, b).call()
+    def user_auctions(self, a:address, b:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.userAuctions(a, b).call(block_identifier=block_identifier)

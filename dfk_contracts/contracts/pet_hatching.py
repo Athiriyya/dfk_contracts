@@ -66,20 +66,20 @@ class PetHatching(ABIContractWrapper):
         tx = self.contract.functions.crack(_egg_id)
         return self.send_transaction(tx, cred)
 
-    def egg_type_costs(self, a:uint256) -> Tuple[address, address, uint16, address, uint16]:
-        return self.contract.functions.eggTypeCosts(a).call()
+    def egg_type_costs(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, address, uint16, address, uint16]:
+        return self.contract.functions.eggTypeCosts(a).call(block_identifier=block_identifier)
 
-    def fee_addresses(self, a:uint256) -> address:
-        return self.contract.functions.feeAddresses(a).call()
+    def fee_addresses(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.feeAddresses(a).call(block_identifier=block_identifier)
 
-    def fee_percents(self, a:uint256) -> uint256:
-        return self.contract.functions.feePercents(a).call()
+    def fee_percents(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.feePercents(a).call(block_identifier=block_identifier)
 
-    def get_egg(self, _egg_id:uint256) -> tuple:
-        return self.contract.functions.getEgg(_egg_id).call()
+    def get_egg(self, _egg_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getEgg(_egg_id).call(block_identifier=block_identifier)
 
-    def get_user_eggs(self, _address:address) -> List[uint256]:
-        return self.contract.functions.getUserEggs(_address).call()
+    def get_user_eggs(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getUserEggs(_address).call(block_identifier=block_identifier)
 
     def incubate_egg(self, cred:Credentials, _egg_type:uint8, _tier:uint8) -> TxReceipt:
         tx = self.contract.functions.incubateEgg(_egg_type, _tier)
@@ -93,24 +93,24 @@ class PetHatching(ABIContractWrapper):
         tx = self.contract.functions.initialize(_pet_core_address, _power_token_address, _gold_address, _gaia_tears_address, _random_generator_address)
         return self.send_transaction(tx, cred)
 
-    def origin_id(self) -> uint8:
-        return self.contract.functions.originId().call()
+    def origin_id(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.originId().call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def power_token(self) -> address:
-        return self.contract.functions.powerToken().call()
+    def power_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.powerToken().call(block_identifier=block_identifier)
 
-    def price_tiers(self, a:uint256) -> Tuple[uint8, uint16, uint8, uint32, uint16]:
-        return self.contract.functions.priceTiers(a).call()
+    def price_tiers(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint8, uint16, uint8, uint32, uint16]:
+        return self.contract.functions.priceTiers(a).call(block_identifier=block_identifier)
 
-    def season(self) -> uint8:
-        return self.contract.functions.season().call()
+    def season(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.season().call(block_identifier=block_identifier)
 
     def set_appearance_choices(self, cred:Credentials, _egg_type:uint8, _rarity:uint8, _is_special:uint8, _start_index:uint256, _end_index:uint256) -> TxReceipt:
         tx = self.contract.functions.setAppearanceChoices(_egg_type, _rarity, _is_special, _start_index, _end_index)
@@ -140,11 +140,11 @@ class PetHatching(ABIContractWrapper):
         tx = self.contract.functions.setTokenUnlocker(_token_unlocker_address)
         return self.send_transaction(tx, cred)
 
-    def supports_interface(self, interface_id:bytes4) -> bool:
-        return self.contract.functions.supportsInterface(interface_id).call()
+    def supports_interface(self, interface_id:bytes4, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.supportsInterface(interface_id).call(block_identifier=block_identifier)
 
-    def total_eggs(self) -> uint256:
-        return self.contract.functions.totalEggs().call()
+    def total_eggs(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalEggs().call(block_identifier=block_identifier)
 
     def unpause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unpause()

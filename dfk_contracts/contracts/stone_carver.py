@@ -45,38 +45,38 @@ class StoneCarver(ABIContractWrapper):
         tx = self.contract.functions.adminSetupShop()
         return self.send_transaction(tx, cred)
 
-    def away_until(self) -> uint256:
-        return self.contract.functions.awayUntil().call()
+    def away_until(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.awayUntil().call(block_identifier=block_identifier)
 
     def carve_stone(self, cred:Credentials, _stone_address:address, _quantity:uint256) -> TxReceipt:
         tx = self.contract.functions.carveStone(_stone_address, _quantity)
         return self.send_transaction(tx, cred)
 
-    def get_availability(self) -> Tuple[uint256, uint256]:
-        return self.contract.functions.getAvailability().call()
+    def get_availability(self, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256]:
+        return self.contract.functions.getAvailability().call(block_identifier=block_identifier)
 
-    def get_recipe(self, stone_address:address) -> tuple:
-        return self.contract.functions.getRecipe(stone_address).call()
+    def get_recipe(self, stone_address:address, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getRecipe(stone_address).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.initialize()
         return self.send_transaction(tx, cred)
 
-    def min_closed_time(self) -> uint256:
-        return self.contract.functions.minClosedTime().call()
+    def min_closed_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.minClosedTime().call(block_identifier=block_identifier)
 
-    def min_open_time(self) -> uint256:
-        return self.contract.functions.minOpenTime().call()
+    def min_open_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.minOpenTime().call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def recipes(self, a:address) -> bool:
-        return self.contract.functions.recipes(a).call()
+    def recipes(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.recipes(a).call(block_identifier=block_identifier)
 
     def set_recipe(self, cred:Credentials, _stone_address:address, _required_resources:Sequence[address], _required_quantities:Sequence[uint32], _active:bool) -> TxReceipt:
         tx = self.contract.functions.setRecipe(_stone_address, _required_resources, _required_quantities, _active)
@@ -94,11 +94,11 @@ class StoneCarver(ABIContractWrapper):
         tx = self.contract.functions.unpause()
         return self.send_transaction(tx, cred)
 
-    def var_closed_time(self) -> uint256:
-        return self.contract.functions.varClosedTime().call()
+    def var_closed_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.varClosedTime().call(block_identifier=block_identifier)
 
-    def var_open_time(self) -> uint256:
-        return self.contract.functions.varOpenTime().call()
+    def var_open_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.varOpenTime().call(block_identifier=block_identifier)
 
-    def working_until(self) -> uint256:
-        return self.contract.functions.workingUntil().call()
+    def working_until(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.workingUntil().call(block_identifier=block_identifier)

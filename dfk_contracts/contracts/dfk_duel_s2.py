@@ -144,124 +144,124 @@ class DFKDuelS2(ABIContractWrapper):
         tx = self.contract.functions.completeDuel(_duel_id)
         return self.send_transaction(tx, cred)
 
-    def get_current_class_bonuses(self) -> List[List[uint8]]:
-        return self.contract.functions.getCurrentClassBonuses().call()
+    def get_current_class_bonuses(self, block_identifier:BlockIdentifier = 'latest') -> List[List[uint8]]:
+        return self.contract.functions.getCurrentClassBonuses().call(block_identifier=block_identifier)
 
     def complete_duel_admin(self, cred:Credentials, _duel_id:uint256) -> TxReceipt:
         tx = self.contract.functions.completeDuelAdmin(_duel_id)
         return self.send_transaction(tx, cred)
 
-    def get_key_exists(self, _type:uint256, _key:uint256, _value:uint256) -> bool:
-        return self.contract.functions.getKeyExists(_type, _key, _value).call()
+    def get_key_exists(self, _type:uint256, _key:uint256, _value:uint256, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.getKeyExists(_type, _key, _value).call(block_identifier=block_identifier)
 
     def enter_duel_lobby(self, cred:Credentials, _type:uint256, _hero_ids:Sequence[uint256], _token_fee:uint256, _background:uint8, _stat:uint8) -> TxReceipt:
         tx = self.contract.functions.enterDuelLobby(_type, _hero_ids, _token_fee, _background, _stat)
         return self.send_transaction(tx, cred)
 
-    def get_active_duels(self, _address:address) -> List[tuple]:
-        return self.contract.functions.getActiveDuels(_address).call()
+    def get_active_duels(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getActiveDuels(_address).call(block_identifier=block_identifier)
 
-    def get_challenges(self, _profile:address) -> List[tuple]:
-        return self.contract.functions.getChallenges(_profile).call()
+    def get_challenges(self, _profile:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getChallenges(_profile).call(block_identifier=block_identifier)
 
-    def get_current_hero_score_duel_id(self, _hero_id:uint256) -> uint256:
-        return self.contract.functions.getCurrentHeroScoreDuelId(_hero_id).call()
+    def get_current_hero_score_duel_id(self, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getCurrentHeroScoreDuelId(_hero_id).call(block_identifier=block_identifier)
 
-    def get_duel(self, _id:uint256) -> tuple:
-        return self.contract.functions.getDuel(_id).call()
+    def get_duel(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getDuel(_id).call(block_identifier=block_identifier)
 
-    def get_duel_entry(self, _id:uint256) -> tuple:
-        return self.contract.functions.getDuelEntry(_id).call()
+    def get_duel_entry(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getDuelEntry(_id).call(block_identifier=block_identifier)
 
-    def get_duel_history(self, _profile:address) -> List[tuple]:
-        return self.contract.functions.getDuelHistory(_profile).call()
+    def get_duel_history(self, _profile:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getDuelHistory(_profile).call(block_identifier=block_identifier)
 
-    def get_duel_index_p1(self, _duel_id:uint256) -> uint256:
-        return self.contract.functions.getDuelIndexP1(_duel_id).call()
+    def get_duel_index_p1(self, _duel_id:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getDuelIndexP1(_duel_id).call(block_identifier=block_identifier)
 
-    def get_duel_rewards(self, _id:uint256) -> List[tuple]:
-        return self.contract.functions.getDuelRewards(_id).call()
+    def get_duel_rewards(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getDuelRewards(_id).call(block_identifier=block_identifier)
 
-    def get_duel_turns(self, _id:uint256) -> List[tuple]:
-        return self.contract.functions.getDuelTurns(_id).call()
+    def get_duel_turns(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getDuelTurns(_id).call(block_identifier=block_identifier)
 
-    def get_hero_duel(self, _hero_id:uint256) -> tuple:
-        return self.contract.functions.getHeroDuel(_hero_id).call()
+    def get_hero_duel(self, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getHeroDuel(_hero_id).call(block_identifier=block_identifier)
 
-    def get_hero_duel_count_for_day(self, _hero_ids:Sequence[uint256], _duel_type:uint256) -> List[uint256]:
-        return self.contract.functions.getHeroDuelCountForDay(_hero_ids, _duel_type).call()
+    def get_hero_duel_count_for_day(self, _hero_ids:Sequence[uint256], _duel_type:uint256, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getHeroDuelCountForDay(_hero_ids, _duel_type).call(block_identifier=block_identifier)
 
-    def get_hero_duel_entry(self, _hero_id:uint256) -> tuple:
-        return self.contract.functions.getHeroDuelEntry(_hero_id).call()
+    def get_hero_duel_entry(self, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getHeroDuelEntry(_hero_id).call(block_identifier=block_identifier)
 
-    def get_hero_last_time_played(self, _hero_id:uint256) -> uint256:
-        return self.contract.functions.getHeroLastTimePlayed(_hero_id).call()
+    def get_hero_last_time_played(self, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getHeroLastTimePlayed(_hero_id).call(block_identifier=block_identifier)
 
-    def get_highest_score(self, _type:uint256) -> uint64:
-        return self.contract.functions.getHighestScore(_type).call()
+    def get_highest_score(self, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> uint64:
+        return self.contract.functions.getHighestScore(_type).call(block_identifier=block_identifier)
 
-    def get_num_ranks(self, _type:uint256) -> uint256:
-        return self.contract.functions.getNumRanks(_type).call()
+    def get_num_ranks(self, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getNumRanks(_type).call(block_identifier=block_identifier)
 
-    def get_player_duel_entries(self, _profile:address) -> List[tuple]:
-        return self.contract.functions.getPlayerDuelEntries(_profile).call()
+    def get_player_duel_entries(self, _profile:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getPlayerDuelEntries(_profile).call(block_identifier=block_identifier)
 
-    def get_player_rank(self, _profile:address, _type:uint256) -> uint256:
-        return self.contract.functions.getPlayerRank(_profile, _type).call()
+    def get_player_rank(self, _profile:address, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getPlayerRank(_profile, _type).call(block_identifier=block_identifier)
 
-    def get_player_score(self, _profile:address, _type:uint256) -> uint64:
-        return self.contract.functions.getPlayerScore(_profile, _type).call()
+    def get_player_score(self, _profile:address, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> uint64:
+        return self.contract.functions.getPlayerScore(_profile, _type).call(block_identifier=block_identifier)
 
-    def get_practice_entry(self, _type:uint256, _rank:uint8) -> tuple:
-        return self.contract.functions.getPracticeEntry(_type, _rank).call()
+    def get_practice_entry(self, _type:uint256, _rank:uint8, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getPracticeEntry(_type, _rank).call(block_identifier=block_identifier)
 
-    def get_rank_levels(self, _type:uint256) -> List[uint16]:
-        return self.contract.functions.getRankLevels(_type).call()
+    def get_rank_levels(self, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> List[uint16]:
+        return self.contract.functions.getRankLevels(_type).call(block_identifier=block_identifier)
 
-    def get_season_info(self) -> Tuple[uint256, uint256]:
-        return self.contract.functions.getSeasonInfo().call()
+    def get_season_info(self, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256]:
+        return self.contract.functions.getSeasonInfo().call(block_identifier=block_identifier)
 
-    def get_total_duel_entries(self) -> uint256:
-        return self.contract.functions.getTotalDuelEntries().call()
+    def get_total_duel_entries(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getTotalDuelEntries().call(block_identifier=block_identifier)
 
-    def get_total_duels(self) -> uint256:
-        return self.contract.functions.getTotalDuels().call()
+    def get_total_duels(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getTotalDuels().call(block_identifier=block_identifier)
 
-    def get_total_open_duel_entries(self, _lobby:uint256) -> uint256:
-        return self.contract.functions.getTotalOpenDuelEntries(_lobby).call()
+    def get_total_open_duel_entries(self, _lobby:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getTotalOpenDuelEntries(_lobby).call(block_identifier=block_identifier)
 
-    def get_total_player_duels(self, _profile:address, _type:uint256) -> uint64:
-        return self.contract.functions.getTotalPlayerDuels(_profile, _type).call()
+    def get_total_player_duels(self, _profile:address, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> uint64:
+        return self.contract.functions.getTotalPlayerDuels(_profile, _type).call(block_identifier=block_identifier)
 
-    def get_total_player_wins(self, _profile:address, _type:uint256) -> uint64:
-        return self.contract.functions.getTotalPlayerWins(_profile, _type).call()
+    def get_total_player_wins(self, _profile:address, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> uint64:
+        return self.contract.functions.getTotalPlayerWins(_profile, _type).call(block_identifier=block_identifier)
 
-    def get_win_streaks(self, _player:address, _type:uint256) -> uint256:
-        return self.contract.functions.getWinStreaks(_player, _type).call()
+    def get_win_streaks(self, _player:address, _type:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getWinStreaks(_player, _type).call(block_identifier=block_identifier)
 
-    def get_duel_entry_match(self, _id:uint256, _random_distance:uint256) -> tuple:
-        return self.contract.functions.getDuelEntryMatch(_id, _random_distance).call()
+    def get_duel_entry_match(self, _id:uint256, _random_distance:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getDuelEntryMatch(_id, _random_distance).call(block_identifier=block_identifier)
 
-    def get_first_open_entry(self, _lobby:uint256) -> tuple:
-        return self.contract.functions.getFirstOpenEntry(_lobby).call()
+    def get_first_open_entry(self, _lobby:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getFirstOpenEntry(_lobby).call(block_identifier=block_identifier)
 
-    def get_next_duel_entry_match(self, _id:uint256) -> tuple:
-        return self.contract.functions.getNextDuelEntryMatch(_id).call()
+    def get_next_duel_entry_match(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getNextDuelEntryMatch(_id).call(block_identifier=block_identifier)
 
-    def get_prev_duel_entry_match(self, _id:uint256) -> tuple:
-        return self.contract.functions.getPrevDuelEntryMatch(_id).call()
+    def get_prev_duel_entry_match(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getPrevDuelEntryMatch(_id).call(block_identifier=block_identifier)
 
-    def get_tree_node(self, _type:uint256, _value:uint256) -> Tuple[uint256, uint256, uint256, bool, uint256, uint256]:
-        return self.contract.functions.getTreeNode(_type, _value).call()
+    def get_tree_node(self, _type:uint256, _value:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256, uint256, bool, uint256, uint256]:
+        return self.contract.functions.getTreeNode(_type, _value).call(block_identifier=block_identifier)
 
-    def get_tree_prev(self, _type:uint256, _key:uint256, _value:uint256) -> tuple:
-        return self.contract.functions.getTreePrev(_type, _key, _value).call()
+    def get_tree_prev(self, _type:uint256, _key:uint256, _value:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getTreePrev(_type, _key, _value).call(block_identifier=block_identifier)
 
-    def get_tree_value(self, _type:uint256, _value:uint256, _index:uint256) -> uint256:
-        return self.contract.functions.getTreeValue(_type, _value, _index).call()
+    def get_tree_value(self, _type:uint256, _value:uint256, _index:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getTreeValue(_type, _value, _index).call(block_identifier=block_identifier)
 
-    def get_tree_value_index(self, _type:uint256, _key:uint256, _value:uint256) -> uint256:
-        return self.contract.functions.getTreeValueIndex(_type, _key, _value).call()
+    def get_tree_value_index(self, _type:uint256, _key:uint256, _value:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getTreeValueIndex(_type, _key, _value).call(block_identifier=block_identifier)
 
     def match_duel_entry(self, cred:Credentials, _duel_entry1_id:uint256, _duel_entry2_id:uint256) -> TxReceipt:
         tx = self.contract.functions.matchDuelEntry(_duel_entry1_id, _duel_entry2_id)

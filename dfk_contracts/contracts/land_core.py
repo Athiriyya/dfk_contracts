@@ -59,59 +59,59 @@ class LandCore(ABIContractWrapper):
         tx = self.contract.functions.approve(to, token_id)
         return self.send_transaction(tx, cred)
 
-    def balance_of(self, owner:address) -> uint256:
-        return self.contract.functions.balanceOf(owner).call()
+    def balance_of(self, owner:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.balanceOf(owner).call(block_identifier=block_identifier)
 
     def claim_land(self, cred:Credentials, _to:address, _token_id:uint256) -> TxReceipt:
         tx = self.contract.functions.claimLand(_to, _token_id)
         return self.send_transaction(tx, cred)
 
-    def get_account_lands(self, _account:address) -> List[tuple]:
-        return self.contract.functions.getAccountLands(_account).call()
+    def get_account_lands(self, _account:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getAccountLands(_account).call(block_identifier=block_identifier)
 
-    def get_all_lands(self) -> List[tuple]:
-        return self.contract.functions.getAllLands().call()
+    def get_all_lands(self, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getAllLands().call(block_identifier=block_identifier)
 
-    def get_approved(self, token_id:uint256) -> address:
-        return self.contract.functions.getApproved(token_id).call()
+    def get_approved(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.getApproved(token_id).call(block_identifier=block_identifier)
 
-    def get_land(self, _land_id:uint256) -> tuple:
-        return self.contract.functions.getLand(_land_id).call()
+    def get_land(self, _land_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getLand(_land_id).call(block_identifier=block_identifier)
 
-    def get_lands_by_region(self, _region:uint32) -> List[tuple]:
-        return self.contract.functions.getLandsByRegion(_region).call()
+    def get_lands_by_region(self, _region:uint32, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getLandsByRegion(_region).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.initialize()
         return self.send_transaction(tx, cred)
 
-    def is_approved_for_all(self, owner:address, operator:address) -> bool:
-        return self.contract.functions.isApprovedForAll(owner, operator).call()
+    def is_approved_for_all(self, owner:address, operator:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isApprovedForAll(owner, operator).call(block_identifier=block_identifier)
 
-    def land_id_to_meta(self, a:uint256) -> Tuple[uint256, string, address, uint256, uint8, uint256, uint64]:
-        return self.contract.functions.landIdToMeta(a).call()
+    def land_id_to_meta(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, string, address, uint256, uint8, uint256, uint64]:
+        return self.contract.functions.landIdToMeta(a).call(block_identifier=block_identifier)
 
-    def name(self) -> string:
-        return self.contract.functions.name().call()
+    def name(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.name().call(block_identifier=block_identifier)
 
-    def on_erc721_received(self, a:address, b:address, c:uint256, d:bytes) -> bytes4:
-        return self.contract.functions.onERC721Received(a, b, c, d).call()
+    def on_erc721_received(self, a:address, b:address, c:uint256, d:bytes, block_identifier:BlockIdentifier = 'latest') -> bytes4:
+        return self.contract.functions.onERC721Received(a, b, c, d).call(block_identifier=block_identifier)
 
-    def owner_of(self, token_id:uint256) -> address:
-        return self.contract.functions.ownerOf(token_id).call()
+    def owner_of(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.ownerOf(token_id).call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def region_to_land_count(self, a:uint256) -> uint256:
-        return self.contract.functions.regionToLandCount(a).call()
+    def region_to_land_count(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.regionToLandCount(a).call(block_identifier=block_identifier)
 
-    def region_to_lands(self, a:uint256, b:uint256) -> uint256:
-        return self.contract.functions.regionToLands(a, b).call()
+    def region_to_lands(self, a:uint256, b:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.regionToLands(a, b).call(block_identifier=block_identifier)
 
     def safe_mint(self, cred:Credentials, _owner:address, _land_id:uint256, _name:string, _region:uint32) -> TxReceipt:
         tx = self.contract.functions.safeMint(_owner, _land_id, _name, _region)
@@ -129,20 +129,20 @@ class LandCore(ABIContractWrapper):
         tx = self.contract.functions.setApprovalForAll(operator, approved)
         return self.send_transaction(tx, cred)
 
-    def symbol(self) -> string:
-        return self.contract.functions.symbol().call()
+    def symbol(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.symbol().call(block_identifier=block_identifier)
 
-    def token_by_index(self, index:uint256) -> uint256:
-        return self.contract.functions.tokenByIndex(index).call()
+    def token_by_index(self, index:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.tokenByIndex(index).call(block_identifier=block_identifier)
 
-    def token_of_owner_by_index(self, owner:address, index:uint256) -> uint256:
-        return self.contract.functions.tokenOfOwnerByIndex(owner, index).call()
+    def token_of_owner_by_index(self, owner:address, index:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.tokenOfOwnerByIndex(owner, index).call(block_identifier=block_identifier)
 
-    def token_uri(self, token_id:uint256) -> string:
-        return self.contract.functions.tokenURI(token_id).call()
+    def token_uri(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.tokenURI(token_id).call(block_identifier=block_identifier)
 
-    def total_supply(self) -> uint256:
-        return self.contract.functions.totalSupply().call()
+    def total_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalSupply().call(block_identifier=block_identifier)
 
     def transfer_from(self, cred:Credentials, _from:address, to:address, token_id:uint256) -> TxReceipt:
         tx = self.contract.functions.transferFrom(_from, to, token_id)

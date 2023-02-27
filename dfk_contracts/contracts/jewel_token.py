@@ -84,47 +84,47 @@ class JewelToken(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def delegation_typehash(self) -> bytes32:
-        return self.contract.functions.DELEGATION_TYPEHASH().call()
+    def delegation_typehash(self, block_identifier:BlockIdentifier = 'latest') -> bytes32:
+        return self.contract.functions.DELEGATION_TYPEHASH().call(block_identifier=block_identifier)
 
-    def domain_typehash(self) -> bytes32:
-        return self.contract.functions.DOMAIN_TYPEHASH().call()
+    def domain_typehash(self, block_identifier:BlockIdentifier = 'latest') -> bytes32:
+        return self.contract.functions.DOMAIN_TYPEHASH().call(block_identifier=block_identifier)
 
     def add_authorized(self, cred:Credentials, _to_add:address) -> TxReceipt:
         tx = self.contract.functions.addAuthorized(_to_add)
         return self.send_transaction(tx, cred)
 
-    def allowance(self, owner:address, spender:address) -> uint256:
-        return self.contract.functions.allowance(owner, spender).call()
+    def allowance(self, owner:address, spender:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.allowance(owner, spender).call(block_identifier=block_identifier)
 
     def approve(self, cred:Credentials, spender:address, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.approve(spender, amount)
         return self.send_transaction(tx, cred)
 
-    def authorized(self, a:address) -> bool:
-        return self.contract.functions.authorized(a).call()
+    def authorized(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.authorized(a).call(block_identifier=block_identifier)
 
-    def balance_of(self, account:address) -> uint256:
-        return self.contract.functions.balanceOf(account).call()
+    def balance_of(self, account:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.balanceOf(account).call(block_identifier=block_identifier)
 
-    def can_unlock_amount(self, _holder:address) -> uint256:
-        return self.contract.functions.canUnlockAmount(_holder).call()
+    def can_unlock_amount(self, _holder:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.canUnlockAmount(_holder).call(block_identifier=block_identifier)
 
-    def cap(self) -> uint256:
-        return self.contract.functions.cap().call()
+    def cap(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.cap().call(block_identifier=block_identifier)
 
     def cap_update(self, cred:Credentials, _new_cap:uint256) -> TxReceipt:
         tx = self.contract.functions.capUpdate(_new_cap)
         return self.send_transaction(tx, cred)
 
-    def checkpoints(self, a:address, b:uint32) -> Tuple[uint32, uint256]:
-        return self.contract.functions.checkpoints(a, b).call()
+    def checkpoints(self, a:address, b:uint32, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint32, uint256]:
+        return self.contract.functions.checkpoints(a, b).call(block_identifier=block_identifier)
 
-    def circulating_supply(self) -> uint256:
-        return self.contract.functions.circulatingSupply().call()
+    def circulating_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.circulatingSupply().call(block_identifier=block_identifier)
 
-    def decimals(self) -> uint8:
-        return self.contract.functions.decimals().call()
+    def decimals(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.decimals().call(block_identifier=block_identifier)
 
     def decrease_allowance(self, cred:Credentials, spender:address, subtracted_value:uint256) -> TxReceipt:
         tx = self.contract.functions.decreaseAllowance(spender, subtracted_value)
@@ -138,86 +138,86 @@ class JewelToken(ABIContractWrapper):
         tx = self.contract.functions.delegateBySig(delegatee, nonce, expiry, v, r, s)
         return self.send_transaction(tx, cred)
 
-    def delegates(self, delegator:address) -> address:
-        return self.contract.functions.delegates(delegator).call()
+    def delegates(self, delegator:address, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.delegates(delegator).call(block_identifier=block_identifier)
 
-    def get_current_votes(self, account:address) -> uint256:
-        return self.contract.functions.getCurrentVotes(account).call()
+    def get_current_votes(self, account:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getCurrentVotes(account).call(block_identifier=block_identifier)
 
-    def get_prior_votes(self, account:address, block_number:uint256) -> uint256:
-        return self.contract.functions.getPriorVotes(account, block_number).call()
+    def get_prior_votes(self, account:address, block_number:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getPriorVotes(account, block_number).call(block_identifier=block_identifier)
 
     def increase_allowance(self, cred:Credentials, spender:address, added_value:uint256) -> TxReceipt:
         tx = self.contract.functions.increaseAllowance(spender, added_value)
         return self.send_transaction(tx, cred)
 
-    def last_unlock_block(self, _holder:address) -> uint256:
-        return self.contract.functions.lastUnlockBlock(_holder).call()
+    def last_unlock_block(self, _holder:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lastUnlockBlock(_holder).call(block_identifier=block_identifier)
 
     def lock(self, cred:Credentials, _holder:address, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.lock(_holder, _amount)
         return self.send_transaction(tx, cred)
 
-    def lock_from_block(self) -> uint256:
-        return self.contract.functions.lockFromBlock().call()
+    def lock_from_block(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockFromBlock().call(block_identifier=block_identifier)
 
     def lock_from_update(self, cred:Credentials, _new_lock_from:uint256) -> TxReceipt:
         tx = self.contract.functions.lockFromUpdate(_new_lock_from)
         return self.send_transaction(tx, cred)
 
-    def lock_of(self, _holder:address) -> uint256:
-        return self.contract.functions.lockOf(_holder).call()
+    def lock_of(self, _holder:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockOf(_holder).call(block_identifier=block_identifier)
 
-    def lock_to_block(self) -> uint256:
-        return self.contract.functions.lockToBlock().call()
+    def lock_to_block(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockToBlock().call(block_identifier=block_identifier)
 
     def lock_to_update(self, cred:Credentials, _new_lock_to:uint256) -> TxReceipt:
         tx = self.contract.functions.lockToUpdate(_new_lock_to)
         return self.send_transaction(tx, cred)
 
-    def locked_supply(self) -> uint256:
-        return self.contract.functions.lockedSupply().call()
+    def locked_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockedSupply().call(block_identifier=block_identifier)
 
     def manual_mint(self, cred:Credentials, _to:address, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.manualMint(_to, _amount)
         return self.send_transaction(tx, cred)
 
-    def manual_mint_limit(self) -> uint256:
-        return self.contract.functions.manualMintLimit().call()
+    def manual_mint_limit(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.manualMintLimit().call(block_identifier=block_identifier)
 
-    def manual_minted(self) -> uint256:
-        return self.contract.functions.manualMinted().call()
+    def manual_minted(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.manualMinted().call(block_identifier=block_identifier)
 
-    def max_transfer_amount(self) -> uint256:
-        return self.contract.functions.maxTransferAmount().call()
+    def max_transfer_amount(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.maxTransferAmount().call(block_identifier=block_identifier)
 
-    def max_transfer_amount_rate(self) -> uint16:
-        return self.contract.functions.maxTransferAmountRate().call()
+    def max_transfer_amount_rate(self, block_identifier:BlockIdentifier = 'latest') -> uint16:
+        return self.contract.functions.maxTransferAmountRate().call(block_identifier=block_identifier)
 
-    def miner(self) -> address:
-        return self.contract.functions.miner().call()
+    def miner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.miner().call(block_identifier=block_identifier)
 
     def mint(self, cred:Credentials, _to:address, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.mint(_to, _amount)
         return self.send_transaction(tx, cred)
 
-    def name(self) -> string:
-        return self.contract.functions.name().call()
+    def name(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.name().call(block_identifier=block_identifier)
 
-    def nonces(self, a:address) -> uint256:
-        return self.contract.functions.nonces(a).call()
+    def nonces(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.nonces(a).call(block_identifier=block_identifier)
 
-    def num_checkpoints(self, a:address) -> uint32:
-        return self.contract.functions.numCheckpoints(a).call()
+    def num_checkpoints(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint32:
+        return self.contract.functions.numCheckpoints(a).call(block_identifier=block_identifier)
 
-    def owner(self) -> address:
-        return self.contract.functions.owner().call()
+    def owner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.owner().call(block_identifier=block_identifier)
 
-    def profile_age_req(self) -> uint64:
-        return self.contract.functions.profileAgeReq().call()
+    def profile_age_req(self, block_identifier:BlockIdentifier = 'latest') -> uint64:
+        return self.contract.functions.profileAgeReq().call(block_identifier=block_identifier)
 
-    def profiles_contract(self) -> address:
-        return self.contract.functions.profilesContract().call()
+    def profiles_contract(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.profilesContract().call(block_identifier=block_identifier)
 
     def remove_authorized(self, cred:Credentials, _to_remove:address) -> TxReceipt:
         tx = self.contract.functions.removeAuthorized(_to_remove)
@@ -239,17 +239,17 @@ class JewelToken(ABIContractWrapper):
         tx = self.contract.functions.setProfiles(_profiles_address)
         return self.send_transaction(tx, cred)
 
-    def symbol(self) -> string:
-        return self.contract.functions.symbol().call()
+    def symbol(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.symbol().call(block_identifier=block_identifier)
 
-    def total_balance_of(self, _holder:address) -> uint256:
-        return self.contract.functions.totalBalanceOf(_holder).call()
+    def total_balance_of(self, _holder:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalBalanceOf(_holder).call(block_identifier=block_identifier)
 
-    def total_lock(self) -> uint256:
-        return self.contract.functions.totalLock().call()
+    def total_lock(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalLock().call(block_identifier=block_identifier)
 
-    def total_supply(self) -> uint256:
-        return self.contract.functions.totalSupply().call()
+    def total_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalSupply().call(block_identifier=block_identifier)
 
     def transfer(self, cred:Credentials, recipient:address, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.transfer(recipient, amount)
@@ -275,8 +275,8 @@ class JewelToken(ABIContractWrapper):
         tx = self.contract.functions.unlockForUser(account, amount)
         return self.send_transaction(tx, cred)
 
-    def unlocked_supply(self) -> uint256:
-        return self.contract.functions.unlockedSupply().call()
+    def unlocked_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.unlockedSupply().call(block_identifier=block_identifier)
 
     def update_max_transfer_amount_rate(self, cred:Credentials, _max_transfer_amount_rate:uint16) -> TxReceipt:
         tx = self.contract.functions.updateMaxTransferAmountRate(_max_transfer_amount_rate)

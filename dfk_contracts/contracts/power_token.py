@@ -72,30 +72,30 @@ class PowerToken(ABIContractWrapper):
         tx = self.contract.functions.addAuthorized(_to_add)
         return self.send_transaction(tx, cred)
 
-    def allowance(self, owner:address, spender:address) -> uint256:
-        return self.contract.functions.allowance(owner, spender).call()
+    def allowance(self, owner:address, spender:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.allowance(owner, spender).call(block_identifier=block_identifier)
 
     def approve(self, cred:Credentials, spender:address, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.approve(spender, amount)
         return self.send_transaction(tx, cred)
 
-    def authorized(self, a:address) -> bool:
-        return self.contract.functions.authorized(a).call()
+    def authorized(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.authorized(a).call(block_identifier=block_identifier)
 
-    def balance_of(self, account:address) -> uint256:
-        return self.contract.functions.balanceOf(account).call()
+    def balance_of(self, account:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.balanceOf(account).call(block_identifier=block_identifier)
 
-    def can_unlock_amount(self, _holder:address) -> uint256:
-        return self.contract.functions.canUnlockAmount(_holder).call()
+    def can_unlock_amount(self, _holder:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.canUnlockAmount(_holder).call(block_identifier=block_identifier)
 
-    def cap(self) -> uint256:
-        return self.contract.functions.cap().call()
+    def cap(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.cap().call(block_identifier=block_identifier)
 
-    def circulating_supply(self) -> uint256:
-        return self.contract.functions.circulatingSupply().call()
+    def circulating_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.circulatingSupply().call(block_identifier=block_identifier)
 
-    def decimals(self) -> uint8:
-        return self.contract.functions.decimals().call()
+    def decimals(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.decimals().call(block_identifier=block_identifier)
 
     def decrease_allowance(self, cred:Credentials, spender:address, subtracted_value:uint256) -> TxReceipt:
         tx = self.contract.functions.decreaseAllowance(spender, subtracted_value)
@@ -105,25 +105,25 @@ class PowerToken(ABIContractWrapper):
         tx = self.contract.functions.increaseAllowance(spender, added_value)
         return self.send_transaction(tx, cred)
 
-    def last_unlock_time(self, a:address) -> uint256:
-        return self.contract.functions.lastUnlockTime(a).call()
+    def last_unlock_time(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lastUnlockTime(a).call(block_identifier=block_identifier)
 
     def lock(self, cred:Credentials, _holder:address, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.lock(_holder, _amount)
         return self.send_transaction(tx, cred)
 
-    def lock_from_time(self) -> uint256:
-        return self.contract.functions.lockFromTime().call()
+    def lock_from_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockFromTime().call(block_identifier=block_identifier)
 
     def lock_from_update(self, cred:Credentials, _lock_from_time:uint256) -> TxReceipt:
         tx = self.contract.functions.lockFromUpdate(_lock_from_time)
         return self.send_transaction(tx, cred)
 
-    def lock_of(self, _holder:address) -> uint256:
-        return self.contract.functions.lockOf(_holder).call()
+    def lock_of(self, _holder:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockOf(_holder).call(block_identifier=block_identifier)
 
-    def lock_to_time(self) -> uint256:
-        return self.contract.functions.lockToTime().call()
+    def lock_to_time(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.lockToTime().call(block_identifier=block_identifier)
 
     def lock_to_update(self, cred:Credentials, _lock_to_time:uint256) -> TxReceipt:
         tx = self.contract.functions.lockToUpdate(_lock_to_time)
@@ -133,27 +133,27 @@ class PowerToken(ABIContractWrapper):
         tx = self.contract.functions.manualMint(_to, _amount)
         return self.send_transaction(tx, cred)
 
-    def manual_mint_limit(self) -> uint256:
-        return self.contract.functions.manualMintLimit().call()
+    def manual_mint_limit(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.manualMintLimit().call(block_identifier=block_identifier)
 
-    def manual_minted(self) -> uint256:
-        return self.contract.functions.manualMinted().call()
+    def manual_minted(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.manualMinted().call(block_identifier=block_identifier)
 
-    def max_transfer_amount(self) -> uint256:
-        return self.contract.functions.maxTransferAmount().call()
+    def max_transfer_amount(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.maxTransferAmount().call(block_identifier=block_identifier)
 
-    def max_transfer_amount_rate(self) -> uint16:
-        return self.contract.functions.maxTransferAmountRate().call()
+    def max_transfer_amount_rate(self, block_identifier:BlockIdentifier = 'latest') -> uint16:
+        return self.contract.functions.maxTransferAmountRate().call(block_identifier=block_identifier)
 
     def mint(self, cred:Credentials, _to:address, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.mint(_to, _amount)
         return self.send_transaction(tx, cred)
 
-    def name(self) -> string:
-        return self.contract.functions.name().call()
+    def name(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.name().call(block_identifier=block_identifier)
 
-    def owner(self) -> address:
-        return self.contract.functions.owner().call()
+    def owner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.owner().call(block_identifier=block_identifier)
 
     def remove_authorized(self, cred:Credentials, _to_remove:address) -> TxReceipt:
         tx = self.contract.functions.removeAuthorized(_to_remove)
@@ -167,17 +167,17 @@ class PowerToken(ABIContractWrapper):
         tx = self.contract.functions.setExcludedFromAntiWhale(_account, _excluded)
         return self.send_transaction(tx, cred)
 
-    def symbol(self) -> string:
-        return self.contract.functions.symbol().call()
+    def symbol(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.symbol().call(block_identifier=block_identifier)
 
-    def total_balance_of(self, _holder:address) -> uint256:
-        return self.contract.functions.totalBalanceOf(_holder).call()
+    def total_balance_of(self, _holder:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalBalanceOf(_holder).call(block_identifier=block_identifier)
 
-    def total_lock(self) -> uint256:
-        return self.contract.functions.totalLock().call()
+    def total_lock(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalLock().call(block_identifier=block_identifier)
 
-    def total_supply(self) -> uint256:
-        return self.contract.functions.totalSupply().call()
+    def total_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalSupply().call(block_identifier=block_identifier)
 
     def transfer(self, cred:Credentials, to:address, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.transfer(to, amount)
@@ -187,15 +187,15 @@ class PowerToken(ABIContractWrapper):
         tx = self.contract.functions.transferAll(_to)
         return self.send_transaction(tx, cred)
 
-    def transfer_all_interval(self) -> uint256:
-        return self.contract.functions.transferAllInterval().call()
+    def transfer_all_interval(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.transferAllInterval().call(block_identifier=block_identifier)
 
     def transfer_all_interval_update(self, cred:Credentials, _transfer_all_interval:uint256) -> TxReceipt:
         tx = self.contract.functions.transferAllIntervalUpdate(_transfer_all_interval)
         return self.send_transaction(tx, cred)
 
-    def transfer_all_tracker(self, a:address) -> uint256:
-        return self.contract.functions.transferAllTracker(a).call()
+    def transfer_all_tracker(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.transferAllTracker(a).call(block_identifier=block_identifier)
 
     def transfer_from(self, cred:Credentials, _from:address, to:address, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.transferFrom(_from, to, amount)
@@ -213,8 +213,8 @@ class PowerToken(ABIContractWrapper):
         tx = self.contract.functions.unlockForUser(account, amount)
         return self.send_transaction(tx, cred)
 
-    def unlocked_supply(self) -> uint256:
-        return self.contract.functions.unlockedSupply().call()
+    def unlocked_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.unlockedSupply().call(block_identifier=block_identifier)
 
     def update_max_transfer_amount_rate(self, cred:Credentials, _max_transfer_amount_rate:uint16) -> TxReceipt:
         tx = self.contract.functions.updateMaxTransferAmountRate(_max_transfer_amount_rate)

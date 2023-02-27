@@ -49,27 +49,27 @@ class DuelRankClaim(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def _calculate_rank_id(self, _season:uint256, _duel_type:uint256, _rank:uint256) -> uint256:
-        return self.contract.functions._calculateRankId(_season, _duel_type, _rank).call()
+    def _calculate_rank_id(self, _season:uint256, _duel_type:uint256, _rank:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions._calculateRankId(_season, _duel_type, _rank).call(block_identifier=block_identifier)
 
     def claim_reward(self, cred:Credentials, _season:uint256, _duel_type:uint256, _rank:uint256) -> TxReceipt:
         tx = self.contract.functions.claimReward(_season, _duel_type, _rank)
         return self.send_transaction(tx, cred)
 
-    def get_claimed_ranks(self, _season:uint256, _duel_type:uint256, _user:address) -> List[uint256]:
-        return self.contract.functions.getClaimedRanks(_season, _duel_type, _user).call()
+    def get_claimed_ranks(self, _season:uint256, _duel_type:uint256, _user:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getClaimedRanks(_season, _duel_type, _user).call(block_identifier=block_identifier)
 
-    def get_rewards(self, _season:uint256, _duel_type:uint256, _rank:uint256) -> List[tuple]:
-        return self.contract.functions.getRewards(_season, _duel_type, _rank).call()
+    def get_rewards(self, _season:uint256, _duel_type:uint256, _rank:uint256, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getRewards(_season, _duel_type, _rank).call(block_identifier=block_identifier)
 
-    def get_rewards_for_season_and_duel_type(self, _season:uint256, _duel_type:uint256) -> List[List[tuple]]:
-        return self.contract.functions.getRewardsForSeasonAndDuelType(_season, _duel_type).call()
+    def get_rewards_for_season_and_duel_type(self, _season:uint256, _duel_type:uint256, block_identifier:BlockIdentifier = 'latest') -> List[List[tuple]]:
+        return self.contract.functions.getRewardsForSeasonAndDuelType(_season, _duel_type).call(block_identifier=block_identifier)
 
-    def get_season_info(self, _player:address, _season:uint256, _duel_type:uint256) -> Tuple[uint64, uint256, List[uint16], List[uint256], List[List[tuple]], uint256, uint256]:
-        return self.contract.functions.getSeasonInfo(_player, _season, _duel_type).call()
+    def get_season_info(self, _player:address, _season:uint256, _duel_type:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint64, uint256, List[uint16], List[uint256], List[List[tuple]], uint256, uint256]:
+        return self.contract.functions.getSeasonInfo(_player, _season, _duel_type).call(block_identifier=block_identifier)
 
-    def get_season_rank_requirements(self, _season:uint256, _duel_type:uint256) -> List[uint16]:
-        return self.contract.functions.getSeasonRankRequirements(_season, _duel_type).call()
+    def get_season_rank_requirements(self, _season:uint256, _duel_type:uint256, block_identifier:BlockIdentifier = 'latest') -> List[uint16]:
+        return self.contract.functions.getSeasonRankRequirements(_season, _duel_type).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _item_minter:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_item_minter)
@@ -79,11 +79,11 @@ class DuelRankClaim(ABIContractWrapper):
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def rank_rewards(self, a:uint256, b:uint256) -> Tuple[address, uint256]:
-        return self.contract.functions.rankRewards(a, b).call()
+    def rank_rewards(self, a:uint256, b:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, uint256]:
+        return self.contract.functions.rankRewards(a, b).call(block_identifier=block_identifier)
 
     def set_duel_contract(self, cred:Credentials, _season:uint256, _duel_contract:address) -> TxReceipt:
         tx = self.contract.functions.setDuelContract(_season, _duel_contract)
@@ -97,12 +97,12 @@ class DuelRankClaim(ABIContractWrapper):
         tx = self.contract.functions.setRankRewards(_season, _duel_type, _rank, _token_addresses, _amounts)
         return self.send_transaction(tx, cred)
 
-    def supports_interface(self, interface_id:bytes4) -> bool:
-        return self.contract.functions.supportsInterface(interface_id).call()
+    def supports_interface(self, interface_id:bytes4, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.supportsInterface(interface_id).call(block_identifier=block_identifier)
 
     def unpause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unpause()
         return self.send_transaction(tx, cred)
 
-    def user_rank_claims(self, a:uint256, b:address) -> uint256:
-        return self.contract.functions.userRankClaims(a, b).call()
+    def user_rank_claims(self, a:uint256, b:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.userRankClaims(a, b).call(block_identifier=block_identifier)

@@ -54,21 +54,21 @@ class PetCore(ABIContractWrapper):
         tx = self.contract.functions.approve(to, token_id)
         return self.send_transaction(tx, cred)
 
-    def balance_of(self, owner:address) -> uint256:
-        return self.contract.functions.balanceOf(owner).call()
+    def balance_of(self, owner:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.balanceOf(owner).call(block_identifier=block_identifier)
 
     def bridge_mint(self, cred:Credentials, _id:uint256, _to:address) -> TxReceipt:
         tx = self.contract.functions.bridgeMint(_id, _to)
         return self.send_transaction(tx, cred)
 
-    def get_approved(self, token_id:uint256) -> address:
-        return self.contract.functions.getApproved(token_id).call()
+    def get_approved(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.getApproved(token_id).call(block_identifier=block_identifier)
 
-    def get_pet(self, _id:uint256) -> tuple:
-        return self.contract.functions.getPet(_id).call()
+    def get_pet(self, _id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getPet(_id).call(block_identifier=block_identifier)
 
-    def get_user_pets(self, _address:address) -> List[tuple]:
-        return self.contract.functions.getUserPets(_address).call()
+    def get_user_pets(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getUserPets(_address).call(block_identifier=block_identifier)
 
     def hatch_pet(self, cred:Credentials, _pet_options:tuple, owner:address) -> TxReceipt:
         tx = self.contract.functions.hatchPet(_pet_options, owner)
@@ -78,24 +78,24 @@ class PetCore(ABIContractWrapper):
         tx = self.contract.functions.initialize(_name, _symbol)
         return self.send_transaction(tx, cred)
 
-    def is_approved_for_all(self, owner:address, operator:address) -> bool:
-        return self.contract.functions.isApprovedForAll(owner, operator).call()
+    def is_approved_for_all(self, owner:address, operator:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isApprovedForAll(owner, operator).call(block_identifier=block_identifier)
 
-    def name(self) -> string:
-        return self.contract.functions.name().call()
+    def name(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.name().call(block_identifier=block_identifier)
 
-    def next_pet_id(self) -> uint256:
-        return self.contract.functions.nextPetId().call()
+    def next_pet_id(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.nextPetId().call(block_identifier=block_identifier)
 
-    def owner_of(self, token_id:uint256) -> address:
-        return self.contract.functions.ownerOf(token_id).call()
+    def owner_of(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.ownerOf(token_id).call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
     def safe_transfer_from(self, cred:Credentials, _from:address, to:address, token_id:uint256) -> TxReceipt:
         tx = self.contract.functions.safeTransferFrom(_from, to, token_id)
@@ -109,20 +109,20 @@ class PetCore(ABIContractWrapper):
         tx = self.contract.functions.setApprovalForAll(operator, approved)
         return self.send_transaction(tx, cred)
 
-    def symbol(self) -> string:
-        return self.contract.functions.symbol().call()
+    def symbol(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.symbol().call(block_identifier=block_identifier)
 
-    def token_by_index(self, index:uint256) -> uint256:
-        return self.contract.functions.tokenByIndex(index).call()
+    def token_by_index(self, index:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.tokenByIndex(index).call(block_identifier=block_identifier)
 
-    def token_of_owner_by_index(self, owner:address, index:uint256) -> uint256:
-        return self.contract.functions.tokenOfOwnerByIndex(owner, index).call()
+    def token_of_owner_by_index(self, owner:address, index:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.tokenOfOwnerByIndex(owner, index).call(block_identifier=block_identifier)
 
-    def token_uri(self, token_id:uint256) -> string:
-        return self.contract.functions.tokenURI(token_id).call()
+    def token_uri(self, token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.tokenURI(token_id).call(block_identifier=block_identifier)
 
-    def total_supply(self) -> uint256:
-        return self.contract.functions.totalSupply().call()
+    def total_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalSupply().call(block_identifier=block_identifier)
 
     def transfer_from(self, cred:Credentials, _from:address, to:address, token_id:uint256) -> TxReceipt:
         tx = self.contract.functions.transferFrom(_from, to, token_id)

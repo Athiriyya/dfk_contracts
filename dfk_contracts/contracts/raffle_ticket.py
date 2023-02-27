@@ -43,15 +43,15 @@ class RaffleTicket(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def allowance(self, owner:address, spender:address) -> uint256:
-        return self.contract.functions.allowance(owner, spender).call()
+    def allowance(self, owner:address, spender:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.allowance(owner, spender).call(block_identifier=block_identifier)
 
     def approve(self, cred:Credentials, spender:address, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.approve(spender, amount)
         return self.send_transaction(tx, cred)
 
-    def balance_of(self, account:address) -> uint256:
-        return self.contract.functions.balanceOf(account).call()
+    def balance_of(self, account:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.balanceOf(account).call(block_identifier=block_identifier)
 
     def burn(self, cred:Credentials, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.burn(amount)
@@ -61,11 +61,11 @@ class RaffleTicket(ABIContractWrapper):
         tx = self.contract.functions.burnFrom(account, amount)
         return self.send_transaction(tx, cred)
 
-    def burnable(self) -> bool:
-        return self.contract.functions.burnable().call()
+    def burnable(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.burnable().call(block_identifier=block_identifier)
 
-    def decimals(self) -> uint8:
-        return self.contract.functions.decimals().call()
+    def decimals(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.decimals().call(block_identifier=block_identifier)
 
     def decrease_allowance(self, cred:Credentials, spender:address, subtracted_value:uint256) -> TxReceipt:
         tx = self.contract.functions.decreaseAllowance(spender, subtracted_value)
@@ -83,18 +83,18 @@ class RaffleTicket(ABIContractWrapper):
         tx = self.contract.functions.mint(to, amount)
         return self.send_transaction(tx, cred)
 
-    def name(self) -> string:
-        return self.contract.functions.name().call()
+    def name(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.name().call(block_identifier=block_identifier)
 
     def pause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def symbol(self) -> string:
-        return self.contract.functions.symbol().call()
+    def symbol(self, block_identifier:BlockIdentifier = 'latest') -> string:
+        return self.contract.functions.symbol().call(block_identifier=block_identifier)
 
     def toggle_burnable(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.toggleBurnable()
@@ -104,8 +104,8 @@ class RaffleTicket(ABIContractWrapper):
         tx = self.contract.functions.togglePause()
         return self.send_transaction(tx, cred)
 
-    def total_supply(self) -> uint256:
-        return self.contract.functions.totalSupply().call()
+    def total_supply(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalSupply().call(block_identifier=block_identifier)
 
     def transfer(self, cred:Credentials, to:address, amount:uint256) -> TxReceipt:
         tx = self.contract.functions.transfer(to, amount)

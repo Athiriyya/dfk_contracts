@@ -41,17 +41,17 @@ class PetExchange(ABIContractWrapper):
         tx = self.contract.functions.completeExchange(_exchange_id)
         return self.send_transaction(tx, cred)
 
-    def eggs(self, a:uint256) -> address:
-        return self.contract.functions.eggs(a).call()
+    def eggs(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.eggs(a).call(block_identifier=block_identifier)
 
-    def get_pet_exchange(self, _exchange_id:uint256) -> tuple:
-        return self.contract.functions.getPetExchange(_exchange_id).call()
+    def get_pet_exchange(self, _exchange_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getPetExchange(_exchange_id).call(block_identifier=block_identifier)
 
-    def get_user_pet_exchanges(self, _address:address) -> List[tuple]:
-        return self.contract.functions.getUserPetExchanges(_address).call()
+    def get_user_pet_exchanges(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getUserPetExchanges(_address).call(block_identifier=block_identifier)
 
-    def id_to_pet_exchange(self, a:uint256) -> Tuple[uint256, address, uint256, uint256, uint256, uint256, uint8]:
-        return self.contract.functions.idToPetExchange(a).call()
+    def id_to_pet_exchange(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, uint256, uint256, uint256, uint256, uint8]:
+        return self.contract.functions.idToPetExchange(a).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _pet_core_address:address, _pasture_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_pet_core_address, _pasture_address)
@@ -61,11 +61,11 @@ class PetExchange(ABIContractWrapper):
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def profile_exchanged_pets(self, a:address, b:uint256) -> Tuple[uint256, address, uint256, uint256, uint256, uint256, uint8]:
-        return self.contract.functions.profileExchangedPets(a, b).call()
+    def profile_exchanged_pets(self, a:address, b:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, uint256, uint256, uint256, uint256, uint8]:
+        return self.contract.functions.profileExchangedPets(a, b).call(block_identifier=block_identifier)
 
     def set_egg(self, cred:Credentials, _index:uint8, _egg_address:address) -> TxReceipt:
         tx = self.contract.functions.setEgg(_index, _egg_address)
@@ -83,8 +83,8 @@ class PetExchange(ABIContractWrapper):
         tx = self.contract.functions.startExchange(_pet_id1, _pet_id2)
         return self.send_transaction(tx, cred)
 
-    def total_exchanges(self) -> uint256:
-        return self.contract.functions.totalExchanges().call()
+    def total_exchanges(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalExchanges().call(block_identifier=block_identifier)
 
     def unpause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unpause()

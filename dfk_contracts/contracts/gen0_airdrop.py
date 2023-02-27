@@ -34,20 +34,20 @@ class Gen0Airdrop(ABIContractWrapper):
         tx = self.contract.functions.airdropCrystal(_recipient)
         return self.send_transaction(tx, cred)
 
-    def crystals(self, a:uint256) -> Tuple[address, uint256, uint256, uint16, uint256, uint256, uint8, uint8, address, uint32, uint32, uint32, uint8]:
-        return self.contract.functions.crystals(a).call()
+    def crystals(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, uint256, uint256, uint16, uint256, uint256, uint8, uint8, address, uint32, uint32, uint32, uint8]:
+        return self.contract.functions.crystals(a).call(block_identifier=block_identifier)
 
-    def enabled(self) -> bool:
-        return self.contract.functions.enabled().call()
+    def enabled(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.enabled().call(block_identifier=block_identifier)
 
-    def extract_number(self, random_number:uint256, digits:uint256, offset:uint256) -> uint256:
-        return self.contract.functions.extractNumber(random_number, digits, offset).call()
+    def extract_number(self, random_number:uint256, digits:uint256, offset:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.extractNumber(random_number, digits, offset).call(block_identifier=block_identifier)
 
-    def get_crystal(self, _crystal_id:uint256) -> tuple:
-        return self.contract.functions.getCrystal(_crystal_id).call()
+    def get_crystal(self, _crystal_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getCrystal(_crystal_id).call(block_identifier=block_identifier)
 
-    def get_user_crystals(self, _address:address) -> List[uint256]:
-        return self.contract.functions.getUserCrystals(_address).call()
+    def get_user_crystals(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getUserCrystals(_address).call(block_identifier=block_identifier)
 
     def open(self, cred:Credentials, _crystal_id:uint256) -> TxReceipt:
         tx = self.contract.functions.open(_crystal_id)
@@ -57,8 +57,8 @@ class Gen0Airdrop(ABIContractWrapper):
         tx = self.contract.functions.toggleEnabled()
         return self.send_transaction(tx, cred)
 
-    def user_crystals(self, a:address, b:uint256) -> uint256:
-        return self.contract.functions.userCrystals(a, b).call()
+    def user_crystals(self, a:address, b:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.userCrystals(a, b).call(block_identifier=block_identifier)
 
-    def vrf(self, block_number:uint256) -> bytes32:
-        return self.contract.functions.vrf(block_number).call()
+    def vrf(self, block_number:uint256, block_identifier:BlockIdentifier = 'latest') -> bytes32:
+        return self.contract.functions.vrf(block_number).call(block_identifier=block_identifier)

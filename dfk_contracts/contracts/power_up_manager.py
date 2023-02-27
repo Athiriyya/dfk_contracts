@@ -70,8 +70,8 @@ class PowerUpManager(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def active_power_ups(self, a:uint256) -> uint256:
-        return self.contract.functions.activePowerUps(a).call()
+    def active_power_ups(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.activePowerUps(a).call(block_identifier=block_identifier)
 
     def add_power_up(self, cred:Credentials, _id:uint256, _name:string, _type:uint256, _tiers:uint256, _heroes_per_tier:uint256, _lock_time_required_to_acquire:uint256, _cancel_hold_delay:uint256, _gov_token_per_tier:Sequence[uint256]) -> TxReceipt:
         tx = self.contract.functions.addPowerUp(_id, _name, _type, _tiers, _heroes_per_tier, _lock_time_required_to_acquire, _cancel_hold_delay, _gov_token_per_tier)
@@ -101,23 +101,23 @@ class PowerUpManager(ABIContractWrapper):
         tx = self.contract.functions.emergencyCancelAll(_address)
         return self.send_transaction(tx, cred)
 
-    def get_active_power_ups(self) -> List[tuple]:
-        return self.contract.functions.getActivePowerUps().call()
+    def get_active_power_ups(self, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getActivePowerUps().call(block_identifier=block_identifier)
 
-    def get_assigned_hero_ids(self, _account:address, _power_up_id:uint256) -> List[uint256]:
-        return self.contract.functions.getAssignedHeroIds(_account, _power_up_id).call()
+    def get_assigned_hero_ids(self, _account:address, _power_up_id:uint256, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getAssignedHeroIds(_account, _power_up_id).call(block_identifier=block_identifier)
 
-    def get_assigned_heroes(self, _account:address, _power_up_id:uint256) -> List[tuple]:
-        return self.contract.functions.getAssignedHeroes(_account, _power_up_id).call()
+    def get_assigned_heroes(self, _account:address, _power_up_id:uint256, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getAssignedHeroes(_account, _power_up_id).call(block_identifier=block_identifier)
 
-    def get_power_up_hero_data(self, _power_up_id:uint256, _hero_id:uint256) -> tuple:
-        return self.contract.functions.getPowerUpHeroData(_power_up_id, _hero_id).call()
+    def get_power_up_hero_data(self, _power_up_id:uint256, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getPowerUpHeroData(_power_up_id, _hero_id).call(block_identifier=block_identifier)
 
-    def get_user_power_up_data(self, _address:address, _power_up_id:uint256) -> tuple:
-        return self.contract.functions.getUserPowerUpData(_address, _power_up_id).call()
+    def get_user_power_up_data(self, _address:address, _power_up_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getUserPowerUpData(_address, _power_up_id).call(block_identifier=block_identifier)
 
-    def get_user_power_up_data_for_active_power_ups(self, _address:address) -> Tuple[List[tuple], List[tuple]]:
-        return self.contract.functions.getUserPowerUpDataForActivePowerUps(_address).call()
+    def get_user_power_up_data_for_active_power_ups(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> Tuple[List[tuple], List[tuple]]:
+        return self.contract.functions.getUserPowerUpDataForActivePowerUps(_address).call(block_identifier=block_identifier)
 
     def increase_tier(self, cred:Credentials, _power_up_id:uint256, _tier:uint256) -> TxReceipt:
         tx = self.contract.functions.increaseTier(_power_up_id, _tier)
@@ -127,20 +127,20 @@ class PowerUpManager(ABIContractWrapper):
         tx = self.contract.functions.initialize(_vote_escrow_reward_pool_address, _hero_core_address, _quest_core_address)
         return self.send_transaction(tx, cred)
 
-    def is_hero_power_up_active(self, _user:address, _power_up_id:uint256, _hero_id:uint256) -> bool:
-        return self.contract.functions.isHeroPowerUpActive(_user, _power_up_id, _hero_id).call()
+    def is_hero_power_up_active(self, _user:address, _power_up_id:uint256, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isHeroPowerUpActive(_user, _power_up_id, _hero_id).call(block_identifier=block_identifier)
 
-    def is_user_power_up_active(self, _user:address, _power_up_id:uint256) -> bool:
-        return self.contract.functions.isUserPowerUpActive(_user, _power_up_id).call()
+    def is_user_power_up_active(self, _user:address, _power_up_id:uint256, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isUserPowerUpActive(_user, _power_up_id).call(block_identifier=block_identifier)
 
-    def power_up_hero_data(self, a:uint256, b:uint256) -> Tuple[uint256, uint256, uint256, address]:
-        return self.contract.functions.powerUpHeroData(a, b).call()
+    def power_up_hero_data(self, a:uint256, b:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256, uint256, address]:
+        return self.contract.functions.powerUpHeroData(a, b).call(block_identifier=block_identifier)
 
-    def power_up_heroes_assigned(self, a:address, b:uint256, c:uint256) -> uint256:
-        return self.contract.functions.powerUpHeroesAssigned(a, b, c).call()
+    def power_up_heroes_assigned(self, a:address, b:uint256, c:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.powerUpHeroesAssigned(a, b, c).call(block_identifier=block_identifier)
 
-    def power_ups(self, a:uint256) -> Tuple[uint256, string, uint256, uint256, uint256, uint256, uint256]:
-        return self.contract.functions.powerUps(a).call()
+    def power_ups(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, string, uint256, uint256, uint256, uint256, uint256]:
+        return self.contract.functions.powerUps(a).call(block_identifier=block_identifier)
 
     def remove_hero(self, cred:Credentials, _power_up_id:uint256, _hero_id:uint256) -> TxReceipt:
         tx = self.contract.functions.removeHero(_power_up_id, _hero_id)
@@ -162,11 +162,11 @@ class PowerUpManager(ABIContractWrapper):
         tx = self.contract.functions.subscribe(_power_up_id, _tier)
         return self.send_transaction(tx, cred)
 
-    def supports_interface(self, interface_id:bytes4) -> bool:
-        return self.contract.functions.supportsInterface(interface_id).call()
+    def supports_interface(self, interface_id:bytes4, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.supportsInterface(interface_id).call(block_identifier=block_identifier)
 
-    def user_power_up_data(self, a:address, b:uint256) -> Tuple[bool, bool, uint256, uint256, uint256, uint256, uint256, address]:
-        return self.contract.functions.userPowerUpData(a, b).call()
+    def user_power_up_data(self, a:address, b:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[bool, bool, uint256, uint256, uint256, uint256, uint256, address]:
+        return self.contract.functions.userPowerUpData(a, b).call(block_identifier=block_identifier)
 
     def verify_all_power_ups(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.verifyAllPowerUps()

@@ -42,15 +42,15 @@ class CharityFund(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def accepted(self, a:address) -> bool:
-        return self.contract.functions.accepted(a).call()
+    def accepted(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.accepted(a).call(block_identifier=block_identifier)
 
     def add_token(self, cred:Credentials, _token:address) -> TxReceipt:
         tx = self.contract.functions.addToken(_token)
         return self.send_transaction(tx, cred)
 
-    def campaign_id(self) -> uint8:
-        return self.contract.functions.campaignId().call()
+    def campaign_id(self, block_identifier:BlockIdentifier = 'latest') -> uint8:
+        return self.contract.functions.campaignId().call(block_identifier=block_identifier)
 
     def disable_token(self, cred:Credentials, _token:address) -> TxReceipt:
         tx = self.contract.functions.disableToken(_token)
@@ -64,25 +64,25 @@ class CharityFund(ABIContractWrapper):
         tx = self.contract.functions.donateToken(_token, _wei)
         return self.send_transaction(tx, cred)
 
-    def donation_totals(self, a:address) -> uint256:
-        return self.contract.functions.donationTotals(a).call()
+    def donation_totals(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.donationTotals(a).call(block_identifier=block_identifier)
 
     def enable_token(self, cred:Credentials, _token:address) -> TxReceipt:
         tx = self.contract.functions.enableToken(_token)
         return self.send_transaction(tx, cred)
 
-    def get_info(self) -> List[tuple]:
-        return self.contract.functions.getInfo().call()
+    def get_info(self, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getInfo().call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _multisig:address, _flag_storage_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_multisig, _flag_storage_address)
         return self.send_transaction(tx, cred)
 
-    def multisig(self) -> address:
-        return self.contract.functions.multisig().call()
+    def multisig(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.multisig().call(block_identifier=block_identifier)
 
-    def owner(self) -> address:
-        return self.contract.functions.owner().call()
+    def owner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.owner().call(block_identifier=block_identifier)
 
     def renounce_ownership(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.renounceOwnership()
@@ -92,8 +92,8 @@ class CharityFund(ABIContractWrapper):
         tx = self.contract.functions.setCampaignId(_campaign_id)
         return self.send_transaction(tx, cred)
 
-    def tokens(self, a:uint256) -> address:
-        return self.contract.functions.tokens(a).call()
+    def tokens(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.tokens(a).call(block_identifier=block_identifier)
 
     def transfer_ownership(self, cred:Credentials, new_owner:address) -> TxReceipt:
         tx = self.contract.functions.transferOwnership(new_owner)

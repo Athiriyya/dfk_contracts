@@ -44,8 +44,8 @@ class AssistingAuction(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def auction_hero_core(self) -> address:
-        return self.contract.functions.auctionHeroCore().call()
+    def auction_hero_core(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.auctionHeroCore().call(block_identifier=block_identifier)
 
     def bid(self, cred:Credentials, _token_id:uint256, _bid_amount:uint256) -> TxReceipt:
         tx = self.contract.functions.bid(_token_id, _bid_amount)
@@ -63,35 +63,35 @@ class AssistingAuction(ABIContractWrapper):
         tx = self.contract.functions.createAuction(_token_id, _starting_price, _ending_price, _duration, _winner)
         return self.send_transaction(tx, cred)
 
-    def get_auction(self, _token_id:uint256) -> Tuple[uint256, address, uint256, uint256, uint256, uint256]:
-        return self.contract.functions.getAuction(_token_id).call()
+    def get_auction(self, _token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, uint256, uint256, uint256, uint256]:
+        return self.contract.functions.getAuction(_token_id).call(block_identifier=block_identifier)
 
-    def get_current_price(self, _token_id:uint256) -> uint256:
-        return self.contract.functions.getCurrentPrice(_token_id).call()
+    def get_current_price(self, _token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getCurrentPrice(_token_id).call(block_identifier=block_identifier)
 
-    def get_user_auctions(self, _address:address) -> List[uint256]:
-        return self.contract.functions.getUserAuctions(_address).call()
+    def get_user_auctions(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getUserAuctions(_address).call(block_identifier=block_identifier)
 
-    def is_on_auction(self, _token_id:uint256) -> bool:
-        return self.contract.functions.isOnAuction(_token_id).call()
+    def is_on_auction(self, _token_id:uint256, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isOnAuction(_token_id).call(block_identifier=block_identifier)
 
-    def jewel_token(self) -> address:
-        return self.contract.functions.jewelToken().call()
+    def jewel_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.jewelToken().call(block_identifier=block_identifier)
 
-    def max_price(self) -> uint256:
-        return self.contract.functions.maxPrice().call()
+    def max_price(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.maxPrice().call(block_identifier=block_identifier)
 
-    def min_price(self) -> uint256:
-        return self.contract.functions.minPrice().call()
+    def min_price(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.minPrice().call(block_identifier=block_identifier)
 
-    def owner(self) -> address:
-        return self.contract.functions.owner().call()
+    def owner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.owner().call(block_identifier=block_identifier)
 
-    def owner_cut(self) -> uint256:
-        return self.contract.functions.ownerCut().call()
+    def owner_cut(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.ownerCut().call(block_identifier=block_identifier)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
     def renounce_ownership(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.renounceOwnership()
@@ -109,5 +109,5 @@ class AssistingAuction(ABIContractWrapper):
         tx = self.contract.functions.transferOwnership(new_owner)
         return self.send_transaction(tx, cred)
 
-    def user_auctions(self, a:address, b:uint256) -> uint256:
-        return self.contract.functions.userAuctions(a, b).call()
+    def user_auctions(self, a:address, b:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.userAuctions(a, b).call(block_identifier=block_identifier)

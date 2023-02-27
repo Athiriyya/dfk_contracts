@@ -89,35 +89,35 @@ class MasterGardener(ABIContractWrapper):
         contract_address = CONTRACT_ADDRESS[chain_key]
         super().__init__(contract_address=contract_address, abi=ABI, rpc=rpc)
 
-    def finish_bonus_at_timestamp(self) -> uint256:
-        return self.contract.functions.FINISH_BONUS_AT_TIMESTAMP().call()
+    def finish_bonus_at_timestamp(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.FINISH_BONUS_AT_TIMESTAMP().call(block_identifier=block_identifier)
 
-    def halving_at_timestamp(self, a:uint256) -> uint256:
-        return self.contract.functions.HALVING_AT_TIMESTAMP(a).call()
+    def halving_at_timestamp(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.HALVING_AT_TIMESTAMP(a).call(block_identifier=block_identifier)
 
-    def percent_for_com(self) -> uint256:
-        return self.contract.functions.PERCENT_FOR_COM().call()
+    def percent_for_com(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.PERCENT_FOR_COM().call(block_identifier=block_identifier)
 
-    def percent_for_dev(self) -> uint256:
-        return self.contract.functions.PERCENT_FOR_DEV().call()
+    def percent_for_dev(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.PERCENT_FOR_DEV().call(block_identifier=block_identifier)
 
-    def percent_for_founders(self) -> uint256:
-        return self.contract.functions.PERCENT_FOR_FOUNDERS().call()
+    def percent_for_founders(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.PERCENT_FOR_FOUNDERS().call(block_identifier=block_identifier)
 
-    def percent_for_lp(self) -> uint256:
-        return self.contract.functions.PERCENT_FOR_LP().call()
+    def percent_for_lp(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.PERCENT_FOR_LP().call(block_identifier=block_identifier)
 
-    def percent_lock_bonus_reward(self, a:uint256) -> uint256:
-        return self.contract.functions.PERCENT_LOCK_BONUS_REWARD(a).call()
+    def percent_lock_bonus_reward(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.PERCENT_LOCK_BONUS_REWARD(a).call(block_identifier=block_identifier)
 
-    def reward_multiplier(self, a:uint256) -> uint256:
-        return self.contract.functions.REWARD_MULTIPLIER(a).call()
+    def reward_multiplier(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.REWARD_MULTIPLIER(a).call(block_identifier=block_identifier)
 
-    def reward_per_second(self) -> uint256:
-        return self.contract.functions.REWARD_PER_SECOND().call()
+    def reward_per_second(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.REWARD_PER_SECOND().call(block_identifier=block_identifier)
 
-    def start_timestamp(self) -> uint256:
-        return self.contract.functions.START_TIMESTAMP().call()
+    def start_timestamp(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.START_TIMESTAMP().call(block_identifier=block_identifier)
 
     def add(self, cred:Credentials, _alloc_point:uint256, _lp_token:address, _with_update:bool) -> TxReceipt:
         tx = self.contract.functions.add(_alloc_point, _lp_token, _with_update)
@@ -127,8 +127,8 @@ class MasterGardener(ABIContractWrapper):
         tx = self.contract.functions.addAuthorized(_to_add)
         return self.send_transaction(tx, cred)
 
-    def authorized(self, a:address) -> bool:
-        return self.contract.functions.authorized(a).call()
+    def authorized(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.authorized(a).call(block_identifier=block_identifier)
 
     def bonus_finish_update(self, cred:Credentials, _new_finish:uint256) -> TxReceipt:
         tx = self.contract.functions.bonusFinishUpdate(_new_finish)
@@ -146,8 +146,8 @@ class MasterGardener(ABIContractWrapper):
         tx = self.contract.functions.comUpdate(_new_com)
         return self.send_transaction(tx, cred)
 
-    def comfundaddr(self) -> address:
-        return self.contract.functions.comfundaddr().call()
+    def comfundaddr(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.comfundaddr().call(block_identifier=block_identifier)
 
     def deposit(self, cred:Credentials, _pid:uint256, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.deposit(_pid, _amount)
@@ -157,11 +157,11 @@ class MasterGardener(ABIContractWrapper):
         tx = self.contract.functions.dev(_devaddr)
         return self.send_transaction(tx, cred)
 
-    def dev_fee_stage(self, a:uint256) -> uint256:
-        return self.contract.functions.devFeeStage(a).call()
+    def dev_fee_stage(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.devFeeStage(a).call(block_identifier=block_identifier)
 
-    def devaddr(self) -> address:
-        return self.contract.functions.devaddr().call()
+    def devaddr(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.devaddr().call(block_identifier=block_identifier)
 
     def emergency_withdraw(self, cred:Credentials, _pid:uint256) -> TxReceipt:
         tx = self.contract.functions.emergencyWithdraw(_pid)
@@ -171,30 +171,30 @@ class MasterGardener(ABIContractWrapper):
         tx = self.contract.functions.founderUpdate(_new_founder)
         return self.send_transaction(tx, cred)
 
-    def founderaddr(self) -> address:
-        return self.contract.functions.founderaddr().call()
+    def founderaddr(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.founderaddr().call(block_identifier=block_identifier)
 
-    def get_lock_percentage(self, _from:uint256, _to:uint256) -> uint256:
-        return self.contract.functions.getLockPercentage(_from, _to).call()
+    def get_lock_percentage(self, _from:uint256, _to:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getLockPercentage(_from, _to).call(block_identifier=block_identifier)
 
-    def get_multiplier(self, _from:uint256, _to:uint256) -> uint256:
-        return self.contract.functions.getMultiplier(_from, _to).call()
+    def get_multiplier(self, _from:uint256, _to:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getMultiplier(_from, _to).call(block_identifier=block_identifier)
 
-    def get_new_reward_per_second(self, pid1:uint256) -> uint256:
-        return self.contract.functions.getNewRewardPerSecond(pid1).call()
+    def get_new_reward_per_second(self, pid1:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getNewRewardPerSecond(pid1).call(block_identifier=block_identifier)
 
-    def get_pool_reward(self, _from:uint256, _to:uint256, _alloc_point:uint256) -> Tuple[uint256, uint256, uint256, uint256, uint256]:
-        return self.contract.functions.getPoolReward(_from, _to, _alloc_point).call()
+    def get_pool_reward(self, _from:uint256, _to:uint256, _alloc_point:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256, uint256, uint256, uint256]:
+        return self.contract.functions.getPoolReward(_from, _to, _alloc_point).call(block_identifier=block_identifier)
 
-    def gov_token(self) -> address:
-        return self.contract.functions.govToken().call()
+    def gov_token(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.govToken().call(block_identifier=block_identifier)
 
     def halving_update(self, cred:Credentials, _new_halving:Sequence[uint256]) -> TxReceipt:
         tx = self.contract.functions.halvingUpdate(_new_halving)
         return self.send_transaction(tx, cred)
 
-    def liquidityaddr(self) -> address:
-        return self.contract.functions.liquidityaddr().call()
+    def liquidityaddr(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.liquidityaddr().call(block_identifier=block_identifier)
 
     def lock_update(self, cred:Credentials, _newlock:Sequence[uint256]) -> TxReceipt:
         tx = self.contract.functions.lockUpdate(_newlock)
@@ -224,23 +224,23 @@ class MasterGardener(ABIContractWrapper):
         tx = self.contract.functions.massUpdatePools()
         return self.send_transaction(tx, cred)
 
-    def owner(self) -> address:
-        return self.contract.functions.owner().call()
+    def owner(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.owner().call(block_identifier=block_identifier)
 
-    def pending_reward(self, _pid:uint256, _user:address) -> uint256:
-        return self.contract.functions.pendingReward(_pid, _user).call()
+    def pending_reward(self, _pid:uint256, _user:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.pendingReward(_pid, _user).call(block_identifier=block_identifier)
 
-    def pool_existence(self, a:address) -> bool:
-        return self.contract.functions.poolExistence(a).call()
+    def pool_existence(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.poolExistence(a).call(block_identifier=block_identifier)
 
-    def pool_id1(self, a:address) -> uint256:
-        return self.contract.functions.poolId1(a).call()
+    def pool_id1(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.poolId1(a).call(block_identifier=block_identifier)
 
-    def pool_info(self, a:uint256) -> Tuple[address, uint256, uint256, uint256]:
-        return self.contract.functions.poolInfo(a).call()
+    def pool_info(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, uint256, uint256, uint256]:
+        return self.contract.functions.poolInfo(a).call(block_identifier=block_identifier)
 
-    def pool_length(self) -> uint256:
-        return self.contract.functions.poolLength().call()
+    def pool_length(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.poolLength().call(block_identifier=block_identifier)
 
     def reclaim_token_ownership(self, cred:Credentials, _new_owner:address) -> TxReceipt:
         tx = self.contract.functions.reclaimTokenOwnership(_new_owner)
@@ -286,14 +286,14 @@ class MasterGardener(ABIContractWrapper):
         tx = self.contract.functions.startTimestampUpdate(_newstarttimestamp)
         return self.send_transaction(tx, cred)
 
-    def time_delta_end_stage(self, a:uint256) -> uint256:
-        return self.contract.functions.timeDeltaEndStage(a).call()
+    def time_delta_end_stage(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.timeDeltaEndStage(a).call(block_identifier=block_identifier)
 
-    def time_delta_start_stage(self, a:uint256) -> uint256:
-        return self.contract.functions.timeDeltaStartStage(a).call()
+    def time_delta_start_stage(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.timeDeltaStartStage(a).call(block_identifier=block_identifier)
 
-    def total_alloc_point(self) -> uint256:
-        return self.contract.functions.totalAllocPoint().call()
+    def total_alloc_point(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalAllocPoint().call(block_identifier=block_identifier)
 
     def transfer_ownership(self, cred:Credentials, new_owner:address) -> TxReceipt:
         tx = self.contract.functions.transferOwnership(new_owner)
@@ -303,17 +303,17 @@ class MasterGardener(ABIContractWrapper):
         tx = self.contract.functions.updatePool(_pid)
         return self.send_transaction(tx, cred)
 
-    def usd_oracle(self) -> address:
-        return self.contract.functions.usdOracle().call()
+    def usd_oracle(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.usdOracle().call(block_identifier=block_identifier)
 
-    def user_delta(self, _pid:uint256) -> uint256:
-        return self.contract.functions.userDelta(_pid).call()
+    def user_delta(self, _pid:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.userDelta(_pid).call(block_identifier=block_identifier)
 
-    def user_fee_stage(self, a:uint256) -> uint256:
-        return self.contract.functions.userFeeStage(a).call()
+    def user_fee_stage(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.userFeeStage(a).call(block_identifier=block_identifier)
 
-    def user_info(self, a:uint256, b:address) -> Tuple[uint256, uint256, uint256, uint256, uint256, uint256, uint256]:
-        return self.contract.functions.userInfo(a, b).call()
+    def user_info(self, a:uint256, b:address, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, uint256, uint256, uint256, uint256, uint256, uint256]:
+        return self.contract.functions.userInfo(a, b).call(block_identifier=block_identifier)
 
     def withdraw(self, cred:Credentials, _pid:uint256, _amount:uint256) -> TxReceipt:
         tx = self.contract.functions.withdraw(_pid, _amount)

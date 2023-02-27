@@ -38,28 +38,28 @@ class Alchemist(ABIContractWrapper):
         tx = self.contract.functions.addPotion(_potion_address, _required_resources, _required_quantities)
         return self.send_transaction(tx, cred)
 
-    def address_to_potion_id(self, a:address) -> uint256:
-        return self.contract.functions.addressToPotionId(a).call()
+    def address_to_potion_id(self, a:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.addressToPotionId(a).call(block_identifier=block_identifier)
 
     def create_potion(self, cred:Credentials, _potion_address:address, _quantity:uint256) -> TxReceipt:
         tx = self.contract.functions.createPotion(_potion_address, _quantity)
         return self.send_transaction(tx, cred)
 
-    def get_potion(self, _potion_address:address) -> tuple:
-        return self.contract.functions.getPotion(_potion_address).call()
+    def get_potion(self, _potion_address:address, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getPotion(_potion_address).call(block_identifier=block_identifier)
 
-    def get_potions(self) -> List[tuple]:
-        return self.contract.functions.getPotions().call()
+    def get_potions(self, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getPotions().call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _dfk_gold_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_dfk_gold_address)
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def potions(self, a:uint256) -> Tuple[address, uint8]:
-        return self.contract.functions.potions(a).call()
+    def potions(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[address, uint8]:
+        return self.contract.functions.potions(a).call(block_identifier=block_identifier)
 
     def remove_potion(self, cred:Credentials, _potion_address:address) -> TxReceipt:
         tx = self.contract.functions.removePotion(_potion_address)

@@ -59,18 +59,18 @@ class CrystalCore(ABIContractWrapper):
         tx = self.contract.functions.createCrystal(_owner, _summoner_id, _assistant_id, _generation, _summoner_bonus_tears, _assistant_bonus_tears, _enhancement_stone, _max_summons)
         return self.send_transaction(tx, cred)
 
-    def get_crystal(self, _crystal_id:uint256) -> tuple:
-        return self.contract.functions.getCrystal(_crystal_id).call()
+    def get_crystal(self, _crystal_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getCrystal(_crystal_id).call(block_identifier=block_identifier)
 
-    def get_user_crystals(self, _address:address) -> List[uint256]:
-        return self.contract.functions.getUserCrystals(_address).call()
+    def get_user_crystals(self, _address:address, block_identifier:BlockIdentifier = 'latest') -> List[uint256]:
+        return self.contract.functions.getUserCrystals(_address).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _hero_core_address:address, _stat_science_address:address, _random_generator_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_hero_core_address, _stat_science_address, _random_generator_address)
         return self.send_transaction(tx, cred)
 
-    def new_summon_cooldown(self) -> uint256:
-        return self.contract.functions.newSummonCooldown().call()
+    def new_summon_cooldown(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.newSummonCooldown().call(block_identifier=block_identifier)
 
     def open(self, cred:Credentials, _crystal_id:uint256) -> TxReceipt:
         tx = self.contract.functions.open(_crystal_id)
@@ -80,8 +80,8 @@ class CrystalCore(ABIContractWrapper):
         tx = self.contract.functions.pause()
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
     def set_hero_core(self, cred:Credentials, _hero_core_address:address) -> TxReceipt:
         tx = self.contract.functions.setHeroCore(_hero_core_address)
@@ -95,15 +95,15 @@ class CrystalCore(ABIContractWrapper):
         tx = self.contract.functions.setWaitBlocks(_wait_blocks)
         return self.send_transaction(tx, cred)
 
-    def supports_interface(self, interface_id:bytes4) -> bool:
-        return self.contract.functions.supportsInterface(interface_id).call()
+    def supports_interface(self, interface_id:bytes4, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.supportsInterface(interface_id).call(block_identifier=block_identifier)
 
-    def total_crystals(self) -> uint256:
-        return self.contract.functions.totalCrystals().call()
+    def total_crystals(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.totalCrystals().call(block_identifier=block_identifier)
 
     def unpause(self, cred:Credentials) -> TxReceipt:
         tx = self.contract.functions.unpause()
         return self.send_transaction(tx, cred)
 
-    def wait_blocks(self) -> uint256:
-        return self.contract.functions.waitBlocks().call()
+    def wait_blocks(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.waitBlocks().call(block_identifier=block_identifier)

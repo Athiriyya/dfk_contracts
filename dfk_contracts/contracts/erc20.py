@@ -33,7 +33,7 @@ class ERC20(ABIMultiContractWrapper):
     def __init__(self, rpc:str):
         super().__init__(abi=ABI, rpc=rpc)
 
-    def allowance(self, contract_address:address, owner:address, spender:address) -> uint256:
+    def allowance(self, contract_address:address, owner:address, spender:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
         contract = self.get_custom_contract(contract_address, abi=self.abi)
         return contract.functions.allowance(owner, spender).call()
 
@@ -42,7 +42,7 @@ class ERC20(ABIMultiContractWrapper):
         tx = contract.functions.approve(spender, amount)
         return self.send_transaction(tx, cred)
 
-    def balance_of(self, contract_address:address, account:address) -> uint256:
+    def balance_of(self, contract_address:address, account:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
         contract = self.get_custom_contract(contract_address, abi=self.abi)
         return contract.functions.balanceOf(account).call()
 
@@ -56,7 +56,7 @@ class ERC20(ABIMultiContractWrapper):
         tx = contract.functions.burnFrom(account, amount)
         return self.send_transaction(tx, cred)
 
-    def decimals(self, contract_address:address) -> uint8:
+    def decimals(self, contract_address:address, block_identifier:BlockIdentifier = 'latest') -> uint8:
         contract = self.get_custom_contract(contract_address, abi=self.abi)
         return contract.functions.decimals().call()
 
@@ -75,19 +75,19 @@ class ERC20(ABIMultiContractWrapper):
         tx = contract.functions.mint(to, amount)
         return self.send_transaction(tx, cred)
 
-    def name(self, contract_address:address) -> string:
+    def name(self, contract_address:address, block_identifier:BlockIdentifier = 'latest') -> string:
         contract = self.get_custom_contract(contract_address, abi=self.abi)
         return contract.functions.name().call()
 
-    def supports_interface(self, contract_address:address, interface_id:bytes4) -> bool:
+    def supports_interface(self, contract_address:address, interface_id:bytes4, block_identifier:BlockIdentifier = 'latest') -> bool:
         contract = self.get_custom_contract(contract_address, abi=self.abi)
         return contract.functions.supportsInterface(interface_id).call()
 
-    def symbol(self, contract_address:address) -> string:
+    def symbol(self, contract_address:address, block_identifier:BlockIdentifier = 'latest') -> string:
         contract = self.get_custom_contract(contract_address, abi=self.abi)
         return contract.functions.symbol().call()
 
-    def total_supply(self, contract_address:address) -> uint256:
+    def total_supply(self, contract_address:address, block_identifier:BlockIdentifier = 'latest') -> uint256:
         contract = self.get_custom_contract(contract_address, abi=self.abi)
         return contract.functions.totalSupply().call()
 

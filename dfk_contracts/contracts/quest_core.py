@@ -59,8 +59,8 @@ class QuestCore(ABIContractWrapper):
         tx = self.contract.functions.activateQuest(_quest_address)
         return self.send_transaction(tx, cred)
 
-    def active_account_quests(self, a:address, b:address, c:uint256) -> Tuple[uint256, address, uint8, address, uint256, uint256, uint256, uint8, uint8]:
-        return self.contract.functions.activeAccountQuests(a, b, c).call()
+    def active_account_quests(self, a:address, b:address, c:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, uint8, address, uint256, uint256, uint256, uint8, uint8]:
+        return self.contract.functions.activeAccountQuests(a, b, c).call(block_identifier=block_identifier)
 
     def cancel_quest(self, cred:Credentials, _hero_id:uint256) -> TxReceipt:
         tx = self.contract.functions.cancelQuest(_hero_id)
@@ -82,30 +82,30 @@ class QuestCore(ABIContractWrapper):
         tx = self.contract.functions.completeQuest(_hero_id)
         return self.send_transaction(tx, cred)
 
-    def get_account_active_quests(self, _account:address) -> List[tuple]:
-        return self.contract.functions.getAccountActiveQuests(_account).call()
+    def get_account_active_quests(self, _account:address, block_identifier:BlockIdentifier = 'latest') -> List[tuple]:
+        return self.contract.functions.getAccountActiveQuests(_account).call(block_identifier=block_identifier)
 
-    def get_current_stamina(self, _hero_id:uint256) -> uint256:
-        return self.contract.functions.getCurrentStamina(_hero_id).call()
+    def get_current_stamina(self, _hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.getCurrentStamina(_hero_id).call(block_identifier=block_identifier)
 
-    def get_hero_quest(self, hero_id:uint256) -> tuple:
-        return self.contract.functions.getHeroQuest(hero_id).call()
+    def get_hero_quest(self, hero_id:uint256, block_identifier:BlockIdentifier = 'latest') -> tuple:
+        return self.contract.functions.getHeroQuest(hero_id).call(block_identifier=block_identifier)
 
-    def get_quest_contracts(self) -> List[address]:
-        return self.contract.functions.getQuestContracts().call()
+    def get_quest_contracts(self, block_identifier:BlockIdentifier = 'latest') -> List[address]:
+        return self.contract.functions.getQuestContracts().call(block_identifier=block_identifier)
 
-    def hero_core(self) -> address:
-        return self.contract.functions.heroCore().call()
+    def hero_core(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.heroCore().call(block_identifier=block_identifier)
 
-    def hero_to_quest(self, a:uint256) -> uint256:
-        return self.contract.functions.heroToQuest(a).call()
+    def hero_to_quest(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.heroToQuest(a).call(block_identifier=block_identifier)
 
     def initialize(self, cred:Credentials, _hero_core_address:address) -> TxReceipt:
         tx = self.contract.functions.initialize(_hero_core_address)
         return self.send_transaction(tx, cred)
 
-    def is_quest(self, a:address) -> bool:
-        return self.contract.functions.isQuest(a).call()
+    def is_quest(self, a:address, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.isQuest(a).call(block_identifier=block_identifier)
 
     def multi_complete_quest(self, cred:Credentials, _hero_ids:Sequence[uint256]) -> TxReceipt:
         tx = self.contract.functions.multiCompleteQuest(_hero_ids)
@@ -115,17 +115,17 @@ class QuestCore(ABIContractWrapper):
         tx = self.contract.functions.multiStartQuest(_quest_address, _hero_ids, _attempts, _level)
         return self.send_transaction(tx, cred)
 
-    def paused(self) -> bool:
-        return self.contract.functions.paused().call()
+    def paused(self, block_identifier:BlockIdentifier = 'latest') -> bool:
+        return self.contract.functions.paused().call(block_identifier=block_identifier)
 
-    def quest_counter(self) -> uint256:
-        return self.contract.functions.questCounter().call()
+    def quest_counter(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.questCounter().call(block_identifier=block_identifier)
 
-    def quest_rewarder(self) -> address:
-        return self.contract.functions.questRewarder().call()
+    def quest_rewarder(self, block_identifier:BlockIdentifier = 'latest') -> address:
+        return self.contract.functions.questRewarder().call(block_identifier=block_identifier)
 
-    def quests(self, a:uint256) -> Tuple[uint256, address, uint8, address, uint256, uint256, uint256, uint8, uint8]:
-        return self.contract.functions.quests(a).call()
+    def quests(self, a:uint256, block_identifier:BlockIdentifier = 'latest') -> Tuple[uint256, address, uint8, address, uint256, uint256, uint256, uint8, uint8]:
+        return self.contract.functions.quests(a).call(block_identifier=block_identifier)
 
     def set_quest_rewarder(self, cred:Credentials, _quest_rewarder:address) -> TxReceipt:
         tx = self.contract.functions.setQuestRewarder(_quest_rewarder)
@@ -139,5 +139,5 @@ class QuestCore(ABIContractWrapper):
         tx = self.contract.functions.startQuest(_hero_ids, _quest_address, _attempts, _level)
         return self.send_transaction(tx, cred)
 
-    def time_per_stamina(self) -> uint256:
-        return self.contract.functions.timePerStamina().call()
+    def time_per_stamina(self, block_identifier:BlockIdentifier = 'latest') -> uint256:
+        return self.contract.functions.timePerStamina().call(block_identifier=block_identifier)
