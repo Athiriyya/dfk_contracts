@@ -14,12 +14,14 @@ from .contracts.dark_summoning import DarkSummoning
 from .contracts.dfk_duel_s2 import DFKDuelS2
 from .contracts.duel_rank_claim import DuelRankClaim
 from .contracts.erc20 import ERC20
+from .contracts.flag_storage_v2 import FlagStorageV2
 from .contracts.gen0_airdrop import Gen0Airdrop
 from .contracts.gen0_reroll import Gen0Reroll
 from .contracts.hero_auction import HeroAuction
 from .contracts.hero_bridge import HeroBridge
 from .contracts.hero_core import HeroCore
 from .contracts.hero_summoning import HeroSummoning
+from .contracts.item_bridge import ItemBridge
 from .contracts.item_consumer import ItemConsumer
 from .contracts.item_gold_trader_v2 import ItemGoldTraderV2
 from .contracts.jewel_token import JewelToken
@@ -27,8 +29,10 @@ from .contracts.land_auction import LandAuction
 from .contracts.land_core import LandCore
 from .contracts.master_gardener import MasterGardener
 from .contracts.meditation_circle import MeditationCircle
+from .contracts.multicall3 import Multicall3
 from .contracts.pasture import Pasture
 from .contracts.pet_auction import PetAuction
+from .contracts.pet_bridge import PetBridge
 from .contracts.pet_core import PetCore
 from .contracts.pet_exchange import PetExchange
 from .contracts.pet_hatching import PetHatching
@@ -68,12 +72,14 @@ class AllDfkContracts:
         self.dfk_duel_s2 = DFKDuelS2(self.chain_key, self.rpc)
         self.duel_rank_claim = DuelRankClaim(self.chain_key, self.rpc)
         self.erc20 = ERC20(self.rpc)
+        self.flag_storage_v2 = FlagStorageV2(self.chain_key, self.rpc)
         self.gen0_airdrop = Gen0Airdrop(self.chain_key, self.rpc)
         self.gen0_reroll = Gen0Reroll(self.chain_key, self.rpc)
         self.hero_auction = HeroAuction(self.chain_key, self.rpc)
         self.hero_bridge = HeroBridge(self.chain_key, self.rpc)
         self.hero_core = HeroCore(self.chain_key, self.rpc)
         self.hero_summoning = HeroSummoning(self.chain_key, self.rpc)
+        self.item_bridge = ItemBridge(self.chain_key, self.rpc)
         self.item_consumer = ItemConsumer(self.chain_key, self.rpc)
         self.item_gold_trader_v2 = ItemGoldTraderV2(self.chain_key, self.rpc)
         self.jewel_token = JewelToken(self.chain_key, self.rpc)
@@ -81,8 +87,10 @@ class AllDfkContracts:
         self.land_core = LandCore(self.chain_key, self.rpc)
         self.master_gardener = MasterGardener(self.chain_key, self.rpc)
         self.meditation_circle = MeditationCircle(self.chain_key, self.rpc)
+        self.multicall3 = Multicall3(self.chain_key, self.rpc)
         self.pasture = Pasture(self.chain_key, self.rpc)
         self.pet_auction = PetAuction(self.chain_key, self.rpc)
+        self.pet_bridge = PetBridge(self.chain_key, self.rpc)
         self.pet_core = PetCore(self.chain_key, self.rpc)
         self.pet_exchange = PetExchange(self.chain_key, self.rpc)
         self.pet_hatching = PetHatching(self.chain_key, self.rpc)
