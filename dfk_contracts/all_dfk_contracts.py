@@ -17,6 +17,7 @@ from .contracts.erc20 import ERC20
 from .contracts.flag_storage_v2 import FlagStorageV2
 from .contracts.gen0_airdrop import Gen0Airdrop
 from .contracts.gen0_reroll import Gen0Reroll
+from .contracts.gene_reroll import GeneReroll
 from .contracts.hero_auction import HeroAuction
 from .contracts.hero_bridge import HeroBridge
 from .contracts.hero_core import HeroCore
@@ -75,6 +76,7 @@ class AllDfkContracts:
         self.flag_storage_v2 = FlagStorageV2(self.chain_key, self.rpc)
         self.gen0_airdrop = Gen0Airdrop(self.chain_key, self.rpc)
         self.gen0_reroll = Gen0Reroll(self.chain_key, self.rpc)
+        self.gene_reroll = GeneReroll(self.chain_key, self.rpc)
         self.hero_auction = HeroAuction(self.chain_key, self.rpc)
         self.hero_bridge = HeroBridge(self.chain_key, self.rpc)
         self.hero_core = HeroCore(self.chain_key, self.rpc)

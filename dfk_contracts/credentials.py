@@ -39,3 +39,14 @@ class Credentials:
         except StopIteration:
             raise ValueError(f'Address {address} not found in {creds}')   
 
+
+    @staticmethod 
+    def creds_for_nicknames(creds:Sequence['Credentials'], nicknames:Sequence[str], accept_abbreviation=True) -> List['Credentials']:
+        creds_out = []
+        for n in nicknames:
+            try:
+                c = Credentials.cred_for_nickname(creds, n, accept_abbreviation)
+                creds_out.append(c)
+            except ValueError:
+                pass
+        return creds_out
