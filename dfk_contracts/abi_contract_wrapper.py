@@ -5,9 +5,9 @@ from web3.logs import DISCARD
 
 from .credentials import Credentials
 
-from .solidity_types import *
-from web3.contract import Contract
-from typing import Dict, Tuple, Union, Optional, Any
+from .solidity_types import (address, ChecksumAddress, TxReceipt, AttributeDict)
+from web3.contract.contract import Contract
+from typing import Dict, Tuple, Union, Optional, Any, Sequence
 
 DEFAULT_TIMEOUT = 30
 DEFAULT_MAX_GAS = 50
@@ -37,10 +37,10 @@ class ABIContractWrapper:
             w3.middleware_onion.inject(geth_poa_middleware, layer=0)
             W3_INSTANCES[self.rpc] = w3
         self.w3 = w3
-        self.contract_address:HexAddress = self.w3.toChecksumAddress(contract_address)
+        self.contract_address:ChecksumAddress = self.w3.to_checksum_address(contract_address)
 
-        self.max_gas_wei = self.w3.toWei(max_gas_gwei, 'gwei')
-        self.max_priority_wei = self.w3.toWei(max_priority_gwei, 'gwei')
+        self.max_gas_wei = self.w3.to_wei(max_gas_gwei, 'gwei')
+        self.max_priority_wei = self.w3.to_wei(max_priority_gwei, 'gwei')
 
         self.contract = self.w3.eth.contract(self.contract_address, abi=self.abi)
 
@@ -56,7 +56,7 @@ class ABIContractWrapper:
         # error gets thrown       
         nonce = self.nonces.get(address, 0) 
         if force_fetch or nonce == 0:
-            nonce = self.w3.eth.getTransactionCount( address, 'pending')
+            nonce = self.w3.eth.get_transaction_count( address, 'pending')
 
         # Store the next nonce this address will use, and return the current one
         self.nonces[address] = nonce + 1
@@ -88,12 +88,12 @@ class ABIContractWrapper:
         contract_func = getattr(self.contract, function_name)
         return contract_func(*args).call()
 
-    def get_custom_contract(self, contract_address:HexAddress, abi:str | None=None) -> Contract:
+    def get_custom_contract(self, contract_address:ChecksumAddress, abi:str | None=None) -> Contract:
         # TODO: Many custom contracts for e.g. ERC20 tokens could
         # be re-used by caching a contracts dictionary keyed by address
         # For now, just return a new contract
         abi = abi or self.abi
-        checked_addr = self.w3.toChecksumAddress(contract_address)
+        checked_addr = self.w3.to_checksum_address(contract_address)
         contract = self.w3.eth.contract(checked_addr, abi=abi)
         return contract
 
@@ -109,7 +109,7 @@ class ABIContractWrapper:
         gas_dict = self.get_gas_dict_and_update(address)
         if extra_dict:
             gas_dict.update(extra_dict)
-        tx_dict = tx.buildTransaction(gas_dict)    
+        tx_dict = tx.build_transaction(gas_dict)    
         signed_tx = self.w3.eth.account.sign_transaction(tx_dict, private_key=cred.private_key)
         try:
             self.w3.eth.send_raw_transaction(signed_tx.rawTransaction)
@@ -131,9 +131,9 @@ class ABIContractWrapper:
     def get_legacy_gas_fee(self) ->Tuple[int, int]:
         # See: https://web3py.readthedocs.io/en/stable/gas_price.html#gas-price-api
         # Some transactions may require a gas dict with the keys {'gasPrice': x_wei, '': y_wei}
-        block = self.w3.eth.getBlock("pending")
-        base_gas = block.gasUsed + self.w3.toWei(50, 'gwei')
-        gas_limit =block.gasLimit
+        block = self.w3.eth.get_block("pending")
+        base_gas = block.get('gasUsed', 2_500_000) + self.w3.to_wei(50, 'gwei')
+        gas_limit =block.get('gasLimit', 2_500_000)
 
         return base_gas, gas_limit
 
@@ -144,7 +144,7 @@ class ABIContractWrapper:
     def parse_events(self, tx_receipt:TxReceipt, event_names:Sequence[str] | None = None) -> Dict[str, AttributeDict]:
         event_dicts = {}
         for event in self.contract.events: # type: ignore
-            eds = event().processReceipt(tx_receipt, errors=DISCARD)
+            eds = event().process_receipt(tx_receipt, errors=DISCARD)
             if eds:
                 for ed in eds:
                     event_dicts.setdefault(ed.event,[]).append(ed)

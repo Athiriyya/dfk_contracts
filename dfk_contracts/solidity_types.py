@@ -2,12 +2,13 @@
 from typing import Sequence, Dict, Tuple, List
 from web3.datastructures import AttributeDict
 from web3.types import TxReceipt, BlockIdentifier
-from eth_typing.evm import HexAddress
+from eth_typing.evm import ChecksumAddress
 
+HexAddress = ChecksumAddress
 # We lose some detail here; Python doesnt have signed/unsigned int differentions
-# or bytes sizes. For now, these type aliase let us use Solidity's native types 
+# or bytes sizes. For now, these type aliases let us use Solidity's native types 
 # as type hints while being a little less particular to Pythons Mypy type analyzer
-address = HexAddress
+address = ChecksumAddress
 bool = bool
 string = str
 uint8 = int

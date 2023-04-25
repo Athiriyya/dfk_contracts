@@ -34,5 +34,5 @@ class ABIMultiContractWrapper(ABIContractWrapper):
             W3_INSTANCES[self.rpc] = w3
         self.w3 = w3
 
-        self.max_gas_wei = self.w3.toWei(max_gas_gwei, 'gwei')
-        self.max_priority_wei = self.w3.toWei(max_priority_gwei, 'gwei')
+        self.max_gas_wei = self.w3.to_wei(max_gas_gwei, 'gwei')
+        self.max_priority_wei = self.w3.to_wei(max_priority_gwei, 'gwei')
