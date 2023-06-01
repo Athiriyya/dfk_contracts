@@ -40,6 +40,7 @@ from .contracts.pet_hatching import PetHatching
 from .contracts.power_up_manager import PowerUpManager
 from .contracts.profiles import Profiles
 from .contracts.quest_core import QuestCore
+from .contracts.quest_core_v3 import QuestCoreV3
 from .contracts.raffle_master import RaffleMaster
 from .contracts.raffle_ticket import RaffleTicket
 from .contracts.stone_carver import StoneCarver
@@ -99,6 +100,7 @@ class AllDfkContracts:
         self.power_up_manager = PowerUpManager(self.chain_key, self.rpc)
         self.profiles = Profiles(self.chain_key, self.rpc)
         self.quest_core = QuestCore(self.chain_key, self.rpc)
+        self.quest_core_v3 = QuestCoreV3(self.chain_key, self.rpc)
         self.raffle_master = RaffleMaster(self.chain_key, self.rpc)
         self.raffle_ticket = RaffleTicket(self.chain_key, self.rpc)
         self.stone_carver = StoneCarver(self.chain_key, self.rpc)
